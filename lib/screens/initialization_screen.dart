@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Initialization extends StatelessWidget {
-  const Initialization({super.key});
+class InitializationScreen extends StatelessWidget {
+  const InitializationScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
