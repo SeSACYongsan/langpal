@@ -41,6 +41,60 @@ class SignInScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                const Spacer(),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            elevation: 10,
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                          ),
+                          icon: Image.asset(
+                            "assets/images/google_logo.png",
+                            width: 30,
+                          ),
+                          label: const Text(
+                            "SIGN IN WITH GOOGLE",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ElevatedButton.icon(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            elevation: 10,
+                          ),
+                          icon: Image.asset(
+                            "assets/images/apple_logo.png",
+                            width: 30,
+                          ),
+                          label: const Text(
+                            "SIGN IN WITH APPLE",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           )
