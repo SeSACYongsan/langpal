@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:langpal/screens/question_detail_screen.dart';
+import 'package:langpal/screens/notifications_screen.dart';
 
 void main() {
   runApp(
     const MaterialApp(
-      home: QuestionDetailScreen(),
+      home: NotificationsScreen(),
     ),
   );
 }
