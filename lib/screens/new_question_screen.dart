@@ -87,8 +87,13 @@ class NewQuestionScreen extends StatelessWidget {
                   elevation: 10,
                 ),
                 onPressed: () {},
-                child: const Text("등록"),
-              )
+                child: const Text(
+                  "등록",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

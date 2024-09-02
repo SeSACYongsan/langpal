@@ -68,11 +68,11 @@ class ProfileSettingScreen extends StatelessWidget {
                         color: Colors.black,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

@@ -22,7 +22,7 @@ class NotificationsScreen extends StatelessWidget {
               Icons.check_box_outlined,
               color: Colors.black,
             ),
-          )
+          ),
         ],
         leading: IconButton(
           onPressed: () {},
@@ -45,7 +45,7 @@ class NotificationsScreen extends StatelessWidget {
                   blurRadius: 5,
                   color: Colors.black12,
                   offset: Offset(5, 5),
-                )
+                ),
               ],
               color: Colors.white,
             ),

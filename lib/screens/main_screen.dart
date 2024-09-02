@@ -63,7 +63,7 @@ class MainScreen extends StatelessWidget {
                             blurRadius: 5,
                             offset: Offset(5, 5),
                             color: Colors.black12,
-                          )
+                          ),
                         ],
                       ),
                       padding: const EdgeInsets.all(20),

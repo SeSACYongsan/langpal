@@ -110,7 +110,7 @@ class QuestionDetailScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

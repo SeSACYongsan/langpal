@@ -66,7 +66,7 @@ class NotificationsDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
