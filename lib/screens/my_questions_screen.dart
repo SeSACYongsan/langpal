@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyQuestionScreen extends StatelessWidget {
-  const MyQuestionScreen({super.key});
+class MyQuestionsScreen extends StatelessWidget {
+  const MyQuestionsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
