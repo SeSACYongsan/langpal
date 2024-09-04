@@ -46,14 +46,26 @@ class SubscriptionPlansScreen extends StatelessWidget {
                       "월간",
                       style: TextStyle(
                         fontSize: 20,
+                        color: Colors.black,
                       ),
                     ),
-                    Text("* 매달 3,000 포인트 제공"),
-                    Text("* 질문 최상단 노출"),
+                    Text(
+                      "* 매달 3,000 포인트 제공",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "* 질문 최상단 노출",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                     Text(
                       "₩5,900 / 월",
                       style: TextStyle(
                         fontSize: 24,
+                        color: Colors.black,
                       ),
                     )
                   ],
@@ -77,14 +89,26 @@ class SubscriptionPlansScreen extends StatelessWidget {
                       "연간",
                       style: TextStyle(
                         fontSize: 20,
+                        color: Colors.black,
                       ),
                     ),
-                    Text("* 매달 4,000 포인트 제공"),
-                    Text("* 질문 최상단 노출"),
+                    Text(
+                      "* 매달 4,000 포인트 제공",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "* 질문 최상단 노출",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                     Text(
                       "₩59,000 / 년",
                       style: TextStyle(
                         fontSize: 24,
+                        color: Colors.black,
                       ),
                     )
                   ],
