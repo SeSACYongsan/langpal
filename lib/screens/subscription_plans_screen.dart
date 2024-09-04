@@ -92,7 +92,23 @@ class SubscriptionPlansScreen extends StatelessWidget {
                 icon: const Icon(Icons.chevron_right),
                 onPressed: () {},
                 iconAlignment: IconAlignment.end,
-              )
+              ),
+              const Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.all(15),
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text("다음으로"),
+              ),
             ],
           ),
         ),
