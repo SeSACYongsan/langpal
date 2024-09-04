@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:langpal/screens/my_answers_screen.dart';
+import 'package:langpal/screens/my_answer_detail_screen.dart';
 
 void main() {
   runApp(
     const MaterialApp(
-      home: MyAnswersScreen(),
+      home: MyAnswerDetailScreen(),
     ),
   );
 }
