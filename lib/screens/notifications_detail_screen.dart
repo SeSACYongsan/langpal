@@ -22,7 +22,7 @@ class NotificationsDetailScreen extends StatelessWidget {
               "읽음",
               style: TextStyle(color: Colors.black),
             ),
-          )
+          ),
         ],
         leading: TextButton(
           onPressed: () {},
@@ -52,7 +52,7 @@ class NotificationsDetailScreen extends StatelessWidget {
                         blurRadius: 5,
                         color: Colors.black12,
                         offset: Offset(5, 5),
-                      )
+                      ),
                     ],
                     color: Colors.white,
                   ),

@@ -35,7 +35,7 @@ class MyQuestionsScreen extends StatelessWidget {
                       BoxShadow(
                         offset: Offset(5, 5),
                         color: Colors.black12,
-                      )
+                      ),
                     ],
                   ),
                   child: const Column(
@@ -60,7 +60,7 @@ class MyQuestionsScreen extends StatelessWidget {
                       BoxShadow(
                         offset: Offset(5, 5),
                         color: Colors.black12,
-                      )
+                      ),
                     ],
                   ),
                   child: const Column(

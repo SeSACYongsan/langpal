@@ -21,14 +21,15 @@ class ProfileSettingScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(5, 5),
-                            color: Colors.black12,
-                          )
-                        ]),
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          offset: Offset(5, 5),
+                          color: Colors.black12,
+                        ),
+                      ],
+                    ),
                     child: Column(
                       children: [
                         ElevatedButton(

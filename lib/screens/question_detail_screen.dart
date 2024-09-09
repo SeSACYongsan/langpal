@@ -45,15 +45,16 @@ class QuestionDetailScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 5,
-                          offset: Offset(5, 5),
-                          color: Colors.black12)
-                    ]),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                        blurRadius: 5,
+                        spreadRadius: 5,
+                        offset: Offset(5, 5),
+                        color: Colors.black12)
+                  ],
+                ),
                 child: Text(dummyQuestions.first.content),
               ),
               const SizedBox(height: 30),
@@ -67,16 +68,17 @@ class QuestionDetailScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 5,
-                        spreadRadius: 5,
-                        offset: Offset(5, 5),
-                        color: Colors.black12,
-                      )
-                    ]),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 5,
+                      spreadRadius: 5,
+                      offset: Offset(5, 5),
+                      color: Colors.black12,
+                    )
+                  ],
+                ),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: TextField(

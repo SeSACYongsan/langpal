@@ -109,7 +109,7 @@ class SubscriptionDetailScreen extends StatelessWidget {
                 ),
                 onPressed: () {},
                 child: const Text("결제"),
-              )
+              ),
             ],
           ),
         ),

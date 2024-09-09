@@ -67,7 +67,7 @@ class SubscriptionPlansScreen extends StatelessWidget {
                         fontSize: 24,
                         color: Colors.black,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
@@ -110,7 +110,7 @@ class SubscriptionPlansScreen extends StatelessWidget {
                         fontSize: 24,
                         color: Colors.black,
                       ),
-                    )
+                    ),
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
