@@ -19,9 +19,9 @@ class MyQuestionDetailScreen extends StatelessWidget {
           onPressed: () {},
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
