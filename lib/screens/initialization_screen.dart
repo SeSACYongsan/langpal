@@ -85,9 +85,10 @@ class InitializationScreen extends StatelessWidget {
                             inputDecorationTheme: InputDecorationTheme(),
                             width: 200,
                             dropdownMenuEntries: [
-                              DropdownMenuEntry(value: "Korean", label: "한국어"),
-                              DropdownMenuEntry(value: "English", label: "영어"),
-                              DropdownMenuEntry(value: "Japanese", label: "일본어")
+                              DropdownMenuEntry(value: "Beginner", label: "초급"),
+                              DropdownMenuEntry(
+                                  value: "Intermediate", label: "중급"),
+                              DropdownMenuEntry(value: "Advanced", label: "고급")
                             ],
                           ),
                         ),
