@@ -26,7 +26,9 @@ class MainScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go("/main/notifications");
+            },
             icon: const Icon(
               Icons.notifications,
               color: Colors.white,

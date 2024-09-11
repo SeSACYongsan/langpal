@@ -20,17 +20,10 @@ class NotificationsScreen extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(
               Icons.check_box_outlined,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ],
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.chevron_left,
-            color: Colors.black,
-          ),
-        ),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => Padding(
