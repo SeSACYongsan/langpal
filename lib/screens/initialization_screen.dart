@@ -49,12 +49,10 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
+                        Text(
                           "당신의 모국어",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Center(
                           child: DropdownMenu(
@@ -65,6 +63,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                             },
                             controller: firstLanguageTextEditingController,
                             requestFocusOnTap: true,
+                            textStyle: Theme.of(context).textTheme.titleMedium,
                             inputDecorationTheme: const InputDecorationTheme(),
                             width: 200,
                             dropdownMenuEntries:
@@ -76,12 +75,10 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Text(
+                        Text(
                           "배우고 싶은 언어",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Center(
                           child: DropdownMenu(
@@ -90,6 +87,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                                   .read(targetLanguageProvider.notifier)
                                   .setLanguage(value!);
                             },
+                            textStyle: Theme.of(context).textTheme.titleMedium,
                             controller: targetLanguageTextEditingController,
                             requestFocusOnTap: true,
                             inputDecorationTheme: const InputDecorationTheme(),
@@ -103,12 +101,10 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Text(
+                        Text(
                           "구사 수준",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Center(
                           child: DropdownMenu(
@@ -116,6 +112,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                             onSelected: (value) {
                               ref.read(levelProvider.notifier).setLevel(value!);
                             },
+                            textStyle: Theme.of(context).textTheme.titleMedium,
                             requestFocusOnTap: true,
                             inputDecorationTheme: const InputDecorationTheme(),
                             width: 200,
@@ -137,12 +134,9 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                         elevation: 10,
                       ),
                       onPressed: () {},
-                      child: const Text(
+                      child: Text(
                         "다음으로",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                   ),
