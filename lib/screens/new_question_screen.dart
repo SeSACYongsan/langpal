@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/point_slider_provider.dart';
 import 'package:langpal/providers/question_type_provider.dart';
 
 class NewQuestionScreen extends ConsumerStatefulWidget {
@@ -65,12 +66,16 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                   const Text("0"),
                   Expanded(
                     child: Slider(
-                      value: 50,
+                      value: ref.watch(pointSliderProvider),
                       min: 0,
                       max: 100,
                       thumbColor: Colors.blue,
                       activeColor: Colors.blue,
-                      onChanged: (newValue) {},
+                      onChanged: (newValue) {
+                        ref
+                            .read(pointSliderProvider.notifier)
+                            .setPoint(newValue);
+                      },
                     ),
                   ),
                   const Text("100"),
