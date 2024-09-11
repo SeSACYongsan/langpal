@@ -8,6 +8,9 @@ void main() {
       child: MaterialApp.router(
         routerConfig: router,
         title: "Langpal",
+        theme: ThemeData(
+          fontFamily: "CookieRun",
+        ),
       ),
     ),
   );
