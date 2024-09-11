@@ -17,14 +17,13 @@ class InitializationScreen extends ConsumerStatefulWidget {
 class _InitializationScreenState extends ConsumerState<InitializationScreen> {
   final firstLanguageTextEditingController = TextEditingController();
   final targetLanguageTextEditingController = TextEditingController();
-  final levelTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     firstLanguageTextEditingController.text =
         ref.watch(firstLanguageProvider).toKoreanName();
     targetLanguageTextEditingController.text =
         ref.watch(targetLanguageProvider).toKoreanName();
-    levelTextEditingController.text = ref.watch(levelProvider).toKoreanName();
+    final currentLevel = ref.watch(levelProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -108,21 +107,34 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Center(
-                          child: DropdownMenu(
-                            controller: levelTextEditingController,
-                            onSelected: (value) {
-                              ref.read(levelProvider.notifier).setLevel(value!);
-                            },
-                            textStyle: Theme.of(context).textTheme.titleMedium,
-                            requestFocusOnTap: true,
-                            inputDecorationTheme: const InputDecorationTheme(),
-                            width: 200,
-                            dropdownMenuEntries: Level.values.map((level) {
-                              return DropdownMenuEntry(
-                                  value: level, label: level.toKoreanName());
-                            }).toList(),
-                          ),
-                        ),
+                            child: SegmentedButton<Level>(
+                          segments: [
+                            ButtonSegment(
+                              value: Level.beginner,
+                              label: Text(
+                                Level.beginner.toKoreanName(),
+                              ),
+                            ),
+                            ButtonSegment(
+                              value: Level.intermediate,
+                              label: Text(
+                                Level.intermediate.toKoreanName(),
+                              ),
+                            ),
+                            ButtonSegment(
+                              value: Level.advanced,
+                              label: Text(
+                                Level.advanced.toKoreanName(),
+                              ),
+                            )
+                          ],
+                          onSelectionChanged: (value) {
+                            ref
+                                .read(levelProvider.notifier)
+                                .setLevel(value.first);
+                          },
+                          selected: {currentLevel},
+                        )),
                       ],
                     ),
                   ),
@@ -156,7 +168,6 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
   void dispose() {
     firstLanguageTextEditingController.dispose();
     targetLanguageTextEditingController.dispose();
-    levelTextEditingController.dispose();
     super.dispose();
   }
 }
