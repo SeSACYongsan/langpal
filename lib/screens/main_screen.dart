@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/models/dummy_questions.dart';
 
 class MainScreen extends StatelessWidget {
@@ -28,12 +29,15 @@ class MainScreen extends StatelessWidget {
             onPressed: () {},
             icon: const Icon(
               Icons.notifications,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ],
         leading: IconButton(
-          icon: const Icon(Icons.home_outlined),
+          icon: const Icon(
+            Icons.home_outlined,
+            color: Colors.white,
+          ),
           onPressed: () {},
         ),
       ),
@@ -50,7 +54,9 @@ class MainScreen extends StatelessWidget {
               const SizedBox(width: 20),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.go("/main/detail/dummy");
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
