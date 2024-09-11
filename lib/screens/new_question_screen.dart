@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/new_question_provider.dart';
 import 'package:langpal/providers/point_slider_provider.dart';
 import 'package:langpal/providers/question_type_provider.dart';
 
@@ -12,10 +13,12 @@ class NewQuestionScreen extends ConsumerStatefulWidget {
 
 class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   final questionTypeTextEditingController = TextEditingController();
+  final newQuestionTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     questionTypeTextEditingController.text =
         ref.watch(questionTypeProvider).toKoreanName();
+    newQuestionTextEditingController.text = ref.watch(newQuestionProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -53,11 +56,15 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                   border: Border.all(width: 1, color: Colors.black),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const TextField(
-                  decoration: InputDecoration(
+                child: TextField(
+                  controller: newQuestionTextEditingController,
+                  decoration: const InputDecoration(
                       border: InputBorder.none, hintText: "질문을 입력하세요"),
                   keyboardType: TextInputType.text,
                   maxLines: 8,
+                  onChanged: (value) {
+                    ref.read(newQuestionProvider.notifier).setString(value);
+                  },
                 ),
               ),
               const SizedBox(height: 20),
@@ -110,6 +117,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   @override
   void dispose() {
     questionTypeTextEditingController.dispose();
+    newQuestionTextEditingController.dispose();
     super.dispose();
   }
 }
