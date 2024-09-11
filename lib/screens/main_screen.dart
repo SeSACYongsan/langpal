@@ -8,7 +8,9 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          context.go("/main/new_question");
+        },
         backgroundColor: Colors.blue,
         shape: const CircleBorder(),
         child: const Icon(

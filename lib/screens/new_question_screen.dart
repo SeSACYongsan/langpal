@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/question_type_provider.dart';
 
-class NewQuestionScreen extends StatelessWidget {
+class NewQuestionScreen extends ConsumerStatefulWidget {
   const NewQuestionScreen({super.key});
   @override
+  ConsumerState<NewQuestionScreen> createState() => _NewQuestionScreenState();
+}
+
+class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
+  final questionTypeTextEditingController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    questionTypeTextEditingController.text =
+        ref.watch(questionTypeProvider).toKoreanName();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -15,13 +25,6 @@ class NewQuestionScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -29,20 +32,18 @@ class NewQuestionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const DropdownMenu(
-                initialSelection: QuestionType.isNatural,
+              DropdownMenu(
+                onSelected: (value) {
+                  ref
+                      .read(questionTypeProvider.notifier)
+                      .setQuestionType(value!);
+                },
                 expandedInsets: EdgeInsets.zero,
-                dropdownMenuEntries: [
-                  DropdownMenuEntry(
-                      value: QuestionType.isNatural, label: "이 표현은 자연스럽습니까?"),
-                  DropdownMenuEntry(
-                      value: QuestionType.difference, label: "차이점은 무엇입니까?"),
-                  DropdownMenuEntry(
-                      value: QuestionType.examples, label: "예문을 들어주세요."),
-                  DropdownMenuEntry(
-                      value: QuestionType.meaning, label: "무슨 뜻입니까?"),
-                  DropdownMenuEntry(value: QuestionType.what, label: "무엇입니까?"),
-                ],
+                controller: questionTypeTextEditingController,
+                dropdownMenuEntries: QuestionType.values.map((questionType) {
+                  return DropdownMenuEntry(
+                      value: questionType, label: questionType.toKoreanName());
+                }).toList(),
               ),
               const SizedBox(height: 20),
               Container(
@@ -99,5 +100,11 @@ class NewQuestionScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    questionTypeTextEditingController.dispose();
+    super.dispose();
   }
 }

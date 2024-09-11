@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/screens/initialization_screen.dart';
 import 'package:langpal/screens/main_screen.dart';
 import 'package:langpal/screens/my_page_screen.dart';
+import 'package:langpal/screens/new_question_screen.dart';
 import 'package:langpal/screens/notifications_screen.dart';
 import 'package:langpal/screens/profile_setting_screen.dart';
 import 'package:langpal/screens/question_detail_screen.dart';
@@ -38,6 +39,10 @@ final router = GoRouter(
         GoRoute(
           path: "my_page",
           builder: (context, state) => const MyPageScreen(),
+        ),
+        GoRoute(
+          path: "new_question",
+          builder: (context, state) => const NewQuestionScreen(),
         ),
       ],
     ),
