@@ -83,12 +83,21 @@ class MainScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(dummyQuestions[index].owner),
-                            Text("${dummyQuestions[index].point.toString()}pt"),
+                            Text(
+                              dummyQuestions[index].owner,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              "${dummyQuestions[index].point.toString()}pt",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Text(dummyQuestions[index].content)
+                        Text(
+                          dummyQuestions[index].content,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
                       ],
                     ),
                   ),
