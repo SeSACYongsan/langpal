@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/providers/username_provider.dart';
 
-class ProfileSettingScreen extends StatelessWidget {
+class ProfileSettingScreen extends ConsumerStatefulWidget {
   const ProfileSettingScreen({super.key});
   @override
+  ConsumerState<ProfileSettingScreen> createState() =>
+      _ProfileSettingScreenState();
+}
+
+class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
+  final usernameTextEditingController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
+    usernameTextEditingController.text = ref.watch(usernameProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -39,18 +49,27 @@ class ProfileSettingScreen extends StatelessWidget {
                             shape: const CircleBorder(),
                           ),
                           onPressed: () {},
-                          child: const Text("프로필 사진"),
-                        ),
-                        const SizedBox(height: 30),
-                        const Text(
-                          "닉네임 입력",
-                          style: TextStyle(
-                            fontSize: 20,
+                          child: Text(
+                            "프로필 사진",
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
-                        const SizedBox(
+                        const SizedBox(height: 30),
+                        Text(
+                          "닉네임 입력",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        SizedBox(
                           width: 200,
-                          child: TextField(),
+                          child: TextField(
+                            onChanged: (value) {
+                              ref
+                                  .read(usernameProvider.notifier)
+                                  .setUsername(value);
+                            },
+                            keyboardType: TextInputType.name,
+                            controller: usernameTextEditingController,
+                          ),
                         ),
                       ],
                     ),
@@ -62,12 +81,9 @@ class ProfileSettingScreen extends StatelessWidget {
                       elevation: 10,
                     ),
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       "다음으로",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                 ],
@@ -77,5 +93,11 @@ class ProfileSettingScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    usernameTextEditingController.dispose();
+    super.dispose();
   }
 }

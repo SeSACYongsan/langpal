@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
-import 'package:langpal/providers/firstLanguageProvider.dart';
-import 'package:langpal/providers/levelProvider.dart';
-import 'package:langpal/providers/targetLanguageProvider.dart';
+import 'package:langpal/providers/first_language_provider.dart';
+import 'package:langpal/providers/level_provider.dart';
+import 'package:langpal/providers/target_language_provider.dart';
 
 class InitializationScreen extends ConsumerStatefulWidget {
   const InitializationScreen({super.key});
@@ -133,7 +134,9 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                         padding: const EdgeInsets.all(15),
                         elevation: 10,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go("/profile_setting");
+                      },
                       child: Text(
                         "다음으로",
                         style: Theme.of(context).textTheme.titleLarge,
