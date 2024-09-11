@@ -40,7 +40,9 @@ class MainScreen extends StatelessWidget {
             Icons.home_outlined,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            context.go("/main/my_page");
+          },
         ),
       ),
       body: ListView.builder(

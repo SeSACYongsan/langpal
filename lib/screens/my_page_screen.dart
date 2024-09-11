@@ -14,10 +14,6 @@ class MyPageScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
