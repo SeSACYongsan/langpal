@@ -61,12 +61,9 @@ class SignInScreen extends StatelessWidget {
                             "assets/images/google_logo.png",
                             width: 30,
                           ),
-                          label: const Text(
+                          label: Text(
                             "SIGN IN WITH GOOGLE",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                       ),
@@ -88,12 +85,9 @@ class SignInScreen extends StatelessWidget {
                             "assets/images/apple_logo.png",
                             width: 30,
                           ),
-                          label: const Text(
+                          label: Text(
                             "SIGN IN WITH APPLE",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                       ),
