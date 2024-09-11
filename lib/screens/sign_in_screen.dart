@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -49,7 +50,9 @@ class SignInScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go("/initialization");
+                          },
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
                             padding: const EdgeInsets.symmetric(vertical: 15),
@@ -74,7 +77,9 @@ class SignInScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.go("/initialization");
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             elevation: 10,
