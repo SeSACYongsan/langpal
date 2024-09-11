@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/language.dart';
+import 'package:langpal/models/level.dart';
 import 'package:langpal/providers/firstLanguageProvider.dart';
+import 'package:langpal/providers/levelProvider.dart';
 import 'package:langpal/providers/targetLanguageProvider.dart';
 
 class InitializationScreen extends ConsumerStatefulWidget {
@@ -14,12 +16,14 @@ class InitializationScreen extends ConsumerStatefulWidget {
 class _InitializationScreenState extends ConsumerState<InitializationScreen> {
   final firstLanguageTextEditingController = TextEditingController();
   final targetLanguageTextEditingController = TextEditingController();
+  final levelTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     firstLanguageTextEditingController.text =
         ref.watch(firstLanguageProvider).toKoreanName();
     targetLanguageTextEditingController.text =
         ref.watch(targetLanguageProvider).toKoreanName();
+    levelTextEditingController.text = ref.watch(levelProvider).toKoreanName();
     return Scaffold(
       body: Stack(
         children: [
@@ -108,16 +112,17 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                         ),
                         Center(
                           child: DropdownMenu(
-                            onSelected: (value) {},
+                            controller: levelTextEditingController,
+                            onSelected: (value) {
+                              ref.read(levelProvider.notifier).setLevel(value!);
+                            },
                             requestFocusOnTap: true,
                             inputDecorationTheme: const InputDecorationTheme(),
                             width: 200,
-                            dropdownMenuEntries: const [
-                              DropdownMenuEntry(value: "Beginner", label: "초급"),
-                              DropdownMenuEntry(
-                                  value: "Intermediate", label: "중급"),
-                              DropdownMenuEntry(value: "Advanced", label: "고급")
-                            ],
+                            dropdownMenuEntries: Level.values.map((level) {
+                              return DropdownMenuEntry(
+                                  value: level, label: level.toKoreanName());
+                            }).toList(),
                           ),
                         ),
                       ],
@@ -154,6 +159,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
   void dispose() {
     firstLanguageTextEditingController.dispose();
     targetLanguageTextEditingController.dispose();
+    levelTextEditingController.dispose();
     super.dispose();
   }
 }
