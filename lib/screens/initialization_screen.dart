@@ -107,34 +107,35 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         Center(
-                            child: SegmentedButton<Level>(
-                          segments: [
-                            ButtonSegment(
-                              value: Level.beginner,
-                              label: Text(
-                                Level.beginner.toKoreanName(),
+                          child: SegmentedButton<Level>(
+                            segments: [
+                              ButtonSegment(
+                                value: Level.beginner,
+                                label: Text(
+                                  Level.beginner.toKoreanName(),
+                                ),
                               ),
-                            ),
-                            ButtonSegment(
-                              value: Level.intermediate,
-                              label: Text(
-                                Level.intermediate.toKoreanName(),
+                              ButtonSegment(
+                                value: Level.intermediate,
+                                label: Text(
+                                  Level.intermediate.toKoreanName(),
+                                ),
                               ),
-                            ),
-                            ButtonSegment(
-                              value: Level.advanced,
-                              label: Text(
-                                Level.advanced.toKoreanName(),
-                              ),
-                            )
-                          ],
-                          onSelectionChanged: (value) {
-                            ref
-                                .read(levelProvider.notifier)
-                                .setLevel(value.first);
-                          },
-                          selected: {currentLevel},
-                        )),
+                              ButtonSegment(
+                                value: Level.advanced,
+                                label: Text(
+                                  Level.advanced.toKoreanName(),
+                                ),
+                              )
+                            ],
+                            onSelectionChanged: (value) {
+                              ref
+                                  .read(levelProvider.notifier)
+                                  .setLevel(value.first);
+                            },
+                            selected: {currentLevel},
+                          ),
+                        ),
                       ],
                     ),
                   ),

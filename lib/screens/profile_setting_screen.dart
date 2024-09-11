@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/providers/username_provider.dart';
 
 class ProfileSettingScreen extends ConsumerStatefulWidget {
@@ -80,7 +81,9 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                       padding: const EdgeInsets.all(15),
                       elevation: 10,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go("/main");
+                    },
                     child: Text(
                       "다음으로",
                       style: Theme.of(context).textTheme.titleLarge,
