@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:langpal/screens/sign_in_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/router.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
-      home: SignInScreen(),
+    ProviderScope(
+      child: MaterialApp.router(
+        routerConfig: router,
+        title: "Langpal",
+      ),
     ),
   );
 }
