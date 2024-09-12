@@ -45,9 +45,15 @@ class NotificationsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(dummyNotifications[index].date.toString()),
+                Text(
+                  dummyNotifications[index].date.toString(),
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
                 const SizedBox(height: 10),
-                Text(dummyNotifications[index].content),
+                Text(
+                  dummyNotifications[index].content,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ],
             ),
           ),
