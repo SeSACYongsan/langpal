@@ -11,6 +11,7 @@ import 'package:langpal/screens/notifications_screen.dart';
 import 'package:langpal/screens/profile_setting_screen.dart';
 import 'package:langpal/screens/question_detail_screen.dart';
 import 'package:langpal/screens/sign_in_screen.dart';
+import 'package:langpal/screens/subscription_plans_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -63,6 +64,10 @@ final router = GoRouter(
                   builder: (context, state) => const MyAnswerDetailScreen(),
                 ),
               ],
+            ),
+            GoRoute(
+              path: "subscription",
+              builder: (context, state) => const SubscriptionPlansScreen(),
             ),
           ],
         ),

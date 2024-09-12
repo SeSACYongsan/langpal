@@ -85,7 +85,9 @@ class MyPageScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go("/main/my_page/subscription");
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
