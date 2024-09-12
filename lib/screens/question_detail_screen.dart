@@ -31,8 +31,14 @@ class QuestionDetailScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(dummyQuestions.first.owner),
-                      const Text("한국어 수준: 초급"),
+                      Text(
+                        dummyQuestions.first.owner,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        "한국어 수준: 초급",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ],
                   )
                 ],
@@ -51,7 +57,10 @@ class QuestionDetailScreen extends StatelessWidget {
                         color: Colors.black12)
                   ],
                 ),
-                child: Text(dummyQuestions.first.content),
+                child: Text(
+                  dummyQuestions.first.content,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ),
               const SizedBox(height: 30),
               ClipRRect(
@@ -101,11 +110,11 @@ class QuestionDetailScreen extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () {},
-                  child: const Text(
+                  child: Text(
                     "제출하기",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.white,
+                        ),
                   ),
                 ),
               ),
