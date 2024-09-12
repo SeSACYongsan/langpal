@@ -13,6 +13,15 @@ class QuestionDetailScreen extends StatelessWidget {
           "답변하기",
           style: TextStyle(color: Colors.white),
         ),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
