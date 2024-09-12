@@ -59,7 +59,9 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                 child: TextField(
                   controller: newQuestionTextEditingController,
                   decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: "질문을 입력하세요"),
+                    border: InputBorder.none,
+                    hintText: "질문을 입력하세요",
+                  ),
                   keyboardType: TextInputType.text,
                   maxLines: 8,
                   onChanged: (value) {
@@ -70,7 +72,10 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  const Text("0"),
+                  Text(
+                    "0",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   Expanded(
                     child: Slider(
                       value: ref.watch(pointSliderProvider),
@@ -85,7 +90,10 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                       },
                     ),
                   ),
-                  const Text("100"),
+                  Text(
+                    "100",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ],
               ),
               const Spacer(),
@@ -100,11 +108,11 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                   elevation: 10,
                 ),
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   "등록",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white,
+                      ),
                 ),
               ),
             ],
