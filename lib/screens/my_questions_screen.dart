@@ -14,10 +14,6 @@ class MyQuestionsScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -38,12 +34,21 @@ class MyQuestionsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text("2024-07-31 15:14"),
-                      Text("Break a leg"),
-                      Text("무슨 뜻인가요?"),
+                      Text(
+                        "2024-07-31 15:14",
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      Text(
+                        "Break a leg",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        "무슨 뜻인가요?",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ],
                   ),
                 ),
