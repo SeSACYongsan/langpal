@@ -14,10 +14,6 @@ class MyQuestionDetailScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
