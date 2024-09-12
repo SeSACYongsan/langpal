@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyAnswersScreen extends StatelessWidget {
   const MyAnswersScreen({super.key});
@@ -22,7 +23,9 @@ class MyAnswersScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.go("/main/my_page/my_answers/detail/wow");
+                },
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(

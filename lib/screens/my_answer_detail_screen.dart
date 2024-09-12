@@ -12,10 +12,6 @@ class MyAnswerDetailScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -38,20 +34,24 @@ class MyAnswerDetailScreen extends StatelessWidget {
                   ],
                   color: Colors.white,
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text("\"뉴진스 사랑해\""),
-                    Text("이 표현은 자연스럽나요?"),
+                    Text(
+                      "\"뉴진스 사랑해\"",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      "이 표현은 자연스럽나요?",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 "나의 답변",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
               Container(
@@ -68,7 +68,10 @@ class MyAnswerDetailScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                child: const Text("자연스러워요 ^^"),
+                child: Text(
+                  "자연스러워요 ^^",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
               const SizedBox(height: 30),
               OutlinedButton(
@@ -77,10 +80,7 @@ class MyAnswerDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(15),
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
+                  textStyle: Theme.of(context).textTheme.titleLarge,
                 ),
                 onPressed: () {},
                 child: const Text("수정하기"),
