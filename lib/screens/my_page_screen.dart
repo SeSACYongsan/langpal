@@ -27,26 +27,19 @@ class MyPageScreen extends StatelessWidget {
                   child: Image.asset("assets/images/profile.png"),
                 ),
                 const SizedBox(height: 30),
-                const Text(
+                Text(
                   "jinwookkim (일반 회원)",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
-                const Text(
+                Text(
                   "330 포인트",
-                  style: TextStyle(
-                    fontSize: 24,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
-                const Text(
+                Text(
                   "배우는 언어: 영어",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -60,11 +53,11 @@ class MyPageScreen extends StatelessWidget {
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(10),
                     elevation: 3,
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                    ),
+                    textStyle: Theme.of(context).textTheme.titleLarge,
                   ),
-                  label: const Text("나의 질문 보기"),
+                  label: const Text(
+                    "나의 질문 보기",
+                  ),
                   icon: const Icon(Icons.chevron_right),
                   iconAlignment: IconAlignment.end,
                 ),
@@ -79,9 +72,7 @@ class MyPageScreen extends StatelessWidget {
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(10),
                     elevation: 3,
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                    ),
+                    textStyle: Theme.of(context).textTheme.titleLarge,
                   ),
                   label: const Text("나의 답변 보기"),
                   icon: const Icon(Icons.chevron_right),
@@ -98,9 +89,7 @@ class MyPageScreen extends StatelessWidget {
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(10),
                     elevation: 3,
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                    ),
+                    textStyle: Theme.of(context).textTheme.titleLarge,
                   ),
                   label: const Text("프리미엄 구독"),
                   icon: const Icon(
