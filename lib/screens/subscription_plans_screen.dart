@@ -14,10 +14,6 @@ class SubscriptionPlansScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blue,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -25,11 +21,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 "구독 요금제 선택",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
               OutlinedButton.icon(
@@ -39,34 +33,24 @@ class SubscriptionPlansScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                label: const Column(
+                label: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       "월간",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
                       "* 매달 3,000 포인트 제공",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "* 질문 최상단 노출",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "₩5,900 / 월",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
@@ -82,34 +66,24 @@ class SubscriptionPlansScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                label: const Column(
+                label: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       "연간",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
                       "* 매달 4,000 포인트 제공",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "* 질문 최상단 노출",
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       "₩59,000 / 년",
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ],
                 ),
@@ -123,9 +97,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.all(15),
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
+                  textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Colors.white,
+                      ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
