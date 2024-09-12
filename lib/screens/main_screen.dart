@@ -6,7 +6,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(//todo: Scaffold속성은 주로 appbar-> body->floadtingAction 순서로 배치합니다.
         onPressed: () {},
         backgroundColor: Colors.blue,
         shape: const CircleBorder(),

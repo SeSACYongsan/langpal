@@ -7,3 +7,9 @@ Langpal은 서로가 서로의 모국어를 첨삭해주는 서비스입니다. 
 flutter pub get
 flutter run
 ```
+
+## JH comment
+README를 좀더 작성하면 좋겠네요. 만들어진 화면을 추가해도 좋고, 기획의도를 설명해도 좋고요. 
+
+질문/답변에서 공통되게 사용되는 interface가 많은데 이를 component로 만들면 좋겠어요. 
+

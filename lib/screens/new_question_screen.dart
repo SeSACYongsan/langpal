@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langpal/models/question_type.dart';
 
+//todo: 이 페이지에서 keyboard up되었을때 overflow발생합니다. 
 class NewQuestionScreen extends StatelessWidget {
   const NewQuestionScreen({super.key});
   @override
@@ -29,7 +30,7 @@ class NewQuestionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const DropdownMenu(
+              const DropdownMenu( //todo : dropdown button을 좀 더 이쁜 패키지를 찾아보면 좋겠어요.
                 initialSelection: QuestionType.isNatural,
                 expandedInsets: EdgeInsets.zero,
                 dropdownMenuEntries: [

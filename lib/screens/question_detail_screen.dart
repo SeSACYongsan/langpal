@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:langpal/models/dummy_questions.dart';
 
+
+//todo: 제출하기 보다는 답변하기, 작성하기, 이런 말이 더 친근한것 같습니다. 
 class QuestionDetailScreen extends StatelessWidget {
   const QuestionDetailScreen({super.key});
   @override

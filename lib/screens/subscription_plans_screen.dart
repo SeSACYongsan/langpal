@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
+//todo: RenenueCat, Adapty 라는 서비스가 있어요. 비슷한 서비스 다른것도 있으니 참고하세요. 
 class SubscriptionPlansScreen extends StatelessWidget {
   const SubscriptionPlansScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white,//todo: Theme로 접근하면 좋을듯.
       appBar: AppBar(
         title: const Text(
           "프리미엄 구독",
@@ -13,7 +13,7 @@ class SubscriptionPlansScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue,//todo: Theme로 접근하면 좋을듯. 
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () {},

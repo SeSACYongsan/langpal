@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//todo : 세개의 선택사항이 모두 dropdown이어야 하나요? 반복되니 조금 지루하네요.  구사수준은 togglebutton으로도 가능해보여요.
 class InitializationScreen extends StatelessWidget {
   const InitializationScreen({super.key});
   @override

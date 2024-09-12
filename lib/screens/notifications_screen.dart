@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langpal/models/dummy_notifications.dart';
 
+//todo: datetime 값이 모두 나올 필요는 없어보입니다. 시간 또는 분 정도까지만 나오면 좋겠어요.
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
   @override

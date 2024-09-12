@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//todo: 프리미엄 구독 취소는 어디서??
+//todo: billing history못 보나요?
+//todo: button background 색상이라도 좀 바꿔보면 덜 지루할것 같아요.
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({super.key});
   @override
