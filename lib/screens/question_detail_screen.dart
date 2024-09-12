@@ -120,7 +120,7 @@ class QuestionDetailScreen extends StatelessWidget {
                   ),
                   onPressed: () {},
                   child: Text(
-                    "제출하기",
+                    "답변하기",
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Colors.white,
                         ),

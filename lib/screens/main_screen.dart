@@ -7,17 +7,6 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.go("/main/new_question");
-        },
-        backgroundColor: Colors.blue,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.edit,
-          color: Colors.white,
-        ),
-      ),
       appBar: AppBar(
         title: const Text(
           "답변하기",
@@ -109,6 +98,17 @@ class MainScreen extends StatelessWidget {
         itemCount: dummyQuestions.length,
       ),
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go("/main/new_question");
+        },
+        backgroundColor: Colors.blue,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.edit,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

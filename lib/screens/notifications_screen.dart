@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:langpal/models/dummy_notifications.dart';
+
+final dateFormatter = DateFormat.Hm();
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -55,7 +58,7 @@ class NotificationsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  dummyNotifications[index].date.toString(),
+                  dateFormatter.format(dummyNotifications[index].date),
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const SizedBox(height: 10),
