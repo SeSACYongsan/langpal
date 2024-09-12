@@ -33,20 +33,24 @@ class MyQuestionDetailScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text("Break a leg"),
-                    Text("무슨 뜻인가요?"),
+                    Text(
+                      "Break a leg",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      "무슨 뜻인가요?",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 "답변",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 20),
               Row(
@@ -70,11 +74,9 @@ class MyQuestionDetailScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const Text(
+                            Text(
                               "ashley",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
                         ),
@@ -91,107 +93,10 @@ class MyQuestionDetailScreen extends StatelessWidget {
                             ],
                           ),
                           padding: const EdgeInsets.all(20),
-                          child: const Text("It means, Good luck in English"),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.check_box_outline_blank),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.asset(
-                                "assets/images/profile.png",
-                                width: 70,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              "ashley",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(5, 5),
-                                color: Colors.black12,
-                              ),
-                            ],
+                          child: Text(
+                            "It means, Good luck in English",
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          padding: const EdgeInsets.all(20),
-                          child: const Text("It means, Good luck in English"),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.check_box_outline_blank),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.asset(
-                                "assets/images/profile.png",
-                                width: 70,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Text(
-                              "ashley",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(5, 5),
-                                color: Colors.black12,
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.all(20),
-                          child: const Text("It means, Good luck in English"),
                         ),
                       ],
                     ),
