@@ -58,19 +58,24 @@ class MyPageScreen extends StatelessWidget {
                     context.go("/main/my_page/my_questions");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    foregroundColor: Colors.black,
+                    foregroundColor: Colors.white,
                     padding: const EdgeInsets.all(10),
                     elevation: 3,
-                    textStyle: Theme.of(context).textTheme.titleLarge,
+                    textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.white,
+                        ),
                   ),
                   label: const Text(
                     "나의 질문 보기",
                   ),
-                  icon: const Icon(Icons.chevron_right),
+                  icon: const Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  ),
                   iconAlignment: IconAlignment.end,
                 ),
                 const SizedBox(height: 10),
@@ -79,17 +84,22 @@ class MyPageScreen extends StatelessWidget {
                     context.go("/main/my_page/my_answers");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(10),
+                    foregroundColor: Colors.white,
                     elevation: 3,
-                    textStyle: Theme.of(context).textTheme.titleLarge,
+                    textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.white,
+                        ),
                   ),
                   label: const Text("나의 답변 보기"),
-                  icon: const Icon(Icons.chevron_right),
+                  icon: const Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  ),
                   iconAlignment: IconAlignment.end,
                 ),
                 const SizedBox(height: 10),
@@ -98,14 +108,16 @@ class MyPageScreen extends StatelessWidget {
                     context.go("/main/my_page/subscription");
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    foregroundColor: Colors.black,
                     padding: const EdgeInsets.all(10),
+                    foregroundColor: Colors.white,
                     elevation: 3,
-                    textStyle: Theme.of(context).textTheme.titleLarge,
+                    textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.white,
+                        ),
                   ),
                   label: const Text("프리미엄 구독"),
                   icon: const Icon(
