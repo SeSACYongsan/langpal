@@ -126,6 +126,13 @@ class MyPageScreen extends StatelessWidget {
                   ),
                   iconAlignment: IconAlignment.end,
                 ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "구독 취소",
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                )
               ],
             ),
           ),
