@@ -37,6 +37,7 @@ dependencies:
     go_router:
     flutter_riverpod:
     intl:
+    dropdown_button2:
 dev_dependencies:
     flutter_test:
         sdk: flutter

@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
@@ -46,18 +47,24 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                DropdownMenu(
-                  onSelected: (value) {
+                DropdownButton2(
+                  dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
+                  ),
+                  value: ref.watch(questionTypeProvider),
+                  onChanged: (value) {
                     ref
                         .read(questionTypeProvider.notifier)
                         .setQuestionType(value!);
                   },
-                  expandedInsets: EdgeInsets.zero,
-                  controller: questionTypeTextEditingController,
-                  dropdownMenuEntries: QuestionType.values.map((questionType) {
-                    return DropdownMenuEntry(
+                  isExpanded: true,
+                  items: QuestionType.values.map((questionType) {
+                    return DropdownMenuItem<QuestionType>(
                         value: questionType,
-                        label: questionType.toKoreanName());
+                        child: Text(questionType.toKoreanName()));
                   }).toList(),
                 ),
                 const SizedBox(height: 20),
