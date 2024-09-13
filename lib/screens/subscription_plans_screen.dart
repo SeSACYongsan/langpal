@@ -114,7 +114,7 @@ class SubscriptionPlansScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {},
-                child: const Text("다음으로"),
+                child: const Text("구독"),
               ),
             ],
           ),
