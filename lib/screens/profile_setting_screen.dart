@@ -23,73 +23,75 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          offset: Offset(5, 5),
-                          color: Colors.black12,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(100),
-                            elevation: 5,
-                            shape: const CircleBorder(),
+          SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(5, 5),
+                            color: Colors.black12,
                           ),
-                          onPressed: () {},
-                          child: Text(
-                            "프로필 사진",
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(90),
+                              elevation: 5,
+                              shape: const CircleBorder(),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "프로필 사진",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Text(
+                            "닉네임 입력",
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
-                        ),
-                        const SizedBox(height: 30),
-                        Text(
-                          "닉네임 입력",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: TextField(
-                            onChanged: (value) {
-                              ref
-                                  .read(usernameProvider.notifier)
-                                  .setUsername(value);
-                            },
-                            keyboardType: TextInputType.name,
-                            controller: usernameTextEditingController,
+                          SizedBox(
+                            width: 200,
+                            child: TextField(
+                              onChanged: (value) {
+                                ref
+                                    .read(usernameProvider.notifier)
+                                    .setUsername(value);
+                              },
+                              keyboardType: TextInputType.name,
+                              controller: usernameTextEditingController,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(15),
-                      elevation: 10,
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(15),
+                        elevation: 10,
+                      ),
+                      onPressed: () {
+                        context.go("/main");
+                      },
+                      child: Text(
+                        "다음으로",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
                     ),
-                    onPressed: () {
-                      context.go("/main");
-                    },
-                    child: Text(
-                      "다음으로",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

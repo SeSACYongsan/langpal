@@ -126,6 +126,7 @@ class MyPageScreen extends StatelessWidget {
                   ),
                   iconAlignment: IconAlignment.end,
                 ),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {},
                   child: Text(
