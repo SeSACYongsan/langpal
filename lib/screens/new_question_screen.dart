@@ -20,6 +20,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     questionTypeTextEditingController.text =
         ref.watch(questionTypeProvider).toKoreanName();
     newQuestionTextEditingController.text = ref.watch(newQuestionProvider);
+    final currentPoint = ref.watch(pointSliderProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -88,6 +89,11 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                Text(
+                  currentPoint.toStringAsFixed(0),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 Row(
                   children: [
                     Text(

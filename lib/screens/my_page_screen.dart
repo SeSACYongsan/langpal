@@ -131,9 +131,11 @@ class MyPageScreen extends StatelessWidget {
                   onPressed: () {},
                   child: Text(
                     "구독 취소",
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          decoration: TextDecoration.underline,
+                        ),
                   ),
-                )
+                ),
               ],
             ),
           ),
