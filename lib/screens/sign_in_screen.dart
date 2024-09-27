@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -107,5 +108,16 @@ class SignInScreen extends StatelessWidget {
   Future<void> signInWithGoogle(BuildContext context) async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();
+    if (account != null) {
+      final authentication = await account.authentication;
+      final googleCredential = GoogleAuthProvider.credential(
+          idToken: authentication.idToken,
+          accessToken: authentication.accessToken);
+      final credential =
+          await FirebaseAuth.instance.signInWithCredential(googleCredential);
+      if (credential.user != null) {
+        print(credential.user);
+      }
+    }
   }
 }
