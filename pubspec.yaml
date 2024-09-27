@@ -38,6 +38,7 @@ dependencies:
     flutter_riverpod:
     intl:
     dropdown_button2:
+    firebase_core:
 dev_dependencies:
     flutter_test:
         sdk: flutter

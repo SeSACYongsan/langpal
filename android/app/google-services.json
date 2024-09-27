@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1014948941775",
+    "project_id": "langpal-4d0bc",
+    "storage_bucket": "langpal-4d0bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014948941775:android:84b4d88e6d65ec3a364cba",
+        "android_client_info": {
+          "package_name": "com.jinwookkim.langpal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPwBXarEu1MU9wqH5hpCjy0cYix3iPDF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
