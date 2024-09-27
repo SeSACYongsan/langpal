@@ -12,7 +12,20 @@
           "package_name": "com.jinwookkim.langpal"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1014948941775-80m16h5feb02pb43bfd4vs011gpvervr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jinwookkim.langpal",
+            "certificate_hash": "7225df321f9e7ceb2af88cc6495f023aeb3a7e6e"
+          }
+        },
+        {
+          "client_id": "1014948941775-f5mpnhmaus73d56cbj9l05jgar360auv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDPwBXarEu1MU9wqH5hpCjy0cYix3iPDF0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014948941775-f5mpnhmaus73d56cbj9l05jgar360auv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1014948941775-fkk7mtaii09s964ptgbgsev58ubimc1u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jinwookkim.langpal"
+              }
+            }
+          ]
         }
       }
     }

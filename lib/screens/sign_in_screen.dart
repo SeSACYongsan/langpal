@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -51,7 +52,7 @@ class SignInScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            context.go("/initialization");
+                            signInWithGoogle(context);
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
@@ -101,5 +102,10 @@ class SignInScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    final googleSignIn = GoogleSignIn();
+    final account = await googleSignIn.signIn();
   }
 }
