@@ -19,7 +19,7 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
     state = user;
   }
 
-  Future<void> signInWithGoogle() async {
+  Future<bool> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();
     if (account != null) {
@@ -39,7 +39,9 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
           emailAddress: emailAddress,
         );
         state = user;
+        return true;
       }
     }
+    return false;
   }
 }

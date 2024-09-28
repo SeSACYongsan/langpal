@@ -52,10 +52,13 @@ class SignInScreen extends ConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
-                          onPressed: () {
-                            ref
+                          onPressed: () async {
+                            final hasSignInSucceeded = await ref
                                 .read(currentUserProvider.notifier)
                                 .signInWithGoogle();
+                            if (hasSignInSucceeded) {
+                              context.go("/initialization");
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
