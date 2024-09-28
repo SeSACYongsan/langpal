@@ -42,9 +42,9 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         state = user;
         final firestoreInstance = FirebaseFirestore.instance;
         await firestoreInstance.collection("users").doc().set({
-          userID: userID,
-          displayName: displayName,
-          emailAddress: emailAddress,
+          "userID": userID,
+          "displayName": displayName,
+          "emailAddress": emailAddress,
         });
         return true;
       }
