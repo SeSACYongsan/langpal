@@ -8,6 +8,7 @@ class SignInScreen extends ConsumerWidget {
   const SignInScreen({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserProvider);
     return Scaffold(
       body: Stack(
         children: [

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:langpal/models/user.dart';
+import 'package:langpal/models/langpal_user.dart';
 
 final currentUserProvider = NotifierProvider<CurrentUserNotifier, LangpalUser?>(
   () {
@@ -34,9 +34,10 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         final emailAddress = credential.user!.email!;
         final userID = credential.user!.uid;
         final user = LangpalUser(
-            userID: userID,
-            displayName: displayName,
-            emailAddress: emailAddress);
+          userID: userID,
+          displayName: displayName,
+          emailAddress: emailAddress,
+        );
         state = user;
       }
     }
