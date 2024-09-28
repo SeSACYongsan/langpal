@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,6 +40,12 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
           emailAddress: emailAddress,
         );
         state = user;
+        final firestoreInstance = FirebaseFirestore.instance;
+        await firestoreInstance.collection("users").doc().set({
+          userID: userID,
+          displayName: displayName,
+          emailAddress: emailAddress,
+        });
         return true;
       }
     }
