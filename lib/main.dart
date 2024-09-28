@@ -1,21 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/app.dart';
 import 'package:langpal/firebase_options.dart';
-import 'package:langpal/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    ProviderScope(
-      child: MaterialApp.router(
-        routerConfig: router,
-        title: "Langpal",
-        theme: ThemeData(
-          fontFamily: "CookieRun",
-        ),
-      ),
+    const ProviderScope(
+      child: App(),
     ),
   );
 }
