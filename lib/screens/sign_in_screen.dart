@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends ConsumerWidget {
   const SignInScreen({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Stack(
         children: [
@@ -53,7 +53,9 @@ class SignInScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            signInWithGoogle(context);
+                            ref
+                                .read(currentUserProvider.notifier)
+                                .signInWithGoogle();
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
@@ -103,21 +105,5 @@ class SignInScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> signInWithGoogle(BuildContext context) async {
-    final googleSignIn = GoogleSignIn();
-    final account = await googleSignIn.signIn();
-    if (account != null) {
-      final authentication = await account.authentication;
-      final googleCredential = GoogleAuthProvider.credential(
-          idToken: authentication.idToken,
-          accessToken: authentication.accessToken);
-      final credential =
-          await FirebaseAuth.instance.signInWithCredential(googleCredential);
-      if (credential.user != null) {
-        print(credential.user);
-      }
-    }
   }
 }
