@@ -59,6 +59,17 @@ class SignInScreen extends ConsumerWidget {
                                 .signInWithGoogle();
                             switch (signInStatus) {
                               case SignInStatus.signInFailed:
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        icon: Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                        ),
+                                        title: Text("로그인에 실패하였습니다."),
+                                      );
+                                    });
                                 break;
                               case SignInStatus.userNotExist:
                                 context.go("/initialization");

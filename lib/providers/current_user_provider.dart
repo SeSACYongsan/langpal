@@ -46,8 +46,9 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
     if (account != null) {
       final authentication = await account.authentication;
       final googleCredential = GoogleAuthProvider.credential(
-          idToken: authentication.idToken,
-          accessToken: authentication.accessToken);
+        idToken: authentication.idToken,
+        accessToken: authentication.accessToken,
+      );
       final credential =
           await FirebaseAuth.instance.signInWithCredential(googleCredential);
       if (credential.user != null) {
