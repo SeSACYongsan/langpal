@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/username_provider.dart';
 
 class ProfileSettingScreen extends ConsumerStatefulWidget {
@@ -83,6 +84,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                         elevation: 10,
                       ),
                       onPressed: () {
+                        ref.read(currentUserProvider.notifier).addToFirestore();
                         context.go("/main");
                       },
                       child: Text(

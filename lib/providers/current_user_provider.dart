@@ -4,6 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/sign_in_status.dart';
+import 'package:langpal/providers/first_language_provider.dart';
+import 'package:langpal/providers/level_provider.dart';
+import 'package:langpal/providers/target_language_provider.dart';
+import 'package:langpal/providers/username_provider.dart';
 
 final currentUserProvider = NotifierProvider<CurrentUserNotifier, LangpalUser?>(
   () {
@@ -12,13 +16,28 @@ final currentUserProvider = NotifierProvider<CurrentUserNotifier, LangpalUser?>(
 );
 
 class CurrentUserNotifier extends Notifier<LangpalUser?> {
+  void addToFirestore() async {
+    final firstLanguage = ref.read(firstLanguageProvider);
+    final targetLanguage = ref.read(targetLanguageProvider);
+    final level = ref.read(levelProvider);
+    final username = ref.read(usernameProvider);
+    final firestoreInstance = FirebaseFirestore.instance;
+    final users = firestoreInstance.collection("users");
+    final userRef = users.doc(state!.userID);
+    await userRef.set({
+      "displayName": state!.displayName,
+      "emailAddress": state!.emailAddress,
+      "userID": state!.userID,
+      "firstLanguage": firstLanguage.name,
+      "targetLanguage": targetLanguage.name,
+      "level": level.name,
+      "username": username,
+    });
+  }
+
   @override
   build() {
     return null;
-  }
-
-  void setUser(LangpalUser user) {
-    state = user;
   }
 
   Future<SignInStatus> signInWithGoogle() async {
@@ -49,6 +68,11 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
           }
         } else {
           print("The snapshot doesn't exist");
+          final user = LangpalUser(
+              userID: userID,
+              displayName: displayName,
+              emailAddress: emailAddress);
+          state = user;
           return SignInStatus.userNotExist;
         }
       } else {
