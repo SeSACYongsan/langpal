@@ -62,6 +62,11 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         if (snapshot.exists) {
           if (snapshot.data() != null) {
             print("The snapshot data exists");
+            final user = LangpalUser(
+                userID: userID,
+                displayName: displayName,
+                emailAddress: emailAddress);
+            state = user;
             return SignInStatus.userExist;
           } else {
             print("The snapshot data doesn't exist");
