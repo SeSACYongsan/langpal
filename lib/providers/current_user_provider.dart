@@ -49,7 +49,7 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
           }
         } else {
           print("The snapshot doesn't exist");
-          return SignInStatus.signInFailed;
+          return SignInStatus.userNotExist;
         }
       } else {
         print("The credential user is null");
