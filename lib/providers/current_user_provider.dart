@@ -38,29 +38,26 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         final firestoreInstance = FirebaseFirestore.instance;
         final users = firestoreInstance.collection("users");
         final userRef = users.doc(userID);
-        userRef.get().then((snapshot) {
-          if (snapshot.exists) {
-            print("The user exists");
-            print(snapshot.data());
+        final snapshot = await userRef.get();
+        if (snapshot.exists) {
+          if (snapshot.data() != null) {
+            print("The snapshot data exists");
             return SignInStatus.userExist;
           } else {
-            print("The user does not exist.");
-            userRef.set({
-              "userID": userID,
-              "displayName": displayName,
-              "emailAddress": emailAddress,
-            });
-            return SignInStatus.userNotExist;
+            print("The snapshot data doesn't exist");
+            return SignInStatus.signInFailed;
           }
-        }, onError: (error) {
-          print("Error: $error");
-        });
+        } else {
+          print("The snapshot doesn't exist");
+          return SignInStatus.signInFailed;
+        }
       } else {
+        print("The credential user is null");
         return SignInStatus.signInFailed;
       }
     } else {
+      print("The account is null");
       return SignInStatus.signInFailed;
     }
-    return SignInStatus.signInFailed;
   }
 }

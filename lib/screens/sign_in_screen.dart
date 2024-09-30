@@ -63,6 +63,7 @@ class SignInScreen extends ConsumerWidget {
                               case SignInStatus.userNotExist:
                                 break;
                               case SignInStatus.userExist:
+                                context.go("/initialization");
                                 break;
                             }
                           },
