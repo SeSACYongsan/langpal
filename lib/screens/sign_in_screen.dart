@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 
 class SignInScreen extends ConsumerWidget {
@@ -53,11 +54,16 @@ class SignInScreen extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
                           onPressed: () async {
-                            final hasSignInSucceeded = await ref
+                            final signInStatus = await ref
                                 .read(currentUserProvider.notifier)
                                 .signInWithGoogle();
-                            if (hasSignInSucceeded) {
-                              context.go("/initialization");
+                            switch (signInStatus) {
+                              case SignInStatus.signInFailed:
+                                break;
+                              case SignInStatus.userNotExist:
+                                break;
+                              case SignInStatus.userExist:
+                                break;
                             }
                           },
                           style: ElevatedButton.styleFrom(

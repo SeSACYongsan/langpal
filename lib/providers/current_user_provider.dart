@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langpal/models/langpal_user.dart';
+import 'package:langpal/models/sign_in_status.dart';
 
 final currentUserProvider = NotifierProvider<CurrentUserNotifier, LangpalUser?>(
   () {
@@ -20,7 +21,7 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
     state = user;
   }
 
-  Future<bool> signInWithGoogle() async {
+  Future<SignInStatus> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();
     if (account != null) {
@@ -34,21 +35,32 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         final displayName = credential.user!.displayName!;
         final emailAddress = credential.user!.email!;
         final userID = credential.user!.uid;
-        final user = LangpalUser(
-          userID: userID,
-          displayName: displayName,
-          emailAddress: emailAddress,
-        );
-        state = user;
         final firestoreInstance = FirebaseFirestore.instance;
-        await firestoreInstance.collection("users").doc().set({
-          "userID": userID,
-          "displayName": displayName,
-          "emailAddress": emailAddress,
+        final users = firestoreInstance.collection("users");
+        final userRef = users.doc(userID);
+        userRef.get().then((snapshot) {
+          if (snapshot.exists) {
+            print("The user exists");
+            print(snapshot.data());
+            return SignInStatus.userExist;
+          } else {
+            print("The user does not exist.");
+            userRef.set({
+              "userID": userID,
+              "displayName": displayName,
+              "emailAddress": emailAddress,
+            });
+            return SignInStatus.userNotExist;
+          }
+        }, onError: (error) {
+          print("Error: $error");
         });
-        return true;
+      } else {
+        return SignInStatus.signInFailed;
       }
+    } else {
+      return SignInStatus.signInFailed;
     }
-    return false;
+    return SignInStatus.signInFailed;
   }
 }
