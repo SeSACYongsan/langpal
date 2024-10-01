@@ -2,20 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/providers/first_language_provider.dart';
 import 'package:langpal/providers/level_provider.dart';
 import 'package:langpal/providers/target_language_provider.dart';
+import 'package:langpal/providers/temp_user_provider.dart';
 import 'package:langpal/providers/username_provider.dart';
 
-final currentUserProvider = NotifierProvider<CurrentUserNotifier, LangpalUser?>(
+final currentUserProvider = NotifierProvider<CurrentUserNotifier, String?>(
   () {
     return CurrentUserNotifier();
   },
 );
 
-class CurrentUserNotifier extends Notifier<LangpalUser?> {
+class CurrentUserNotifier extends Notifier<String?> {
   void addToFirestore() async {
     final firstLanguage = ref.read(firstLanguageProvider);
     final targetLanguage = ref.read(targetLanguageProvider);
@@ -23,11 +23,15 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
     final username = ref.read(usernameProvider);
     final firestoreInstance = FirebaseFirestore.instance;
     final users = firestoreInstance.collection("users");
-    final userRef = users.doc(state!.userID);
+    final displayName = ref.read(tempUserProvider)!["displayName"];
+    final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
+    final userID = ref.read(tempUserProvider)!["userID"];
+    final userRef = users.doc(userID);
+    state = userID;
     await userRef.set({
-      "displayName": state!.displayName,
-      "emailAddress": state!.emailAddress,
-      "userID": state!.userID,
+      "displayName": displayName,
+      "emailAddress": emailAddress,
+      "userID": userID,
       "firstLanguage": firstLanguage.name,
       "targetLanguage": targetLanguage.name,
       "level": level.name,
@@ -52,8 +56,6 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
       final credential =
           await FirebaseAuth.instance.signInWithCredential(googleCredential);
       if (credential.user != null) {
-        final displayName = credential.user!.displayName!;
-        final emailAddress = credential.user!.email!;
         final userID = credential.user!.uid;
         final firestoreInstance = FirebaseFirestore.instance;
         final users = firestoreInstance.collection("users");
@@ -62,11 +64,7 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
         if (snapshot.exists) {
           if (snapshot.data() != null) {
             print("The snapshot data exists");
-            final user = LangpalUser(
-                userID: userID,
-                displayName: displayName,
-                emailAddress: emailAddress);
-            state = user;
+            state = userID;
             return SignInStatus.userExist;
           } else {
             print("The snapshot data doesn't exist");
@@ -74,11 +72,14 @@ class CurrentUserNotifier extends Notifier<LangpalUser?> {
           }
         } else {
           print("The snapshot doesn't exist");
-          final user = LangpalUser(
-              userID: userID,
-              displayName: displayName,
-              emailAddress: emailAddress);
-          state = user;
+          final displayName = credential.user!.displayName!;
+          final emailAddress = credential.user!.email!;
+          final userID = credential.user!.uid;
+          ref.read(tempUserProvider.notifier).setTempUser({
+            "displayName": displayName,
+            "emailAddress": emailAddress,
+            "userID": userID,
+          });
           return SignInStatus.userNotExist;
         }
       } else {
