@@ -27,14 +27,34 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
       final questionType = QuestionType.values.byName(questionTypeString);
       final content = data["content"] as String;
       final question = Question(
-          id: id,
-          ownerID: ownerID,
-          point: point,
-          questionType: questionType,
-          content: content);
+        id: id,
+        ownerID: ownerID,
+        point: point,
+        questionType: questionType,
+        content: content,
+      );
       return question;
     }).toList();
+
     return allQuestions;
+  }
+
+  List<String> getUsernames(List<Question> questions) {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final users = firestoreInstance.collection("users");
+    List<String> usernames = [];
+    Future.forEach(questions, (question) async {
+      final ownerID = question.ownerID;
+      final userRef = users.doc(ownerID);
+      final snapshot = await userRef.get();
+      if (snapshot.exists) {
+        final username = snapshot.data()!["username"] as String;
+        usernames.add(username);
+      } else {
+        usernames.add("Anonymous");
+      }
+    });
+    return usernames;
   }
 
   Future<void> saveQuestion(Question question) async {

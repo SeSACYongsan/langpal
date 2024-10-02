@@ -31,11 +31,12 @@ class QuestionNotifier extends FamilyAsyncNotifier<Question?, String> {
         final questionType = QuestionType.values.byName(questionTypeString);
         final content = data["content"] as String;
         final question = Question(
-            id: questionID,
-            ownerID: ownerID,
-            point: point,
-            questionType: questionType,
-            content: content);
+          id: questionID,
+          ownerID: ownerID,
+          point: point,
+          questionType: questionType,
+          content: content,
+        );
         return question;
       } else {
         print("The question snapshot is null");
