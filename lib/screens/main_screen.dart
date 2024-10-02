@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:langpal/models/dummy_questions.dart';
+import 'package:langpal/components/question_card.dart';
+import 'package:langpal/providers/questions_provider.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final questions = ref.watch(questionsProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -37,65 +40,9 @@ class MainScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset("assets/images/profile.png", width: 70),
-              ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    context.go("/main/detail/dummy");
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      boxShadow: const [
-                        BoxShadow(
-                          spreadRadius: 5,
-                          blurRadius: 5,
-                          offset: Offset(5, 5),
-                          color: Colors.black12,
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              dummyQuestions[index].owner,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              "${dummyQuestions[index].point.toString()}pt",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          dummyQuestions[index].content,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        itemCount: dummyQuestions.length,
+        itemBuilder: (context, index) =>
+            QuestionCard(question: questions[index]),
+        itemCount: questions.length,
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:langpal/models/dummy_questions.dart';
+import 'package:langpal/models/question.dart';
 
 class QuestionDetailScreen extends StatelessWidget {
-  const QuestionDetailScreen({super.key});
+  final Question question;
+  const QuestionDetailScreen({super.key, required this.question});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +42,7 @@ class QuestionDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dummyQuestions.first.owner,
+                        question.ownerID,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       Text(
@@ -67,7 +68,7 @@ class QuestionDetailScreen extends StatelessWidget {
                   ],
                 ),
                 child: Text(
-                  dummyQuestions.first.content,
+                  question.content,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
