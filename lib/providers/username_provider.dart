@@ -6,6 +6,7 @@ final usernameProvider = StateNotifierProvider<UsernameNotifier, String>(
 class UsernameNotifier extends StateNotifier<String> {
   UsernameNotifier() : super("");
   void setUsername(String string) {
-    state = string;
+    final regExp = RegExp("[^a-zA-Z0-9]");
+    state = string.replaceAll(regExp, "");
   }
 }
