@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
 import 'package:langpal/providers/current_user_provider.dart';
@@ -170,6 +171,14 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                           .saveQuestion(newQuestion)
                           .then((value) {
                         print("Succeeded to save the question");
+                        ref
+                            .read(questionTypeProvider.notifier)
+                            .setQuestionType(QuestionType.what);
+                        ref.read(newQuestionProvider.notifier).setString("");
+                        ref
+                            .read(pointSliderProvider.notifier)
+                            .initializePoint();
+                        context.go("/main");
                       }, onError: (error) {
                         print("Error: $error");
                       });
