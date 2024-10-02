@@ -140,6 +140,7 @@ class QuestionDetailScreen extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
+          print(error);
           return const ErrorScreen();
         },
         loading: () {

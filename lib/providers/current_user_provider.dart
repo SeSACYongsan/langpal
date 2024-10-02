@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:langpal/models/langpal_user.dart';
+import 'package:langpal/models/langpal_user_info.dart';
 import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/providers/first_language_provider.dart';
 import 'package:langpal/providers/level_provider.dart';
@@ -28,15 +30,19 @@ class CurrentUserNotifier extends Notifier<String?> {
     final userID = ref.read(tempUserProvider)!["userID"];
     final userRef = users.doc(userID);
     state = userID;
-    await userRef.set({
-      "displayName": displayName,
-      "emailAddress": emailAddress,
-      "userID": userID,
-      "firstLanguage": firstLanguage.name,
-      "targetLanguage": targetLanguage.name,
-      "level": level.name,
-      "username": username,
-    });
+    final info = LangpalUserInfo(
+      firstLanguage: firstLanguage,
+      targetLanguage: targetLanguage,
+      level: level,
+      username: username,
+    );
+    final user = LangpalUser(
+      displayName: displayName!,
+      userID: userID!,
+      emailAddress: emailAddress!,
+      info: info,
+    );
+    await userRef.set(user.toMap());
   }
 
   @override

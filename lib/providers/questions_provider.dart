@@ -61,13 +61,8 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");
     final questionRef = questions.doc(question.id);
-    await questionRef.set({
-      "id": question.id,
-      "ownerID": question.ownerID,
-      "point": question.point,
-      "questionType": question.questionType.name,
-      "content": question.content,
-    });
+
+    await questionRef.set(question.toMap());
     final data = state.value!;
     state = AsyncValue.data([...data, question]);
   }

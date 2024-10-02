@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
-import 'package:langpal/models/question_type.dart';
 
 final questionProvider =
     AsyncNotifierProvider.family<QuestionNotifier, Question?, String>(() {
@@ -25,18 +24,8 @@ class QuestionNotifier extends FamilyAsyncNotifier<Question?, String> {
     if (snapshot.exists) {
       if (snapshot.data() != null) {
         final data = snapshot.data()!;
-        final ownerID = data["ownerID"] as String;
-        final point = data["point"] as int;
-        final questionTypeString = data["questionType"] as String;
-        final questionType = QuestionType.values.byName(questionTypeString);
-        final content = data["content"] as String;
-        final question = Question(
-          id: questionID,
-          ownerID: ownerID,
-          point: point,
-          questionType: questionType,
-          content: content,
-        );
+        final question = Question.fromMap(data);
+        print(question);
         return question;
       } else {
         print("The question snapshot is null");
