@@ -17,16 +17,6 @@ class QuestionNotifier extends FamilyAsyncNotifier<Question?, String> {
     return question;
   }
 
-  Future<void> fetchQuestion(String questionID) async {
-    state = const AsyncLoading();
-    try {
-      final question = await getQuestionByID(questionID);
-      state = AsyncData(question);
-    } catch (error) {
-      state = AsyncError(error, StackTrace.current);
-    }
-  }
-
   Future<Question?> getQuestionByID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");

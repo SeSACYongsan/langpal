@@ -10,8 +10,9 @@ final questionsProvider =
 
 class QuestionsNotifier extends AsyncNotifier<List<Question>> {
   @override
-  Future<List<Question>> build() {
-    return getQuestions();
+  Future<List<Question>> build() async {
+    final questions = await getQuestions();
+    return questions;
   }
 
   Future<List<Question>> getQuestions() async {
