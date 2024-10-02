@@ -7,6 +7,10 @@ final questionTypeProvider =
 
 class QuestionTypeNotifier extends StateNotifier<QuestionType> {
   QuestionTypeNotifier() : super(QuestionType.what);
+  void initializeQuestionType() {
+    state = QuestionType.what;
+  }
+
   void setQuestionType(QuestionType questionType) {
     state = questionType;
   }

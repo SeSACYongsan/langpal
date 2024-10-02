@@ -148,36 +148,13 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                             );
                           });
                     } else {
-                      final userID = ref.read(currentUserProvider)!;
-                      final questionType = ref.read(questionTypeProvider);
-                      final content = newQuestionTextEditingController.text;
-                      final point = ref.read(pointSliderProvider).toInt();
-                      final firestoreInstance = FirebaseFirestore.instance;
-                      final userRef =
-                          firestoreInstance.collection("users").doc(userID);
-                      final snapshot = await userRef.get();
-                      final ownerName = snapshot.data()!["info"]["username"];
-                      const uuid = Uuid();
-                      final newQuestion = Question(
-                        id: uuid.v4(),
-                        ownerName: ownerName,
-                        ownerID: userID,
-                        questionType: questionType,
-                        content: content,
-                        point: point,
-                      );
+                      final newQuestion = await makeQuestion();
                       ref
                           .read(questionsProvider.notifier)
                           .saveQuestion(newQuestion)
                           .then((value) {
                         print("Succeeded to save the question");
-                        ref
-                            .read(questionTypeProvider.notifier)
-                            .setQuestionType(QuestionType.what);
-                        ref.read(newQuestionProvider.notifier).setString("");
-                        ref
-                            .read(pointSliderProvider.notifier)
-                            .initializePoint();
+                        clearFields();
                         context.go("/main");
                       }, onError: (error) {
                         print("Error: $error");
@@ -199,10 +176,37 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     );
   }
 
+  void clearFields() {
+    ref.read(questionTypeProvider.notifier).initializeQuestionType();
+    ref.read(newQuestionProvider.notifier).setString("");
+    ref.read(pointSliderProvider.notifier).initializePoint();
+  }
+
   @override
   void dispose() {
     questionTypeTextEditingController.dispose();
     newQuestionTextEditingController.dispose();
     super.dispose();
+  }
+
+  Future<Question> makeQuestion() async {
+    final userID = ref.read(currentUserProvider)!;
+    final questionType = ref.read(questionTypeProvider);
+    final content = newQuestionTextEditingController.text;
+    final point = ref.read(pointSliderProvider).toInt();
+    final firestoreInstance = FirebaseFirestore.instance;
+    final userRef = firestoreInstance.collection("users").doc(userID);
+    final snapshot = await userRef.get();
+    final ownerName = snapshot.data()!["info"]["username"];
+    const uuid = Uuid();
+    final newQuestion = Question(
+      id: uuid.v4(),
+      ownerName: ownerName,
+      ownerID: userID,
+      questionType: questionType,
+      content: content,
+      point: point,
+    );
+    return newQuestion;
   }
 }
