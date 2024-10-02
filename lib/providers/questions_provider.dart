@@ -77,6 +77,7 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
       "questionType": question.questionType.name,
       "content": question.content,
     });
-    // state = [...state, question];
+    final data = state.value!;
+    state = AsyncValue.data([...data, question]);
   }
 }
