@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
-import 'package:langpal/models/question_type.dart';
 
 final questionsProvider =
     AsyncNotifierProvider<QuestionsNotifier, List<Question>>(() {
@@ -20,19 +19,7 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
     final questions = await firestoreInstance.collection("questions").get();
     final allQuestions = questions.docs.map((doc) {
       final data = doc.data();
-      final id = data["id"] as String;
-      final ownerID = data["ownerID"] as String;
-      final point = data["point"] as int;
-      final questionTypeString = data["questionType"] as String;
-      final questionType = QuestionType.values.byName(questionTypeString);
-      final content = data["content"] as String;
-      final question = Question(
-        id: id,
-        ownerID: ownerID,
-        point: point,
-        questionType: questionType,
-        content: content,
-      );
+      final question = Question.fromMap(data);
       return question;
     }).toList();
 

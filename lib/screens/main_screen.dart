@@ -20,6 +20,7 @@ class MainScreen extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
+          print(error);
           return const ErrorScreen();
         },
         data: (data) {
