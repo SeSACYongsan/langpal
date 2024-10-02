@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,7 +136,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                     padding: const EdgeInsets.all(15),
                     elevation: 10,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (newQuestionTextEditingController.text.trim().isEmpty) {
                       showDialog(
                           context: context,
@@ -150,9 +151,15 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                       final questionType = ref.read(questionTypeProvider);
                       final content = newQuestionTextEditingController.text;
                       final point = ref.read(pointSliderProvider).toInt();
+                      final firestoreInstance = FirebaseFirestore.instance;
+                      final userRef =
+                          firestoreInstance.collection("users").doc(userID);
+                      final snapshot = await userRef.get();
+                      final ownerName = snapshot.data()!["info"]["username"];
                       const uuid = Uuid();
                       final newQuestion = Question(
                         id: uuid.v4(),
+                        ownerName: ownerName,
                         ownerID: userID,
                         questionType: questionType,
                         content: content,

@@ -48,7 +48,7 @@ class QuestionDetailScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            data!.ownerID,
+                            data!.ownerName,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           Text(

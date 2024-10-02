@@ -22,7 +22,6 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
       final question = Question.fromMap(data);
       return question;
     }).toList();
-
     return allQuestions;
   }
 
