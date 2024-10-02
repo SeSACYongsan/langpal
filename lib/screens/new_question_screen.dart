@@ -1,10 +1,14 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/new_question_provider.dart';
 import 'package:langpal/providers/point_slider_provider.dart';
 import 'package:langpal/providers/question_type_provider.dart';
+import 'package:langpal/providers/questions_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class NewQuestionScreen extends ConsumerStatefulWidget {
   const NewQuestionScreen({super.key});
@@ -131,7 +135,39 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                     padding: const EdgeInsets.all(15),
                     elevation: 10,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (newQuestionTextEditingController.text.trim().isEmpty) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              title: Text("내용을 입력해주세요"),
+                              icon: Icon(Icons.error),
+                            );
+                          });
+                    } else {
+                      final userID = ref.read(currentUserProvider)!;
+                      final questionType = ref.read(questionTypeProvider);
+                      final content = newQuestionTextEditingController.text;
+                      final point = ref.read(pointSliderProvider).toInt();
+                      const uuid = Uuid();
+                      final newQuestion = Question(
+                        id: uuid.v4(),
+                        ownerID: userID,
+                        questionType: questionType,
+                        content: content,
+                        point: point,
+                      );
+                      ref
+                          .read(questionsProvider.notifier)
+                          .saveQuestion(newQuestion)
+                          .then((value) {
+                        print("Succeeded to save the question");
+                      }, onError: (error) {
+                        print("Error: $error");
+                      });
+                    }
+                  },
                   child: Text(
                     "등록",
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(

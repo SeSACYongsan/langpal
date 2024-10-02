@@ -4,14 +4,14 @@ import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
 
 final questionsProvider =
-    NotifierProvider<QuestionsNotifier, List<Question>>(() {
+    AsyncNotifierProvider<QuestionsNotifier, List<Question>>(() {
   return QuestionsNotifier();
 });
 
-class QuestionsNotifier extends Notifier<List<Question>> {
+class QuestionsNotifier extends AsyncNotifier<List<Question>> {
   @override
-  List<Question> build() {
-    return [];
+  Future<List<Question>> build() {
+    return getQuestions();
   }
 
   Future<Question?> getQuestionByID(String questionID) async {
@@ -64,5 +64,19 @@ class QuestionsNotifier extends Notifier<List<Question>> {
       return question;
     }).toList();
     return allQuestions;
+  }
+
+  Future<void> saveQuestion(Question question) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final questions = firestoreInstance.collection("questions");
+    final questionRef = questions.doc(question.id);
+    await questionRef.set({
+      "id": question.id,
+      "ownerID": question.ownerID,
+      "point": question.point,
+      "questionType": question.questionType.name,
+      "content": question.content,
+    });
+    // state = [...state, question];
   }
 }

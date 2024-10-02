@@ -43,6 +43,7 @@ dependencies:
     firebase_auth:
     firebase_ui_auth:
     google_sign_in:
+    uuid:
 dev_dependencies:
     flutter_test:
         sdk: flutter
