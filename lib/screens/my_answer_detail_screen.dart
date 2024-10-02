@@ -39,7 +39,7 @@ class MyAnswerDetailScreen extends StatelessWidget {
                       blurRadius: 5,
                       offset: Offset(5, 5),
                       color: Colors.black12,
-                    )
+                    ),
                   ],
                   color: Colors.white,
                 ),
@@ -74,7 +74,7 @@ class MyAnswerDetailScreen extends StatelessWidget {
                       spreadRadius: 5,
                       offset: Offset(5, 5),
                       color: Colors.black12,
-                    )
+                    ),
                   ],
                 ),
                 child: Text(
@@ -93,7 +93,7 @@ class MyAnswerDetailScreen extends StatelessWidget {
                 ),
                 onPressed: () {},
                 child: const Text("수정하기"),
-              )
+              ),
             ],
           ),
         ),

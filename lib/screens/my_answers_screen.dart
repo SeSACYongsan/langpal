@@ -61,7 +61,7 @@ class MyAnswersScreen extends StatelessWidget {
                       Text(
                         "무슨 뜻인가요?",
                         style: Theme.of(context).textTheme.titleMedium,
-                      )
+                      ),
                     ],
                   ),
                 ),
