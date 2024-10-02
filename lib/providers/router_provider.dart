@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:langpal/providers/questions_provider.dart';
-import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/initialization_screen.dart';
 import 'package:langpal/screens/main_screen.dart';
 import 'package:langpal/screens/my_answer_detail_screen.dart';
@@ -38,21 +36,8 @@ final routerProvider = Provider((ref) {
           GoRoute(
             path: "questions/:question_id",
             builder: (context, state) {
-              final questionID = state.pathParameters["question_id"];
-              ref
-                  .read(questionsProvider.notifier)
-                  .getQuestionByID(questionID!)
-                  .then((question) {
-                if (question != null) {
-                  return QuestionDetailScreen(question: question);
-                } else {
-                  return const ErrorScreen();
-                }
-              }, onError: (error) {
-                print("Error: $error");
-                return const ErrorScreen();
-              });
-              return const ErrorScreen();
+              final questionID = state.pathParameters["question_id"]!;
+              return QuestionDetailScreen(questionID: questionID);
             },
           ),
           GoRoute(
