@@ -84,8 +84,22 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                         elevation: 10,
                       ),
                       onPressed: () {
-                        ref.read(currentUserProvider.notifier).addToFirestore();
-                        context.go("/main");
+                        final username = usernameTextEditingController.text;
+                        if (username.isEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  icon: Icon(Icons.error),
+                                  title: Text("닉네임을 입력해주세요"),
+                                );
+                              });
+                        } else {
+                          ref
+                              .read(currentUserProvider.notifier)
+                              .addToFirestore();
+                          context.go("/main");
+                        }
                       },
                       child: Text(
                         "다음으로",
