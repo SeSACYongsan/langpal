@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
+import 'package:langpal/providers/answer_text_field_provider.dart';
 import 'package:langpal/providers/question_provider.dart';
 import 'package:langpal/providers/user_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 
-class QuestionDetailScreen extends ConsumerWidget {
+class QuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
   const QuestionDetailScreen({super.key, required this.questionID});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncQuestion = ref.watch(questionProvider(questionID));
+  ConsumerState<QuestionDetailScreen> createState() =>
+      _QuestionDetailScreenState();
+}
+
+class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
+  late TextEditingController answerTextEditingController;
+  @override
+  Widget build(BuildContext context) {
+    final asyncQuestion = ref.watch(questionProvider(widget.questionID));
+    answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -107,15 +116,21 @@ class QuestionDetailScreen extends ConsumerWidget {
                             )
                           ],
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: TextField(
+                            controller: answerTextEditingController,
                             keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "답변을 입력하세요",
                             ),
                             maxLines: 8,
+                            onChanged: (value) {
+                              ref
+                                  .read(answerTextFieldProvider.notifier)
+                                  .setAnswer(value);
+                            },
                           ),
                         ),
                       ),
@@ -167,5 +182,17 @@ class QuestionDetailScreen extends ConsumerWidget {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    answerTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    answerTextEditingController = TextEditingController();
+    super.initState();
   }
 }
