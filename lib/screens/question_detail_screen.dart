@@ -150,7 +150,21 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            if (answerTextEditingController.text
+                                .trim()
+                                .isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return const AlertDialog(
+                                    title: Text("내용을 입력해주세요"),
+                                    icon: Icon(Icons.error),
+                                  );
+                                },
+                              );
+                            }
+                          },
                           child: Text(
                             "답변하기",
                             style: Theme.of(context)
