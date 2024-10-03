@@ -56,8 +56,10 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(50),
-                            child: Image.asset("assets/images/profile.png",
-                                width: 70),
+                            child: Image.asset(
+                              "assets/images/profile.png",
+                              width: 70,
+                            ),
                           ),
                           const SizedBox(width: 20),
                           Column(
@@ -72,7 +74,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 20),
@@ -83,10 +85,11 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: const [
                             BoxShadow(
-                                blurRadius: 5,
-                                spreadRadius: 5,
-                                offset: Offset(5, 5),
-                                color: Colors.black12)
+                              blurRadius: 5,
+                              spreadRadius: 5,
+                              offset: Offset(5, 5),
+                              color: Colors.black12,
+                            ),
                           ],
                         ),
                         child: Text(
@@ -113,7 +116,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               spreadRadius: 5,
                               offset: Offset(5, 5),
                               color: Colors.black12,
-                            )
+                            ),
                           ],
                         ),
                         child: Padding(
