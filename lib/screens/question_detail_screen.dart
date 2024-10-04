@@ -5,6 +5,7 @@ import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/providers/answer_provider.dart';
 import 'package:langpal/providers/answer_text_field_provider.dart';
+import 'package:langpal/providers/answers_provider.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/question_provider.dart';
 import 'package:langpal/providers/user_provider.dart';
@@ -49,15 +50,68 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final asyncUser = ref.watch(userProvider(ownerID));
           return asyncUser.when(
             data: (user) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+              final questionID = question.id;
+              final asyncAnswers = ref.watch(answersProvider(questionID));
+              return asyncAnswers.when(
+                data: (answers) {
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.asset(
+                                  "assets/images/profile.png",
+                                  width: 70,
+                                ),
+                              ),
+                              const SizedBox(width: 20),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user!.info.username,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Text(
+                                    "${user.info.targetLanguage.toKoreanName()} 수준: ${user.info.level.toKoreanName()}",
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          ...answers!.map((answer) {
+                            return Text(answer.content);
+                          }),
+                          const SizedBox(height: 20),
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  spreadRadius: 5,
+                                  offset: Offset(5, 5),
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: Text(
+                              question.content,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ),
+                          const SizedBox(height: 30),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Image.asset(
@@ -65,126 +119,92 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               width: 70,
                             ),
                           ),
-                          const SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user!.info.username,
-                                style: Theme.of(context).textTheme.titleLarge,
+                          const SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  spreadRadius: 5,
+                                  offset: Offset(5, 5),
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: TextField(
+                                controller: answerTextEditingController,
+                                keyboardType: TextInputType.text,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "답변을 입력하세요",
+                                ),
+                                maxLines: 8,
+                                onChanged: (value) {
+                                  ref
+                                      .read(answerTextFieldProvider.notifier)
+                                      .setAnswer(value);
+                                },
                               ),
-                              Text(
-                                "${user.info.targetLanguage.toKoreanName()} 수준: ${user.info.level.toKoreanName()}",
-                                style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.all(15),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 10,
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
                               ),
-                            ],
+                              onPressed: () {
+                                if (answerTextEditingController.text
+                                    .trim()
+                                    .isEmpty) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return const AlertDialog(
+                                        title: Text("내용을 입력해주세요"),
+                                        icon: Icon(Icons.error),
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  submitAnswer();
+                                }
+                              },
+                              child: Text(
+                                "답변하기",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5,
-                              spreadRadius: 5,
-                              offset: Offset(5, 5),
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: Text(
-                          question.content,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          "assets/images/profile.png",
-                          width: 70,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5,
-                              spreadRadius: 5,
-                              offset: Offset(5, 5),
-                              color: Colors.black12,
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: TextField(
-                            controller: answerTextEditingController,
-                            keyboardType: TextInputType.text,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "답변을 입력하세요",
-                            ),
-                            maxLines: 8,
-                            onChanged: (value) {
-                              ref
-                                  .read(answerTextFieldProvider.notifier)
-                                  .setAnswer(value);
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 10,
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            if (answerTextEditingController.text
-                                .trim()
-                                .isEmpty) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const AlertDialog(
-                                    title: Text("내용을 입력해주세요"),
-                                    icon: Icon(Icons.error),
-                                  );
-                                },
-                              );
-                            } else {
-                              submitAnswer();
-                            }
-                          },
-                          child: Text(
-                            "답변하기",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Colors.white,
-                                ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
+                error: (error, stackTrace) {
+                  print(error);
+                  return const ErrorScreen();
+                },
+                loading: () {
+                  return const CircularProgressIndicator();
+                },
               );
             },
             error: (error, stackTrace) {
@@ -227,6 +247,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final questionID = widget.questionID;
     final newAnswer = Answer(
         id: id, ownerID: ownerID, questionID: questionID, content: content);
-    await ref.read(answerProvider.notifier).registerAnswer(newAnswer);
+    ref.read(answerProvider.notifier).registerAnswer(newAnswer);
   }
 }
