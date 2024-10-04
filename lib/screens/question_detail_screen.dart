@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
+import 'package:langpal/providers/answer_provider.dart';
 import 'package:langpal/providers/answer_text_field_provider.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/question_provider.dart';
 import 'package:langpal/providers/user_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
+import 'package:uuid/uuid.dart';
 
 class QuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
@@ -163,6 +167,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                                   );
                                 },
                               );
+                            } else {
+                              submitAnswer();
                             }
                           },
                           child: Text(
@@ -211,5 +217,16 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   void initState() {
     answerTextEditingController = TextEditingController();
     super.initState();
+  }
+
+  void submitAnswer() async {
+    const uuid = Uuid();
+    final content = answerTextEditingController.text;
+    final ownerID = ref.read(currentUserProvider)!;
+    final id = uuid.v4();
+    final questionID = widget.questionID;
+    final newAnswer = Answer(
+        id: id, ownerID: ownerID, questionID: questionID, content: content);
+    await ref.read(answerProvider.notifier).registerAnswer(newAnswer);
   }
 }
