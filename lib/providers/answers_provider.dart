@@ -37,11 +37,4 @@ class AnswersNotifier extends FamilyAsyncNotifier<List<Answer>?, String> {
     }
     return null;
   }
-
-  Future<void> registerAnswer(Answer answer) async {
-    final firestoreInstance = FirebaseFirestore.instance;
-    final answerReference =
-        firestoreInstance.collection("answers").doc(answer.id);
-    await answerReference.set(answer.toMap());
-  }
 }
