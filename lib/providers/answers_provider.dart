@@ -5,19 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 
 final answersProvider =
-    AsyncNotifierProvider.family<AnswersNotifier, List<Answer>?, String>(
-  () {
-    return AnswersNotifier();
-  },
-);
+    AsyncNotifierProvider<AnswersNotifier, List<Answer>>(() {
+  return AnswersNotifier();
+});
 
-class AnswersNotifier extends FamilyAsyncNotifier<List<Answer>?, String> {
+class AnswersNotifier extends AsyncNotifier<List<Answer>> {
   @override
-  Future<List<Answer>?> build(String questionID) async {
-    return await getAnswersByQuestionID(questionID);
+  Future<List<Answer>> build() async {
+    return [];
   }
 
-  Future<List<Answer>?> getAnswersByQuestionID(String questionID) async {
+  Future<List<Answer>> getAnswersByQuestionID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final answers = firestoreInstance.collection("answers");
     final answersReference = answers.where("questionID", isEqualTo: questionID);
@@ -35,6 +33,6 @@ class AnswersNotifier extends FamilyAsyncNotifier<List<Answer>?, String> {
     } catch (error) {
       print(error);
     }
-    return null;
+    return [];
   }
 }

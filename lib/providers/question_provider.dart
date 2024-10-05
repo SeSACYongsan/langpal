@@ -4,36 +4,36 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
 
-final questionProvider =
-    AsyncNotifierProvider.family<QuestionNotifier, Question?, String>(() {
+final questionProvider = AsyncNotifierProvider<QuestionNotifier, Question?>(() {
   return QuestionNotifier();
 });
 
-class QuestionNotifier extends FamilyAsyncNotifier<Question?, String> {
+class QuestionNotifier extends AsyncNotifier<Question?> {
   @override
-  Future<Question?> build(String questionID) async {
-    final question = await getQuestionByID(questionID);
-    return question;
+  Future<Question?> build() async {
+    return null;
   }
 
-  Future<Question?> getQuestionByID(String questionID) async {
+  Future<void> getQuestionByID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");
     final questionRef = questions.doc(questionID);
     final snapshot = await questionRef.get();
-    if (snapshot.exists) {
-      if (snapshot.data() != null) {
-        final data = snapshot.data()!;
-        final question = Question.fromMap(data);
-        print(question);
-        return question;
+    try {
+      if (snapshot.exists) {
+        if (snapshot.data() != null) {
+          final data = snapshot.data()!;
+          final question = Question.fromMap(data);
+          print(question);
+          state = AsyncData(question);
+        } else {
+          throw Exception("The question snapshot is null");
+        }
       } else {
-        print("The question snapshot is null");
-        return null;
+        throw Exception("The question doesn't exist");
       }
-    } else {
-      print("The question doesn't exist");
-      return null;
+    } catch (error) {
+      print(error);
     }
   }
 }

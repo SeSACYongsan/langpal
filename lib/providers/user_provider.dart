@@ -4,16 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/langpal_user.dart';
 
-final userProvider =
-    AsyncNotifierProvider.family<UserNotifier, LangpalUser?, String>(() {
+final userProvider = AsyncNotifierProvider<UserNotifier, LangpalUser?>(() {
   return UserNotifier();
 });
 
-class UserNotifier extends FamilyAsyncNotifier<LangpalUser?, String> {
+class UserNotifier extends AsyncNotifier<LangpalUser?> {
   @override
-  Future<LangpalUser?> build(String userID) async {
-    final user = await getUserByID(userID);
-    return user;
+  Future<LangpalUser?> build() async {
+    return null;
   }
 
   Future<LangpalUser?> getUserByID(String userID) async {
@@ -21,14 +19,18 @@ class UserNotifier extends FamilyAsyncNotifier<LangpalUser?, String> {
     final users = firestoreInstance.collection("users");
     final userRef = users.doc(userID);
     final userSnapshot = await userRef.get();
-    if (userSnapshot.exists) {
-      print("The user exists");
-      final data = userSnapshot.data()!;
-      final user = LangpalUser.fromMap(data);
-      return user;
-    } else {
-      print("The user doesn't exist");
-      return null;
+    try {
+      if (userSnapshot.exists) {
+        print("The user exists");
+        final data = userSnapshot.data()!;
+        final user = LangpalUser.fromMap(data);
+        state = AsyncData(user);
+      } else {
+        throw Exception("The user doesn't exist");
+      }
+    } catch (error) {
+      print(error);
     }
+    return null;
   }
 }

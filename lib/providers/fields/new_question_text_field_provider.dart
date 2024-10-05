@@ -10,6 +10,10 @@ class NewQuestionTextFieldNotifier extends Notifier<String> {
     return "";
   }
 
+  void initializeNewQuestion() {
+    state = "";
+  }
+
   void setString(String string) {
     state = string;
   }

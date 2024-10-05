@@ -19,8 +19,8 @@ class NewQuestionScreen extends ConsumerStatefulWidget {
 }
 
 class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
-  final questionTypeTextEditingController = TextEditingController();
-  final newQuestionTextEditingController = TextEditingController();
+  late TextEditingController questionTypeTextEditingController;
+  late TextEditingController newQuestionTextEditingController;
   @override
   Widget build(BuildContext context) {
     questionTypeTextEditingController.text =
@@ -181,7 +181,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
 
   void clearFields() {
     ref.read(questionTypeDropdownProvider.notifier).initializeQuestionType();
-    ref.read(newQuestionTextFieldProvider.notifier).setString("");
+    ref.read(newQuestionTextFieldProvider.notifier).initializeNewQuestion();
     ref.read(pointSliderProvider.notifier).initializePoint();
   }
 
@@ -190,6 +190,13 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     questionTypeTextEditingController.dispose();
     newQuestionTextEditingController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    questionTypeTextEditingController = TextEditingController();
+    newQuestionTextEditingController = TextEditingController();
+    super.initState();
   }
 
   Future<Question> makeQuestion() async {
