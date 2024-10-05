@@ -26,8 +26,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   Widget build(BuildContext context) {
     final asyncQuestion = ref.read(questionProvider);
     final asyncUser = ref.read(userProvider);
-    final asyncAnswers = ref.watch(answersProvider);
-
+    final asyncAnswers = ref.read(answersProvider);
+    ref.read(questionProvider.notifier).getQuestionByID(widget.questionID);
     answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -52,13 +52,15 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           return const CircularProgressIndicator();
         } else {
           final userID = question.ownerID;
-          
           ref.read(userProvider.notifier).getUserByID(userID);
           return asyncUser.when(
             data: (user) {
               if (user == null) {
                 return const CircularProgressIndicator();
               } else {
+                ref
+                    .read(answersProvider.notifier)
+                    .getAnswersByQuestionID(widget.questionID);
                 return asyncAnswers.when(
                   data: (answers) {
                     return SingleChildScrollView(
@@ -241,8 +243,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   @override
   void initState() {
     answerTextEditingController = TextEditingController();
-    ref.read(questionProvider.notifier).getQuestionByID(widget.questionID);
-    ref.read(answersProvider.notifier).getAnswersByQuestionID(widget.questionID);
     super.initState();
   }
 
