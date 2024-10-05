@@ -226,7 +226,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
             },
           );
         }
-        return null;
       }, error: (error, stackTrace) {
         return const ErrorScreen();
       }, loading: () {
