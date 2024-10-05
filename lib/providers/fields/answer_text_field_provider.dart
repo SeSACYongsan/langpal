@@ -9,7 +9,7 @@ final answerTextFieldProvider =
 
 class AnswerTextFieldNotifier extends Notifier<String> {
   @override
-  build() {
+  String build() {
     return "";
   }
 

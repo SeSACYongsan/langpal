@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/providers/current_user_provider.dart';
-import 'package:langpal/providers/username_provider.dart';
+import 'package:langpal/providers/fields/username_text_field_provider.dart';
 
 class ProfileSettingScreen extends ConsumerStatefulWidget {
   const ProfileSettingScreen({super.key});
@@ -15,7 +15,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   final usernameTextEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    usernameTextEditingController.text = ref.watch(usernameProvider);
+    usernameTextEditingController.text = ref.watch(usernameTextFieldProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -67,7 +67,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                             child: TextField(
                               onChanged: (value) {
                                 ref
-                                    .read(usernameProvider.notifier)
+                                    .read(usernameTextFieldProvider.notifier)
                                     .setUsername(value);
                               },
                               keyboardType: TextInputType.name,

@@ -5,11 +5,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/langpal_user_info.dart';
 import 'package:langpal/models/sign_in_status.dart';
-import 'package:langpal/providers/first_language_provider.dart';
-import 'package:langpal/providers/level_provider.dart';
-import 'package:langpal/providers/target_language_provider.dart';
+import 'package:langpal/providers/fields/first_language_dropdown_provider.dart';
+import 'package:langpal/providers/fields/level_dropdown_provider.dart';
+import 'package:langpal/providers/fields/target_language_dropdown_provider.dart';
+import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
-import 'package:langpal/providers/username_provider.dart';
 
 final currentUserProvider = NotifierProvider<CurrentUserNotifier, String?>(
   () {
@@ -19,10 +19,10 @@ final currentUserProvider = NotifierProvider<CurrentUserNotifier, String?>(
 
 class CurrentUserNotifier extends Notifier<String?> {
   void addToFirestore() async {
-    final firstLanguage = ref.read(firstLanguageProvider);
-    final targetLanguage = ref.read(targetLanguageProvider);
-    final level = ref.read(levelProvider);
-    final username = ref.read(usernameProvider);
+    final firstLanguage = ref.read(firstLanguageDropdownProvider);
+    final targetLanguage = ref.read(targetLanguageDropdownProvider);
+    final level = ref.read(levelDropdownProvider);
+    final username = ref.read(usernameTextFieldProvider);
     final firestoreInstance = FirebaseFirestore.instance;
     final users = firestoreInstance.collection("users");
     final displayName = ref.read(tempUserProvider)!["displayName"];

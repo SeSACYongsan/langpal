@@ -6,9 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
 import 'package:langpal/providers/current_user_provider.dart';
-import 'package:langpal/providers/new_question_provider.dart';
-import 'package:langpal/providers/point_slider_provider.dart';
-import 'package:langpal/providers/question_type_provider.dart';
+import 'package:langpal/providers/fields/new_question_text_field_provider.dart';
+import 'package:langpal/providers/fields/point_slider_provider.dart';
+import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
 import 'package:langpal/providers/questions_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,8 +24,9 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     questionTypeTextEditingController.text =
-        ref.watch(questionTypeProvider).toKoreanName();
-    newQuestionTextEditingController.text = ref.watch(newQuestionProvider);
+        ref.watch(questionTypeDropdownProvider).toKoreanName();
+    newQuestionTextEditingController.text =
+        ref.watch(newQuestionTextFieldProvider);
     final currentPoint = ref.watch(pointSliderProvider);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -61,10 +62,10 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  value: ref.watch(questionTypeProvider),
+                  value: ref.watch(questionTypeDropdownProvider),
                   onChanged: (value) {
                     ref
-                        .read(questionTypeProvider.notifier)
+                        .read(questionTypeDropdownProvider.notifier)
                         .setQuestionType(value!);
                   },
                   isExpanded: true,
@@ -90,7 +91,9 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                     keyboardType: TextInputType.text,
                     maxLines: 5,
                     onChanged: (value) {
-                      ref.read(newQuestionProvider.notifier).setString(value);
+                      ref
+                          .read(newQuestionTextFieldProvider.notifier)
+                          .setString(value);
                     },
                   ),
                 ),
@@ -177,8 +180,8 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   }
 
   void clearFields() {
-    ref.read(questionTypeProvider.notifier).initializeQuestionType();
-    ref.read(newQuestionProvider.notifier).setString("");
+    ref.read(questionTypeDropdownProvider.notifier).initializeQuestionType();
+    ref.read(newQuestionTextFieldProvider.notifier).setString("");
     ref.read(pointSliderProvider.notifier).initializePoint();
   }
 
@@ -191,7 +194,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
 
   Future<Question> makeQuestion() async {
     final userID = ref.read(currentUserProvider)!;
-    final questionType = ref.read(questionTypeProvider);
+    final questionType = ref.read(questionTypeDropdownProvider);
     final content = newQuestionTextEditingController.text;
     final point = ref.read(pointSliderProvider).toInt();
     final firestoreInstance = FirebaseFirestore.instance;

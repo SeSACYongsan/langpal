@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
-import 'package:langpal/providers/first_language_provider.dart';
-import 'package:langpal/providers/level_provider.dart';
-import 'package:langpal/providers/target_language_provider.dart';
+import 'package:langpal/providers/fields/first_language_dropdown_provider.dart';
+import 'package:langpal/providers/fields/level_dropdown_provider.dart';
+import 'package:langpal/providers/fields/target_language_dropdown_provider.dart';
 
 class InitializationScreen extends ConsumerStatefulWidget {
   const InitializationScreen({super.key});
@@ -20,10 +20,10 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
   @override
   Widget build(BuildContext context) {
     firstLanguageTextEditingController.text =
-        ref.watch(firstLanguageProvider).toKoreanName();
+        ref.watch(firstLanguageDropdownProvider).toKoreanName();
     targetLanguageTextEditingController.text =
-        ref.watch(targetLanguageProvider).toKoreanName();
-    final currentLevel = ref.watch(levelProvider);
+        ref.watch(targetLanguageDropdownProvider).toKoreanName();
+    final currentLevel = ref.watch(levelDropdownProvider);
     return Scaffold(
       body: Stack(
         children: [
@@ -58,7 +58,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           child: DropdownMenu(
                             onSelected: (value) {
                               ref
-                                  .read(firstLanguageProvider.notifier)
+                                  .read(firstLanguageDropdownProvider.notifier)
                                   .setLanguage(value!);
                             },
                             controller: firstLanguageTextEditingController,
@@ -84,7 +84,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                           child: DropdownMenu(
                             onSelected: (value) {
                               ref
-                                  .read(targetLanguageProvider.notifier)
+                                  .read(targetLanguageDropdownProvider.notifier)
                                   .setLanguage(value!);
                             },
                             textStyle: Theme.of(context).textTheme.titleMedium,
@@ -130,7 +130,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                             ],
                             onSelectionChanged: (value) {
                               ref
-                                  .read(levelProvider.notifier)
+                                  .read(levelDropdownProvider.notifier)
                                   .setLevel(value.first);
                             },
                             selected: {currentLevel},
