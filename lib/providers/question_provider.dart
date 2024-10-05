@@ -33,7 +33,7 @@ class QuestionNotifier extends AsyncNotifier<Question?> {
         throw Exception("The question doesn't exist");
       }
     } catch (error) {
-      print(error);
+      state = AsyncError(error, StackTrace.current);
     }
   }
 }

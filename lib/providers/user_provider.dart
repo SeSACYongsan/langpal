@@ -14,7 +14,7 @@ class UserNotifier extends AsyncNotifier<LangpalUser?> {
     return null;
   }
 
-  Future<LangpalUser?> getUserByID(String userID) async {
+  Future<void> getUserByID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final users = firestoreInstance.collection("users");
     final userRef = users.doc(userID);
@@ -29,8 +29,7 @@ class UserNotifier extends AsyncNotifier<LangpalUser?> {
         throw Exception("The user doesn't exist");
       }
     } catch (error) {
-      print(error);
+      state = AsyncError(error, StackTrace.current);
     }
-    return null;
   }
 }

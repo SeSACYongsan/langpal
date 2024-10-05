@@ -15,7 +15,7 @@ class AnswersNotifier extends AsyncNotifier<List<Answer>> {
     return [];
   }
 
-  Future<List<Answer>> getAnswersByQuestionID(String questionID) async {
+  Future<void> getAnswersByQuestionID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final answers = firestoreInstance.collection("answers");
     final answersReference = answers.where("questionID", isEqualTo: questionID);
@@ -29,10 +29,9 @@ class AnswersNotifier extends AsyncNotifier<List<Answer>> {
           throw Exception("The document doesn't exist");
         }
       }).toList();
-      return allAnswers;
+      state = AsyncData(allAnswers);
     } catch (error) {
-      print(error);
+      state = AsyncError(error, StackTrace.current);
     }
-    return [];
   }
 }
