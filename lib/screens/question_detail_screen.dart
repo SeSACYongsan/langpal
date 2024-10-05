@@ -53,7 +53,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
         } else {
           final userID = question.ownerID;
           ref.read(userProvider.notifier).getUserByID(userID);
-          asyncUser.when(
+          return asyncUser.when(
             data: (user) {
               if (user == null) {
                 return const CircularProgressIndicator();
@@ -61,7 +61,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                 ref
                     .read(answersProvider.notifier)
                     .getAnswersByQuestionID(widget.questionID);
-                asyncAnswers.when(
+                return asyncAnswers.when(
                   data: (answers) {
                     return SingleChildScrollView(
                       child: Padding(
