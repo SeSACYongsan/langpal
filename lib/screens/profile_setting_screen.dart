@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/providers/current_user_id_provider.dart';
 import 'package:langpal/providers/fields/username_text_field_provider.dart';
 
 class ProfileSettingScreen extends ConsumerStatefulWidget {
@@ -12,7 +12,7 @@ class ProfileSettingScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
-  final usernameTextEditingController = TextEditingController();
+  late TextEditingController usernameTextEditingController;
   @override
   Widget build(BuildContext context) {
     usernameTextEditingController.text = ref.watch(usernameTextFieldProvider);
@@ -96,7 +96,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                               });
                         } else {
                           ref
-                              .read(currentUserProvider.notifier)
+                              .read(currentUserIDProvider.notifier)
                               .addToFirestore();
                           context.go("/main");
                         }
@@ -120,5 +120,11 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   void dispose() {
     usernameTextEditingController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    usernameTextEditingController = TextEditingController();
+    super.initState();
   }
 }

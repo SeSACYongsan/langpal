@@ -1,11 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
-import 'package:langpal/providers/answer_provider.dart';
 import 'package:langpal/providers/answers_provider.dart';
-import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/providers/current_user_id_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/providers/question_provider.dart';
 import 'package:langpal/providers/user_provider.dart';
@@ -239,14 +239,21 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     super.initState();
   }
 
-  void submitAnswer() async {
+  Future<void> registerAnswer(Answer answer) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answerReference =
+        firestoreInstance.collection("answers").doc(answer.id);
+    await answerReference.set(answer.toMap());
+  }
+
+  Future<void> submitAnswer() async {
     const uuid = Uuid();
     final content = answerTextEditingController.text;
-    final ownerID = ref.read(currentUserProvider)!;
+    final ownerID = ref.read(currentUserIDProvider)!;
     final id = uuid.v4();
     final questionID = widget.questionID;
     final newAnswer = Answer(
         id: id, ownerID: ownerID, questionID: questionID, content: content);
-    ref.read(answerProvider.notifier).registerAnswer(newAnswer);
+    registerAnswer(newAnswer);
   }
 }

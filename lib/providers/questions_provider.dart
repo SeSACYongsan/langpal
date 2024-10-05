@@ -3,18 +3,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
 
 final questionsProvider =
-    AsyncNotifierProvider<QuestionsNotifier, List<Question>>(() {
+    NotifierProvider<QuestionsNotifier, List<Question>>(() {
   return QuestionsNotifier();
 });
 
-class QuestionsNotifier extends AsyncNotifier<List<Question>> {
+class QuestionsNotifier extends Notifier<List<Question>> {
   @override
-  Future<List<Question>> build() async {
-    final questions = await getQuestions();
-    return questions;
+  List<Question> build() {
+    return [];
   }
 
-  Future<List<Question>> getQuestions() async {
+  Future<void> getQuestions() async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = await firestoreInstance.collection("questions").get();
     final allQuestions = questions.docs.map((doc) {
@@ -22,25 +21,7 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
       final question = Question.fromMap(data);
       return question;
     }).toList();
-    return allQuestions;
-  }
-
-  List<String> getUsernames(List<Question> questions) {
-    final firestoreInstance = FirebaseFirestore.instance;
-    final users = firestoreInstance.collection("users");
-    List<String> usernames = [];
-    Future.forEach(questions, (question) async {
-      final ownerID = question.ownerID;
-      final userRef = users.doc(ownerID);
-      final snapshot = await userRef.get();
-      if (snapshot.exists) {
-        final username = snapshot.data()!["username"] as String;
-        usernames.add(username);
-      } else {
-        usernames.add("Anonymous");
-      }
-    });
-    return usernames;
+    state = allQuestions;
   }
 
   Future<void> saveQuestion(Question question) async {
@@ -48,7 +29,7 @@ class QuestionsNotifier extends AsyncNotifier<List<Question>> {
     final questions = firestoreInstance.collection("questions");
     final questionRef = questions.doc(question.id);
     await questionRef.set(question.toMap());
-    final data = state.value!;
-    state = AsyncValue.data([...data, question]);
+    final data = state;
+    state = [...data, question];
   }
 }

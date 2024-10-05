@@ -15,8 +15,8 @@ class InitializationScreen extends ConsumerStatefulWidget {
 }
 
 class _InitializationScreenState extends ConsumerState<InitializationScreen> {
-  final firstLanguageTextEditingController = TextEditingController();
-  final targetLanguageTextEditingController = TextEditingController();
+  late TextEditingController firstLanguageTextEditingController;
+  late TextEditingController targetLanguageTextEditingController;
   @override
   Widget build(BuildContext context) {
     firstLanguageTextEditingController.text =
@@ -126,7 +126,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                                 label: Text(
                                   Level.advanced.toKoreanName(),
                                 ),
-                              )
+                              ),
                             ],
                             onSelectionChanged: (value) {
                               ref
@@ -170,5 +170,12 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
     firstLanguageTextEditingController.dispose();
     targetLanguageTextEditingController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    firstLanguageTextEditingController = TextEditingController();
+    targetLanguageTextEditingController = TextEditingController();
+    super.initState();
   }
 }

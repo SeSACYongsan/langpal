@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:langpal/models/sign_in_status.dart';
-import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/providers/current_user_id_provider.dart';
 
 class SignInScreen extends ConsumerWidget {
   const SignInScreen({super.key});
@@ -55,21 +55,11 @@ class SignInScreen extends ConsumerWidget {
                         child: ElevatedButton.icon(
                           onPressed: () async {
                             final signInStatus = await ref
-                                .read(currentUserProvider.notifier)
+                                .read(currentUserIDProvider.notifier)
                                 .signInWithGoogle();
                             switch (signInStatus) {
                               case SignInStatus.signInFailed:
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialog(
-                                        icon: Icon(
-                                          Icons.error,
-                                          color: Colors.red,
-                                        ),
-                                        title: Text("로그인에 실패하였습니다."),
-                                      );
-                                    });
+                                showSignInFailedDialog(context);
                                 break;
                               case SignInStatus.userNotExist:
                                 context.go("/initialization");
@@ -126,6 +116,21 @@ class SignInScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showSignInFailedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          icon: Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          title: Text("로그인에 실패하였습니다."),
+        );
+      },
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/providers/current_user_id_provider.dart';
 import 'package:langpal/providers/fields/new_question_text_field_provider.dart';
 import 'package:langpal/providers/fields/point_slider_provider.dart';
 import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
@@ -193,7 +193,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   }
 
   Future<Question> makeQuestion() async {
-    final userID = ref.read(currentUserProvider)!;
+    final userID = ref.read(currentUserIDProvider)!;
     final questionType = ref.read(questionTypeDropdownProvider);
     final content = newQuestionTextEditingController.text;
     final point = ref.read(pointSliderProvider).toInt();

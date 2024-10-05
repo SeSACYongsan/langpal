@@ -11,13 +11,13 @@ import 'package:langpal/providers/fields/target_language_dropdown_provider.dart'
 import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 
-final currentUserProvider = NotifierProvider<CurrentUserNotifier, String?>(
+final currentUserIDProvider = NotifierProvider<CurrentUserIDNotifier, String?>(
   () {
-    return CurrentUserNotifier();
+    return CurrentUserIDNotifier();
   },
 );
 
-class CurrentUserNotifier extends Notifier<String?> {
+class CurrentUserIDNotifier extends Notifier<String?> {
   void addToFirestore() async {
     final firstLanguage = ref.read(firstLanguageDropdownProvider);
     final targetLanguage = ref.read(targetLanguageDropdownProvider);
@@ -53,48 +53,51 @@ class CurrentUserNotifier extends Notifier<String?> {
   Future<SignInStatus> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();
-    if (account != null) {
-      final authentication = await account.authentication;
-      final googleCredential = GoogleAuthProvider.credential(
-        idToken: authentication.idToken,
-        accessToken: authentication.accessToken,
-      );
-      final credential =
-          await FirebaseAuth.instance.signInWithCredential(googleCredential);
-      if (credential.user != null) {
-        final userID = credential.user!.uid;
-        final firestoreInstance = FirebaseFirestore.instance;
-        final users = firestoreInstance.collection("users");
-        final userRef = users.doc(userID);
-        final snapshot = await userRef.get();
-        if (snapshot.exists) {
-          if (snapshot.data() != null) {
-            print("The snapshot data exists");
-            state = userID;
-            return SignInStatus.userExist;
+    try {
+      if (account != null) {
+        final authentication = await account.authentication;
+        final googleCredential = GoogleAuthProvider.credential(
+          idToken: authentication.idToken,
+          accessToken: authentication.accessToken,
+        );
+        final credential =
+            await FirebaseAuth.instance.signInWithCredential(googleCredential);
+        if (credential.user != null) {
+          final userID = credential.user!.uid;
+          final firestoreInstance = FirebaseFirestore.instance;
+          final users = firestoreInstance.collection("users");
+          final userRef = users.doc(userID);
+          final snapshot = await userRef.get();
+          if (snapshot.exists) {
+            if (snapshot.data() != null) {
+              print("The snapshot data exists");
+              state = userID;
+              return SignInStatus.userExist;
+            } else {
+              throw Exception("The snapshot data doesn't exist");
+            }
           } else {
-            print("The snapshot data doesn't exist");
-            return SignInStatus.signInFailed;
+            print("The snapshot doesn't exist");
+            final displayName = credential.user!.displayName!;
+            final emailAddress = credential.user!.email!;
+            final userID = credential.user!.uid;
+            ref.read(tempUserProvider.notifier).setTempUser({
+              "displayName": displayName,
+              "emailAddress": emailAddress,
+              "userID": userID,
+            });
+            return SignInStatus.userNotExist;
           }
         } else {
-          print("The snapshot doesn't exist");
-          final displayName = credential.user!.displayName!;
-          final emailAddress = credential.user!.email!;
-          final userID = credential.user!.uid;
-          ref.read(tempUserProvider.notifier).setTempUser({
-            "displayName": displayName,
-            "emailAddress": emailAddress,
-            "userID": userID,
-          });
-          return SignInStatus.userNotExist;
+          throw Exception("The credential user is null");
         }
       } else {
-        print("The credential user is null");
-        return SignInStatus.signInFailed;
+        throw Exception("The account is null");
       }
-    } else {
-      print("The account is null");
-      return SignInStatus.signInFailed;
+    } catch (error) {
+      print(error);
     }
+    print("The sign-in failed");
+    return SignInStatus.signInFailed;
   }
 }

@@ -14,72 +14,75 @@ import 'package:langpal/screens/question_detail_screen.dart';
 import 'package:langpal/screens/sign_in_screen.dart';
 import 'package:langpal/screens/subscription_plans_screen.dart';
 
-final routerProvider = Provider((ref) {
-  return GoRouter(
-    routes: [
-      GoRoute(
-        path: "/",
-        builder: (context, state) => const SignInScreen(),
-      ),
-      GoRoute(
-        path: "/initialization",
-        builder: (context, state) => const InitializationScreen(),
-      ),
-      GoRoute(
-        path: "/profile_setting",
-        builder: (context, state) => const ProfileSettingScreen(),
-      ),
-      GoRoute(
-        path: "/main",
-        builder: (context, state) => const MainScreen(),
-        routes: [
-          GoRoute(
-            path: "questions/:question_id",
-            builder: (context, state) {
-              final questionID = state.pathParameters["question_id"]!;
-              return QuestionDetailScreen(questionID: questionID);
-            },
-          ),
-          GoRoute(
-            path: "notifications",
-            builder: (context, state) => const NotificationsScreen(),
-          ),
-          GoRoute(
-            path: "my_page",
-            builder: (context, state) => const MyPageScreen(),
-            routes: [
-              GoRoute(
-                path: "my_questions",
-                builder: (context, state) => const MyQuestionsScreen(),
-                routes: [
-                  GoRoute(
-                    path: "detail/:question_id",
-                    builder: (context, state) => const MyQuestionDetailScreen(),
-                  ),
-                ],
-              ),
-              GoRoute(
-                path: "my_answers",
-                builder: (context, state) => const MyAnswersScreen(),
-                routes: [
-                  GoRoute(
-                    path: "detail/:answer_id",
-                    builder: (context, state) => const MyAnswerDetailScreen(),
-                  ),
-                ],
-              ),
-              GoRoute(
-                path: "subscription",
-                builder: (context, state) => const SubscriptionPlansScreen(),
-              ),
-            ],
-          ),
-          GoRoute(
-            path: "new_question",
-            builder: (context, state) => const NewQuestionScreen(),
-          ),
-        ],
-      ),
-    ],
-  );
-});
+final routerProvider = Provider(
+  (ref) {
+    return GoRouter(
+      routes: [
+        GoRoute(
+          path: "/",
+          builder: (context, state) => const SignInScreen(),
+        ),
+        GoRoute(
+          path: "/initialization",
+          builder: (context, state) => const InitializationScreen(),
+        ),
+        GoRoute(
+          path: "/profile_setting",
+          builder: (context, state) => const ProfileSettingScreen(),
+        ),
+        GoRoute(
+          path: "/main",
+          builder: (context, state) => const MainScreen(),
+          routes: [
+            GoRoute(
+              path: "questions/:question_id",
+              builder: (context, state) {
+                final questionID = state.pathParameters["question_id"]!;
+                return QuestionDetailScreen(questionID: questionID);
+              },
+            ),
+            GoRoute(
+              path: "notifications",
+              builder: (context, state) => const NotificationsScreen(),
+            ),
+            GoRoute(
+              path: "my_page",
+              builder: (context, state) => const MyPageScreen(),
+              routes: [
+                GoRoute(
+                  path: "my_questions",
+                  builder: (context, state) => const MyQuestionsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: "detail/:question_id",
+                      builder: (context, state) =>
+                          const MyQuestionDetailScreen(),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: "my_answers",
+                  builder: (context, state) => const MyAnswersScreen(),
+                  routes: [
+                    GoRoute(
+                      path: "detail/:answer_id",
+                      builder: (context, state) => const MyAnswerDetailScreen(),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: "subscription",
+                  builder: (context, state) => const SubscriptionPlansScreen(),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: "new_question",
+              builder: (context, state) => const NewQuestionScreen(),
+            ),
+          ],
+        ),
+      ],
+    );
+  },
+);
