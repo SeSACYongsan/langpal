@@ -25,7 +25,6 @@ class Question {
       content: map["content"],
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       "id": id,

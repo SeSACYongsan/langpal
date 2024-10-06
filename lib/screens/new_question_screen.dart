@@ -200,19 +200,19 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
   }
 
   Future<Question> makeQuestion() async {
-    final userID = ref.read(currentUserIDProvider)!;
+    final userID = ref.read(currentUserIDProvider);
     final questionType = ref.read(questionTypeDropdownProvider);
     final content = newQuestionTextEditingController.text;
     final point = ref.read(pointSliderProvider).toInt();
     final firestoreInstance = FirebaseFirestore.instance;
-    final userRef = firestoreInstance.collection("users").doc(userID);
+    final userRef = firestoreInstance.collection("users").doc(userID.value);
     final snapshot = await userRef.get();
     final ownerName = snapshot.data()!["info"]["username"];
     const uuid = Uuid();
     final newQuestion = Question(
       id: uuid.v4(),
       ownerName: ownerName,
-      ownerID: userID,
+      ownerID: userID.value!,
       questionType: questionType,
       content: content,
       point: point,

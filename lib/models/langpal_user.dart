@@ -19,7 +19,6 @@ class LangpalUser {
       info: LangpalUserInfo.fromMap(map["info"]),
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       "displayName": displayName,

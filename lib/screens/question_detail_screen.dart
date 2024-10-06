@@ -256,11 +256,14 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   Future<void> submitAnswer() async {
     const uuid = Uuid();
     final content = answerTextEditingController.text;
-    final ownerID = ref.read(currentUserIDProvider)!;
+    final ownerID = ref.read(currentUserIDProvider);
     final id = uuid.v4();
     final questionID = widget.questionID;
     final newAnswer = Answer(
-        id: id, ownerID: ownerID, questionID: questionID, content: content);
+        id: id,
+        ownerID: ownerID.value!,
+        questionID: questionID,
+        content: content);
     registerAnswer(newAnswer);
   }
 }

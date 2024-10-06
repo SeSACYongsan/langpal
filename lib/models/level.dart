@@ -1,4 +1,8 @@
-enum Level { beginner, intermediate, advanced }
+enum Level {
+  beginner,
+  intermediate,
+  advanced,
+}
 
 extension ParseToString on Level {
   String toKoreanName() {

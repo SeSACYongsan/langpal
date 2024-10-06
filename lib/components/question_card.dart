@@ -56,7 +56,7 @@ class QuestionCard extends StatelessWidget {
                     Text(
                       question.content,
                       style: Theme.of(context).textTheme.titleSmall,
-                    )
+                    ),
                   ],
                 ),
               ),

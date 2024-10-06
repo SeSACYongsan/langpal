@@ -11,13 +11,14 @@ import 'package:langpal/providers/fields/target_language_dropdown_provider.dart'
 import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 
-final currentUserIDProvider = NotifierProvider<CurrentUserIDNotifier, String?>(
+final currentUserIDProvider =
+    AsyncNotifierProvider<CurrentUserIDNotifier, String?>(
   () {
     return CurrentUserIDNotifier();
   },
 );
 
-class CurrentUserIDNotifier extends Notifier<String?> {
+class CurrentUserIDNotifier extends AsyncNotifier<String?> {
   void addToFirestore() async {
     final firstLanguage = ref.read(firstLanguageDropdownProvider);
     final targetLanguage = ref.read(targetLanguageDropdownProvider);
@@ -29,7 +30,7 @@ class CurrentUserIDNotifier extends Notifier<String?> {
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"];
     final userRef = users.doc(userID);
-    state = userID;
+    state = AsyncData(userID);
     final info = LangpalUserInfo(
       firstLanguage: firstLanguage,
       targetLanguage: targetLanguage,
@@ -47,6 +48,29 @@ class CurrentUserIDNotifier extends Notifier<String?> {
 
   @override
   build() {
+    return null;
+  }
+
+  Future<LangpalUser?> getUser() async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final userReference =
+        firestoreInstance.collection("users").doc(state.value);
+    final userSnapshot = await userReference.get();
+    try {
+      if (userSnapshot.exists) {
+        final user = userSnapshot.data();
+        if (user != null) {
+          final langpalUser = LangpalUser.fromMap(user);
+          return langpalUser;
+        } else {
+          throw Exception("The user is null");
+        }
+      } else {
+        throw Exception("The user doesn't exist");
+      }
+    } catch (error) {
+      print(error);
+    }
     return null;
   }
 
@@ -71,7 +95,7 @@ class CurrentUserIDNotifier extends Notifier<String?> {
           if (snapshot.exists) {
             if (snapshot.data() != null) {
               print("The snapshot data exists");
-              state = userID;
+              state = AsyncData(userID);
               return SignInStatus.userExist;
             } else {
               throw Exception("The snapshot data doesn't exist");
