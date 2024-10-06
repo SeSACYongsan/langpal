@@ -49,7 +49,7 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
   }
 
   @override
-  build() {
+  build() async {
     return null;
   }
 
