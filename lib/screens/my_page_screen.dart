@@ -51,12 +51,12 @@ class MyPageScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 30),
                       Text(
-                        "${user.info.username} (일반 회원)",
+                        "${user.info.username} (${user.isPremium ? "프리미엄 회원" : "일반 회원"})",
                         style: Theme.of(context).textTheme.titleLarge,
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        "330 포인트",
+                        "${user.point} 포인트",
                         style: Theme.of(context).textTheme.titleMedium,
                         textAlign: TextAlign.center,
                       ),

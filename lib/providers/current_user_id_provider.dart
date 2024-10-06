@@ -42,6 +42,8 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
       userID: userID!,
       emailAddress: emailAddress!,
       info: info,
+      isPremium: false,
+      point: 0,
     );
     await userRef.set(user.toMap());
   }
