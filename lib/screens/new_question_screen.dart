@@ -44,6 +44,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
             color: Colors.white,
           ),
           onPressed: () {
+            clearFields();
             Navigator.of(context).pop();
           },
         ),
