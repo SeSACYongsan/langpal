@@ -8,11 +8,11 @@ final questionTypeDropdownProvider =
 class QuestionTypeDropdownNotifier extends Notifier<QuestionType> {
   @override
   QuestionType build() {
-    return QuestionType.what;
+    return QuestionType.meaning;
   }
 
   void initializeQuestionType() {
-    state = QuestionType.what;
+    state = QuestionType.meaning;
   }
 
   void setQuestionType(QuestionType questionType) {
