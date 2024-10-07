@@ -5,41 +5,46 @@ import 'package:langpal/models/langpal_user.dart';
 class AnswerCard extends StatelessWidget {
   final LangpalUser user;
   final Answer answer;
+  final bool isProfileVisible;
   const AnswerCard({
     super.key,
     required this.user,
     required this.answer,
+    required this.isProfileVisible,
   });
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/images/profile.png",
-                  width: 70,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.person,
-                      size: 70,
-                    );
-                  },
-                ),
+          if (isProfileVisible)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      "assets/images/profile.png",
+                      width: 70,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.person,
+                          size: 70,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Text(
+                    user.info.username,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
               ),
-              const SizedBox(width: 20),
-              Text(
-                user.info.username,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
+            ),
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

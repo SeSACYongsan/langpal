@@ -124,6 +124,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       return AnswerCard(
                         user: user,
                         answer: answer,
+                        isProfileVisible: true,
                       );
                     }),
                     const SizedBox(height: 30),

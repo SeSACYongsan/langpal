@@ -62,6 +62,7 @@ class MyAnswersScreen extends ConsumerWidget {
                           child: AnswerCard(
                             answer: answer,
                             user: user,
+                            isProfileVisible: false,
                           ),
                         );
                       },
