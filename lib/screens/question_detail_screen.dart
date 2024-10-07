@@ -58,9 +58,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
               if (user == null) {
                 return const LoadingScreen();
               } else {
-                ref
-                    .read(answersProvider.notifier)
-                    .getAnswersByQuestionID(widget.questionID);
                 return asyncAnswers.when(
                   data: (answers) {
                     return SingleChildScrollView(
@@ -256,6 +253,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   void initState() {
     answerTextEditingController = TextEditingController();
     ref.read(questionProvider.notifier).getQuestionByID(widget.questionID);
+    ref
+        .read(answersProvider.notifier)
+        .getAnswersByQuestionID(widget.questionID);
     super.initState();
   }
 

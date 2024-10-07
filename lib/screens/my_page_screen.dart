@@ -5,6 +5,7 @@ import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/providers/current_user_id_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
+import 'package:langpal/screens/loading_screen.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
@@ -19,7 +20,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const LoadingScreen();
         } else if (snapshot.hasError) {
           return ErrorScreen(
             message: snapshot.error.toString(),
