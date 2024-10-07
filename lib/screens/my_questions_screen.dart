@@ -1,74 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/components/question_card.dart';
+import 'package:langpal/providers/my_questions_provider.dart';
+import 'package:langpal/screens/error_screen.dart';
+import 'package:langpal/screens/loading_screen.dart';
 
-class MyQuestionsScreen extends StatelessWidget {
+class MyQuestionsScreen extends ConsumerWidget {
   const MyQuestionsScreen({super.key});
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          "나의 질문",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        backgroundColor: Colors.blue,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  context.go("/main/my_page/my_questions/detail/wow");
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        offset: Offset(5, 5),
-                        color: Colors.black12,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        "2024-07-31 15:14",
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      Text(
-                        "Break a leg",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      Text(
-                        "무슨 뜻인가요?",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final asyncQuestions = ref.watch(myQuestionsProvider);
+    return asyncQuestions.when(
+      error: (error, stackTrace) {
+        return ErrorScreen(message: error.toString());
+      },
+      loading: () {
+        return const LoadingScreen();
+      },
+      data: (questions) {
+        if (questions == null) {
+          return const LoadingScreen();
+        } else {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: const Text(
+                "나의 질문",
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              backgroundColor: Colors.blue,
+            ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    ...questions.map(
+                      (question) {
+                        return QuestionCard(question: question);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }
