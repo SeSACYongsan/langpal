@@ -62,8 +62,18 @@ final routerProvider = Provider(
                   routes: [
                     GoRoute(
                       path: "detail/:question_id",
-                      builder: (context, state) =>
-                          const MyQuestionDetailScreen(),
+                      builder: (context, state) {
+                        final questionID = state.pathParameters["question_id"];
+                        if (questionID != null) {
+                          return MyQuestionDetailScreen(
+                            questionID: questionID,
+                          );
+                        } else {
+                          return const ErrorScreen(
+                              message:
+                                  "The question id is null for some reason");
+                        }
+                      },
                     ),
                   ],
                 ),

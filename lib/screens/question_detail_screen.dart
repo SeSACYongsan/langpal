@@ -193,7 +193,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               },
                             );
                           } else {
-                            submitAnswer();
+                            submitAnswer(username: user.info.username);
                           }
                         },
                         child: Text(
@@ -236,7 +236,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     ref.refresh(questionDetailProvider(widget.questionID));
   }
 
-  Future<void> submitAnswer() async {
+  Future<void> submitAnswer({required String username}) async {
     const uuid = Uuid();
     final content = answerTextEditingController.text;
     final ownerID = ref.read(currentUserIDProvider);
@@ -245,6 +245,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final newAnswer = Answer(
       id: id,
       ownerID: ownerID!,
+      ownerUsername: username,
       questionID: questionID,
       content: content,
       date: DateTime.now(),
