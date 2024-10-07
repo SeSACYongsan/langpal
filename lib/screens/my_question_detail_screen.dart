@@ -85,69 +85,77 @@ class MyQuestionDetailScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 20),
-                    ...answers.map((answer) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.check_box_outline_blank),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(50),
-                                        child: Image.asset(
-                                          "assets/images/profile.png",
-                                          width: 70,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return const Icon(Icons.person);
-                                          },
+                    if (answers.isEmpty)
+                      const Text(
+                        "등록된 답변이 없습니다",
+                        textAlign: TextAlign.center,
+                      )
+                    else
+                      ...answers.map((answer) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.check_box_outline_blank),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          child: Image.asset(
+                                            "assets/images/profile.png",
+                                            width: 70,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return const Icon(Icons.person);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        answer.ownerUsername,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(5, 5),
-                                          color: Colors.black12,
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          answer.ownerUsername,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge,
                                         ),
                                       ],
                                     ),
-                                    padding: const EdgeInsets.all(20),
-                                    child: Text(
-                                      answer.content,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            offset: Offset(5, 5),
+                                            color: Colors.black12,
+                                          ),
+                                        ],
+                                      ),
+                                      padding: const EdgeInsets.all(20),
+                                      child: Text(
+                                        answer.content,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    })
+                            ],
+                          ),
+                        );
+                      })
                   ],
                 ),
               ),
