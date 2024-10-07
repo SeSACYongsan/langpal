@@ -21,6 +21,9 @@ class QuestionsNotifier extends Notifier<List<Question>> {
       final question = Question.fromMap(data);
       return question;
     }).toList();
+    allQuestions.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     state = allQuestions;
   }
 

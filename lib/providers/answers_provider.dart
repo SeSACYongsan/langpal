@@ -29,6 +29,9 @@ class AnswersNotifier extends AsyncNotifier<List<Answer>> {
           throw Exception("The document doesn't exist");
         }
       }).toList();
+      allAnswers.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
       state = AsyncData(allAnswers);
     } catch (error) {
       state = AsyncError(error, StackTrace.current);
