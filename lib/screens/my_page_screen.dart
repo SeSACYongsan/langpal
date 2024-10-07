@@ -21,8 +21,10 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return const ErrorScreen();
-        } else if (snapshot.hasData) {
+          return ErrorScreen(
+            message: snapshot.error.toString(),
+          );
+        } else {
           final user = snapshot.data!;
           return Scaffold(
             backgroundColor: Colors.white,
@@ -170,8 +172,6 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
               ),
             ),
           );
-        } else {
-          return const ErrorScreen();
         }
       },
       future: currentUser,

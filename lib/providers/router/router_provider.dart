@@ -40,7 +40,9 @@ final routerProvider = Provider(
               builder: (context, state) {
                 final questionID = state.pathParameters["question_id"];
                 if (questionID == null) {
-                  return const ErrorScreen();
+                  return const ErrorScreen(
+                    message: "The question id is null for some reason",
+                  );
                 } else {
                   return QuestionDetailScreen(questionID: questionID);
                 }

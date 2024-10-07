@@ -216,7 +216,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     );
                   },
                   error: (error, stackTrace) {
-                    return const ErrorScreen();
+                    return ErrorScreen(
+                      message: error.toString(),
+                    );
                   },
                   loading: () {
                     return const CircularProgressIndicator();
@@ -225,7 +227,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
               }
             },
             error: (error, stackTrace) {
-              return const ErrorScreen();
+              return ErrorScreen(
+                message: error.toString(),
+              );
             },
             loading: () {
               return const CircularProgressIndicator();
@@ -233,7 +237,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           );
         }
       }, error: (error, stackTrace) {
-        return const ErrorScreen();
+        return ErrorScreen(
+          message: error.toString(),
+        );
       }, loading: () {
         return const CircularProgressIndicator();
       }),
