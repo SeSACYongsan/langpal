@@ -16,6 +16,9 @@ class SignInScreen extends ConsumerWidget {
             "assets/images/earth.png",
             height: double.infinity,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const Placeholder();
+            },
           ),
           SafeArea(
             child: Column(
@@ -76,6 +79,9 @@ class SignInScreen extends ConsumerWidget {
                           icon: Image.asset(
                             "assets/images/google_logo.png",
                             width: 30,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.person);
+                            },
                           ),
                           label: Text(
                             "SIGN IN WITH GOOGLE",
@@ -100,6 +106,9 @@ class SignInScreen extends ConsumerWidget {
                           icon: Image.asset(
                             "assets/images/apple_logo.png",
                             width: 30,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.person);
+                            },
                           ),
                           label: Text(
                             "SIGN IN WITH APPLE",

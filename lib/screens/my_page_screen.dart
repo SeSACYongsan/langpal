@@ -47,7 +47,12 @@ class MyPageScreen extends ConsumerWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(1000),
-                        child: Image.asset("assets/images/profile.png"),
+                        child: Image.asset(
+                          "assets/images/profile.png",
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.person);
+                          },
+                        ),
                       ),
                       const SizedBox(height: 30),
                       Text(

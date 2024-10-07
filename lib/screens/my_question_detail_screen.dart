@@ -80,6 +80,9 @@ class MyQuestionDetailScreen extends StatelessWidget {
                               child: Image.asset(
                                 "assets/images/profile.png",
                                 width: 70,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(Icons.person);
+                                },
                               ),
                             ),
                             const SizedBox(width: 10),

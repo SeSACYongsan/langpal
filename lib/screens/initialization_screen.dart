@@ -31,6 +31,9 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
             "assets/images/earth.png",
             height: double.infinity,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const Placeholder();
+            },
           ),
           SafeArea(
             child: Padding(

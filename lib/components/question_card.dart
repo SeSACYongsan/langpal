@@ -14,7 +14,16 @@ class QuestionCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(50),
-            child: Image.asset("assets/images/profile.png", width: 70),
+            child: Image.asset(
+              "assets/images/profile.png",
+              width: 70,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(
+                  Icons.person,
+                  size: 70,
+                );
+              },
+            ),
           ),
           const SizedBox(width: 20),
           Expanded(

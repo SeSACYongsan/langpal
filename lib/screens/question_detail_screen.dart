@@ -77,6 +77,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                                   child: Image.asset(
                                     "assets/images/profile.png",
                                     width: 70,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Icon(Icons.person);
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 20),
@@ -128,6 +131,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               child: Image.asset(
                                 "assets/images/profile.png",
                                 width: 70,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return const Icon(Icons.person);
+                                },
                               ),
                             ),
                             const SizedBox(height: 20),

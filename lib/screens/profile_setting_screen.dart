@@ -23,6 +23,9 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
             "assets/images/earth.png",
             height: double.infinity,
             fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const Placeholder();
+            },
           ),
           SingleChildScrollView(
             child: SafeArea(
