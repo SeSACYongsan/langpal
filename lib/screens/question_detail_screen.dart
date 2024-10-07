@@ -91,6 +91,10 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               "${user.info.targetLanguage.toKoreanName()} 수준: ${user.info.level.toKoreanName()}",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
+                            Text(
+                              "${question.point} pt",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
                           ],
                         ),
                       ],
