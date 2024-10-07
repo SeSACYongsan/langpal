@@ -179,6 +179,12 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
   }
 
   @override
+  void didUpdateWidget(covariant MyPageScreen oldWidget) {
+    currentUser = ref.read(currentUserIDProvider.notifier).getUser();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void initState() {
     currentUser = ref.read(currentUserIDProvider.notifier).getUser();
     super.initState();
