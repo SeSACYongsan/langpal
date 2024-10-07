@@ -4,7 +4,12 @@ import 'package:langpal/models/question.dart';
 
 class QuestionCard extends StatelessWidget {
   final Question question;
-  const QuestionCard({super.key, required this.question});
+  final String route;
+  const QuestionCard({
+    super.key,
+    required this.question,
+    required this.route,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,7 +34,7 @@ class QuestionCard extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                context.go("/main/questions/${question.id}");
+                context.go(route);
               },
               child: Container(
                 decoration: BoxDecoration(

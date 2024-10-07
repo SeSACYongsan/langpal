@@ -48,7 +48,11 @@ class MyQuestionsScreen extends ConsumerWidget {
                   children: [
                     ...questions.map(
                       (question) {
-                        return QuestionCard(question: question);
+                        return QuestionCard(
+                          question: question,
+                          route:
+                              "/main/my_page/my_questions/detail/${question.id}",
+                        );
                       },
                     ),
                   ],

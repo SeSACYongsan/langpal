@@ -45,8 +45,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         ),
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) =>
-            QuestionCard(question: questions[index]),
+        itemBuilder: (context, index) => QuestionCard(
+          question: questions[index],
+          route: "/main/questions/${questions[index].id}",
+        ),
         itemCount: questions.length,
       ),
       backgroundColor: Colors.white,
