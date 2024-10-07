@@ -22,6 +22,12 @@ class AnswerCard extends StatelessWidget {
                 child: Image.asset(
                   "assets/images/profile.png",
                   width: 70,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.person,
+                      size: 70,
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 20),
