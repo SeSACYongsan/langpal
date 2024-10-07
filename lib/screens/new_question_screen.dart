@@ -212,13 +212,8 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     const uuid = Uuid();
     final newQuestion = Question(
       id: uuid.v4(),
-<<<<<<< Updated upstream
-      ownerName: ownerName,
-      ownerID: userID!,
-=======
       ownerName: ownerName.toString(),
-      ownerID: userID.value!,
->>>>>>> Stashed changes
+      ownerID: userID!,
       questionType: questionType,
       content: content,
       point: point,
