@@ -10,6 +10,7 @@ import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/providers/question_provider.dart';
 import 'package:langpal/providers/user_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
+import 'package:langpal/screens/loading_screen.dart';
 import 'package:uuid/uuid.dart';
 
 class QuestionDetailScreen extends ConsumerStatefulWidget {
@@ -49,14 +50,14 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
       ),
       body: asyncQuestion.when(data: (question) {
         if (question == null) {
-          return const CircularProgressIndicator();
+          return const LoadingScreen();
         } else {
           final userID = question.ownerID;
           ref.read(userProvider.notifier).getUserByID(userID);
           return asyncUser.when(
             data: (user) {
               if (user == null) {
-                return const CircularProgressIndicator();
+                return const LoadingScreen();
               } else {
                 ref
                     .read(answersProvider.notifier)
@@ -221,7 +222,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     );
                   },
                   loading: () {
-                    return const CircularProgressIndicator();
+                    return const LoadingScreen();
                   },
                 );
               }
@@ -232,7 +233,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
               );
             },
             loading: () {
-              return const CircularProgressIndicator();
+              return const LoadingScreen();
             },
           );
         }
@@ -241,7 +242,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           message: error.toString(),
         );
       }, loading: () {
-        return const CircularProgressIndicator();
+        return const LoadingScreen();
       }),
     );
   }
