@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:langpal/models/dummy_notifications.dart';
 
 class NotificationsDetailScreen extends StatelessWidget {
   const NotificationsDetailScreen({super.key});
@@ -60,9 +59,9 @@ class NotificationsDetailScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(dummyNotifications[index].date.toString()),
+                      Text([][index].date.toString()),
                       const SizedBox(height: 10),
-                      Text(dummyNotifications[index].content),
+                      Text([][index].content),
                     ],
                   ),
                 ),
@@ -70,7 +69,7 @@ class NotificationsDetailScreen extends StatelessWidget {
             ],
           ),
         ),
-        itemCount: dummyNotifications.length,
+        itemCount: [].length,
       ),
     );
   }
