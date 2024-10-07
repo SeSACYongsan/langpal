@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:langpal/components/answer_card.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
@@ -94,9 +95,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                         ),
                       ],
                     ),
-                    ...answers.map((answer) {
-                      return Text(answer.content);
-                    }),
                     const SizedBox(height: 20),
                     Container(
                       padding: const EdgeInsets.all(20),
@@ -117,6 +115,12 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
+                    const SizedBox(height: 30),
+                    ...answers.map((answer) {
+                      return AnswerCard(
+                          username: user.info.username,
+                          content: answer.content);
+                    }),
                     const SizedBox(height: 30),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
