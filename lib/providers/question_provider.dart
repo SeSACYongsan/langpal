@@ -17,8 +17,8 @@ class QuestionNotifier extends AsyncNotifier<Question?> {
   Future<void> getQuestionByID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");
-    final questionRef = questions.doc(questionID);
-    final snapshot = await questionRef.get();
+    final questionReference = questions.doc(questionID);
+    final snapshot = await questionReference.get();
     try {
       if (snapshot.exists) {
         if (snapshot.data() != null) {

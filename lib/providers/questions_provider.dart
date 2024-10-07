@@ -30,8 +30,8 @@ class QuestionsNotifier extends Notifier<List<Question>> {
   Future<void> saveQuestion(Question question) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");
-    final questionRef = questions.doc(question.id);
-    await questionRef.set(question.toMap());
+    final questionReference = questions.doc(question.id);
+    await questionReference.set(question.toMap());
     final data = state;
     state = [...data, question];
   }

@@ -17,8 +17,8 @@ class UserNotifier extends AsyncNotifier<LangpalUser?> {
   Future<void> getUserByID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final users = firestoreInstance.collection("users");
-    final userRef = users.doc(userID);
-    final userSnapshot = await userRef.get();
+    final userReference = users.doc(userID);
+    final userSnapshot = await userReference.get();
     try {
       if (userSnapshot.exists) {
         print("The user exists");

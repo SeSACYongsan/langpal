@@ -27,7 +27,7 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
     final displayName = ref.read(tempUserProvider)!["displayName"];
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"];
-    final userRef = users.doc(userID);
+    final userReference = users.doc(userID);
     state = AsyncData(userID);
     final info = LangpalUserInfo(
       firstLanguage: firstLanguage,
@@ -43,7 +43,7 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
       isPremium: false,
       point: 0,
     );
-    await userRef.set(user.toMap());
+    await userReference.set(user.toMap());
   }
 
   @override
@@ -90,8 +90,8 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
           final userID = credential.user!.uid;
           final firestoreInstance = FirebaseFirestore.instance;
           final users = firestoreInstance.collection("users");
-          final userRef = users.doc(userID);
-          final snapshot = await userRef.get();
+          final userReference = users.doc(userID);
+          final snapshot = await userReference.get();
           if (snapshot.exists) {
             if (snapshot.data() != null) {
               print("The snapshot data exists");
