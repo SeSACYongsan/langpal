@@ -3,11 +3,12 @@ class Answer {
   final String ownerID;
   final String questionID;
   final String content;
-  Answer(
-      {required this.id,
-      required this.ownerID,
-      required this.questionID,
-      required this.content});
+  Answer({
+    required this.id,
+    required this.ownerID,
+    required this.questionID,
+    required this.content,
+  });
   factory Answer.fromMap(Map<String, dynamic> map) {
     return Answer(
       id: map["id"],
