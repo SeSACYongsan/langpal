@@ -206,14 +206,14 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     final content = newQuestionTextEditingController.text;
     final point = ref.read(pointSliderProvider).toInt();
     final firestoreInstance = FirebaseFirestore.instance;
-    final userRef = firestoreInstance.collection("users").doc(userID.value);
+    final userRef = firestoreInstance.collection("users").doc(userID);
     final snapshot = await userRef.get();
     final ownerName = snapshot.data()!["info"]["username"];
     const uuid = Uuid();
     final newQuestion = Question(
       id: uuid.v4(),
       ownerName: ownerName,
-      ownerID: userID.value!,
+      ownerID: userID!,
       questionType: questionType,
       content: content,
       point: point,

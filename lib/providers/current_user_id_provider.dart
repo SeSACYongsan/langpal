@@ -12,11 +12,11 @@ import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 
 final currentUserIDProvider =
-    AsyncNotifierProvider<CurrentUserIDNotifier, String?>(() {
+    NotifierProvider<CurrentUserIDNotifier, String?>(() {
   return CurrentUserIDNotifier();
 });
 
-class CurrentUserIDNotifier extends AsyncNotifier<String?> {
+class CurrentUserIDNotifier extends Notifier<String?> {
   void addToFirestore() async {
     final firstLanguage = ref.read(firstLanguageDropdownProvider);
     final targetLanguage = ref.read(targetLanguageDropdownProvider);
@@ -28,7 +28,7 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"];
     final userReference = users.doc(userID);
-    state = AsyncData(userID);
+    state = userID;
     final info = LangpalUserInfo(
       firstLanguage: firstLanguage,
       targetLanguage: targetLanguage,
@@ -47,14 +47,13 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
   }
 
   @override
-  build() async {
+  build() {
     return null;
   }
 
   Future<LangpalUser?> getUser() async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final userReference =
-        firestoreInstance.collection("users").doc(state.value);
+    final userReference = firestoreInstance.collection("users").doc(state);
     final userSnapshot = await userReference.get();
     try {
       if (userSnapshot.exists) {
@@ -95,7 +94,7 @@ class CurrentUserIDNotifier extends AsyncNotifier<String?> {
           if (snapshot.exists) {
             if (snapshot.data() != null) {
               print("The snapshot data exists");
-              state = AsyncData(userID);
+              state = userID;
               return SignInStatus.userExist;
             } else {
               throw Exception("The snapshot data doesn't exist");
