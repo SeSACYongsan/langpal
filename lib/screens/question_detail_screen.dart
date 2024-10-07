@@ -122,8 +122,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     const SizedBox(height: 30),
                     ...answers.map((answer) {
                       return AnswerCard(
-                          username: user.info.username,
-                          content: answer.content);
+                        user: user,
+                        answer: answer,
+                      );
                     }),
                     const SizedBox(height: 30),
                     ClipRRect(

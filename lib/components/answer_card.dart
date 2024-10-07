@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:langpal/models/answer.dart';
+import 'package:langpal/models/langpal_user.dart';
 
 class AnswerCard extends StatelessWidget {
-  final String username;
-  final String content;
+  final LangpalUser user;
+  final Answer answer;
   const AnswerCard({
     super.key,
-    required this.username,
-    required this.content,
+    required this.user,
+    required this.answer,
   });
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class AnswerCard extends StatelessWidget {
               ),
               const SizedBox(width: 20),
               Text(
-                username,
+                user.info.username,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -52,7 +54,7 @@ class AnswerCard extends StatelessWidget {
               ],
               color: Colors.white,
             ),
-            child: Text(content),
+            child: Text(answer.content),
           ),
         ],
       ),
