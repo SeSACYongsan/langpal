@@ -28,7 +28,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final asyncQuestion = ref.watch(questionProvider);
     final asyncUser = ref.watch(userProvider);
     final asyncAnswers = ref.watch(answersProvider);
-    ref.read(questionProvider.notifier).getQuestionByID(widget.questionID);
     answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -256,6 +255,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   @override
   void initState() {
     answerTextEditingController = TextEditingController();
+    ref.read(questionProvider.notifier).getQuestionByID(widget.questionID);
     super.initState();
   }
 

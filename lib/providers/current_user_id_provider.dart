@@ -12,11 +12,9 @@ import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 
 final currentUserIDProvider =
-    AsyncNotifierProvider<CurrentUserIDNotifier, String?>(
-  () {
-    return CurrentUserIDNotifier();
-  },
-);
+    AsyncNotifierProvider<CurrentUserIDNotifier, String?>(() {
+  return CurrentUserIDNotifier();
+});
 
 class CurrentUserIDNotifier extends AsyncNotifier<String?> {
   void addToFirestore() async {
