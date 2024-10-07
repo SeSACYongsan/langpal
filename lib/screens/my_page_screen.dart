@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/providers/current_user_id_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 
-class MyPageScreen extends ConsumerWidget {
+class MyPageScreen extends ConsumerStatefulWidget {
   const MyPageScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.read(currentUserIDProvider.notifier).getUser();
+  ConsumerState<MyPageScreen> createState() => _MyPageScreenState();
+}
+
+class _MyPageScreenState extends ConsumerState<MyPageScreen> {
+  late Future<LangpalUser?> currentUser;
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -170,5 +176,11 @@ class MyPageScreen extends ConsumerWidget {
       },
       future: currentUser,
     );
+  }
+
+  @override
+  void initState() {
+    currentUser = ref.read(currentUserIDProvider.notifier).getUser();
+    super.initState();
   }
 }
