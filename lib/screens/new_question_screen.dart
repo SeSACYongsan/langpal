@@ -217,6 +217,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
       questionType: questionType,
       content: content,
       point: point,
+      date: DateTime.now(),
     );
     return newQuestion;
   }

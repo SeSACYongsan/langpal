@@ -273,10 +273,12 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final id = uuid.v4();
     final questionID = widget.questionID;
     final newAnswer = Answer(
-        id: id,
-        ownerID: ownerID.value!,
-        questionID: questionID,
-        content: content);
+      id: id,
+      ownerID: ownerID.value!,
+      questionID: questionID,
+      content: content,
+      date: DateTime.now(),
+    );
     registerAnswer(newAnswer);
   }
 }

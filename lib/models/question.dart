@@ -7,6 +7,7 @@ class Question {
   final int point;
   final QuestionType questionType;
   final String content;
+  final DateTime date;
   Question({
     required this.id,
     required this.ownerName,
@@ -14,6 +15,7 @@ class Question {
     required this.point,
     required this.questionType,
     required this.content,
+    required this.date,
   });
   factory Question.fromMap(Map<String, dynamic> map) {
     return Question(
@@ -23,6 +25,7 @@ class Question {
       point: int.parse(map["point"]),
       questionType: QuestionType.values.byName(map["questionType"]),
       content: map["content"],
+      date: DateTime.parse(map["date"]),
     );
   }
   Map<String, dynamic> toMap() {
@@ -33,6 +36,7 @@ class Question {
       "point": point.toString(),
       "questionType": questionType.name,
       "content": content,
+      "date": date.toString(),
     };
   }
 }
