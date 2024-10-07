@@ -228,6 +228,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final answerReference =
         firestoreInstance.collection("answers").doc(answer.id);
     await answerReference.set(answer.toMap());
+    ref.read(answerTextFieldProvider.notifier).initializeAnswer();
     ref.refresh(questionDetailProvider(widget.questionID));
   }
 

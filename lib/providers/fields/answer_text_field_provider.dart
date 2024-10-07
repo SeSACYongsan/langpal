@@ -13,6 +13,10 @@ class AnswerTextFieldNotifier extends Notifier<String> {
     return "";
   }
 
+  void initializeAnswer() {
+    state = "";
+  }
+
   void setAnswer(String answer) {
     state = answer;
   }
