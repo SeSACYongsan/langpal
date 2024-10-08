@@ -212,17 +212,13 @@ class _MyQuestionDetailScreenState
           actionsAlignment: MainAxisAlignment.spaceBetween,
           actions: [
             TextButton(
-              onPressed: () {
-                final asyncData = ref.read(chosenAnswerProvider(answerID));
-                asyncData.when(data: (_) {
-                  print("Succeeded to set the chosen answer");
-                  ref.refresh(myQuestionDetailProvider(widget.questionID));
-                  Navigator.of(context).pop();
-                }, error: (error, stackTrace) {
-                  print(error);
-                }, loading: () {
-                  print("Loading...");
-                });
+              onPressed: () async {
+                await ref
+                    .read(chosenAnswerProvider.notifier)
+                    .setChosenAnswer(answerID);
+                print("Succeeded to set the chosen answer");
+                ref.refresh(myQuestionDetailProvider(widget.questionID));
+                Navigator.of(context).pop();
               },
               child: Text(
                 "선택",
