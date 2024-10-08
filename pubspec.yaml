@@ -36,6 +36,7 @@ dependencies:
     cupertino_icons: ^1.0.6
     go_router:
     flutter_riverpod:
+    riverpod_annotation:
     intl:
     dropdown_button2:
     cloud_firestore:
@@ -47,6 +48,10 @@ dependencies:
 dev_dependencies:
     flutter_test:
         sdk: flutter
+    build_runner:
+    riverpod_generator:
+    riverpod_lint:
+    custom_lint:
 
     # The "flutter_lints" package below contains a set of recommended lints to
     # encourage good coding practices. The lint set provided by the package is
