@@ -3,19 +3,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/chosen_answer_provider.dart';
 import 'package:langpal/providers/my_question_detail_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 
-class MyQuestionDetailScreen extends ConsumerWidget {
+class MyQuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
   const MyQuestionDetailScreen({
     super.key,
     required this.questionID,
   });
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncData = ref.watch(myQuestionDetailProvider(questionID));
+  ConsumerState<MyQuestionDetailScreen> createState() =>
+      _MyQuestionDetailScreenState();
+}
+
+class _MyQuestionDetailScreenState
+    extends ConsumerState<MyQuestionDetailScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final asyncData = ref.watch(myQuestionDetailProvider(widget.questionID));
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -27,6 +35,7 @@ class MyQuestionDetailScreen extends ConsumerWidget {
         if (data != null) {
           final question = data["question"] as Question;
           final answers = data["answers"] as List<Answer>;
+          final chosenAnswerID = data["chosenAnswerID"] as String?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -91,71 +100,86 @@ class MyQuestionDetailScreen extends ConsumerWidget {
                         textAlign: TextAlign.center,
                       )
                     else
-                      ...answers.map((answer) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.check_box_outline_blank),
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          child: Image.asset(
-                                            "assets/images/profile.png",
-                                            width: 70,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return const Icon(Icons.person);
-                                            },
+                      ...answers.map(
+                        (answer) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (chosenAnswerID == null)
+                                  IconButton(
+                                    onPressed: () {
+                                      onCheckboxChecked(
+                                          answerID: answer.id,
+                                          context: context);
+                                    },
+                                    icon: const Icon(
+                                        Icons.check_box_outline_blank),
+                                  ),
+                                if (chosenAnswerID == answer.id)
+                                  const Icon(
+                                    Icons.check_circle,
+                                    color: Colors.green,
+                                    size: 30,
+                                  ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            child: Image.asset(
+                                              "assets/images/profile.png",
+                                              width: 70,
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return const Icon(Icons.person);
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          answer.ownerUsername,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleLarge,
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            offset: Offset(5, 5),
-                                            color: Colors.black12,
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            answer.ownerUsername,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge,
                                           ),
                                         ],
                                       ),
-                                      padding: const EdgeInsets.all(20),
-                                      child: Text(
-                                        answer.content,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
+                                      const SizedBox(height: 20),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              offset: Offset(5, 5),
+                                              color: Colors.black12,
+                                            ),
+                                          ],
+                                        ),
+                                        padding: const EdgeInsets.all(20),
+                                        child: Text(
+                                          answer.content,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      })
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),
@@ -164,6 +188,52 @@ class MyQuestionDetailScreen extends ConsumerWidget {
         } else {
           return const LoadingScreen();
         }
+      },
+    );
+  }
+
+  void onCheckboxChecked(
+      {required String answerID, required BuildContext context}) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("이 답변을 선택하시겠어요?"),
+          icon: const Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          ),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            TextButton(
+              onPressed: () {
+                final asyncData = ref.read(chosenAnswerProvider(answerID));
+                asyncData.when(data: (_) {
+                  print("Succeeded to set the chosen answer");
+                  ref.refresh(myQuestionDetailProvider(widget.questionID));
+                  Navigator.of(context).pop();
+                }, error: (error, stackTrace) {
+                  print(error);
+                }, loading: () {
+                  print("Loading...");
+                });
+              },
+              child: Text(
+                "선택",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                "취소",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+          ],
+        );
       },
     );
   }

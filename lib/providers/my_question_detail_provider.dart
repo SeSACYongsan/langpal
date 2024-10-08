@@ -14,6 +14,7 @@ final myQuestionDetailProvider =
     if (questionSnapshot.exists) {
       if (questionSnapshot.data() != null) {
         final question = Question.fromMap(questionSnapshot.data()!);
+
         final questionID = question.id;
         final answers = firestoreInstance.collection("answers");
         final answersReference =
@@ -28,9 +29,11 @@ final myQuestionDetailProvider =
         matchingAnswers.sort((a, b) {
           return a.date.compareTo(b.date);
         });
+        final chosenAnswerID = question.chosenAnswerID;
         return {
           "question": question,
           "answers": matchingAnswers,
+          "chosenAnswerID": chosenAnswerID,
         };
       } else {
         throw Exception("The question data is null");
