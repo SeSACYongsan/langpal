@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final pointSliderProvider =
-    NotifierProvider<PointSliderNotifier, double>(() => PointSliderNotifier());
+part 'point_slider_provider.g.dart';
 
-class PointSliderNotifier extends Notifier<double> {
+@riverpod
+class PointSlider extends _$PointSlider {
   @override
   double build() {
     return 50;

@@ -1,10 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/level.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final levelDropdownProvider = NotifierProvider<LevelDropdownNotifier, Level>(
-    () => LevelDropdownNotifier());
+part 'level_dropdown_provider.g.dart';
 
-class LevelDropdownNotifier extends Notifier<Level> {
+@riverpod
+class LevelDropdown extends _$LevelDropdown {
   @override
   Level build() {
     return Level.beginner;

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final usernameTextFieldProvider =
-    NotifierProvider<UsernameTextFieldNotifier, String>(
-        () => UsernameTextFieldNotifier());
+part 'username_text_field_provider.g.dart';
 
-class UsernameTextFieldNotifier extends Notifier<String> {
+@riverpod
+class UsernameTextField extends _$UsernameTextField {
   @override
   String build() {
     return "";

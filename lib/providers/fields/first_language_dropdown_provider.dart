@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/language.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final firstLanguageDropdownProvider =
-    NotifierProvider<FirstLanguageDropdownNotifier, Language>(
-        () => FirstLanguageDropdownNotifier());
+part 'first_language_dropdown_provider.g.dart';
 
-class FirstLanguageDropdownNotifier extends Notifier<Language> {
+@riverpod
+class FirstLanguageDropdown extends _$FirstLanguageDropdown {
   @override
   Language build() {
     return Language.korean;

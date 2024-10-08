@@ -1,13 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final answerTextFieldProvider =
-    NotifierProvider<AnswerTextFieldNotifier, String>(
-  () {
-    return AnswerTextFieldNotifier();
-  },
-);
+part 'answer_text_field_provider.g.dart';
 
-class AnswerTextFieldNotifier extends Notifier<String> {
+@riverpod
+class AnswerTextField extends _$AnswerTextField {
   @override
   String build() {
     return "";

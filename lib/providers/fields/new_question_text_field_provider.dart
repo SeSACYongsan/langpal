@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final newQuestionTextFieldProvider =
-    NotifierProvider<NewQuestionTextFieldNotifier, String>(
-        () => NewQuestionTextFieldNotifier());
+part 'new_question_text_field_provider.g.dart';
 
-class NewQuestionTextFieldNotifier extends Notifier<String> {
+@riverpod
+class NewQuestionTextField extends _$NewQuestionTextField {
   @override
   String build() {
     return "";

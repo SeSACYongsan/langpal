@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final questionTypeDropdownProvider =
-    NotifierProvider<QuestionTypeDropdownNotifier, QuestionType>(
-        () => QuestionTypeDropdownNotifier());
+part 'question_type_dropdown_provider.g.dart';
 
-class QuestionTypeDropdownNotifier extends Notifier<QuestionType> {
+@riverpod
+class QuestionTypeDropdown extends _$QuestionTypeDropdown {
   @override
   QuestionType build() {
     return QuestionType.meaning;
