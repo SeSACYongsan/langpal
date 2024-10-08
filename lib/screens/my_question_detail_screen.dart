@@ -192,6 +192,12 @@ class _MyQuestionDetailScreenState
     );
   }
 
+  @override
+  void initState() {
+    ref.refresh(myQuestionDetailProvider(widget.questionID));
+    super.initState();
+  }
+
   void onCheckboxChecked(
       {required String answerID, required BuildContext context}) async {
     showDialog(
