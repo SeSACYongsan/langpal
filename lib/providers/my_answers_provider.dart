@@ -19,6 +19,9 @@ final myAnswersProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
         throw Exception("The answer document doesn't exist");
       }
     }).toList();
+    matchingAnswers.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     final userSnapshot =
         await firestoreInstance.collection("users").doc(currentUserID).get();
     if (userSnapshot.exists) {

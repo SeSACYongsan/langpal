@@ -25,6 +25,9 @@ final myQuestionDetailProvider =
             throw Exception("The answer document doesn't exist");
           }
         }).toList();
+        matchingAnswers.sort((a, b) {
+          return a.date.compareTo(b.date);
+        });
         return {
           "question": question,
           "answers": matchingAnswers,

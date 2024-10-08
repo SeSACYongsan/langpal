@@ -17,6 +17,9 @@ final myQuestionsProvider = FutureProvider<List<Question>?>((ref) async {
         throw Exception("The question document doesn't exist");
       }
     }).toList();
+    matchingQuestions.sort((a, b) {
+      return a.date.compareTo(b.date);
+    });
     return matchingQuestions;
   } catch (error) {
     print(error);

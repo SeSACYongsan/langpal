@@ -8,10 +8,15 @@ import 'package:langpal/providers/my_answers_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 
-class MyAnswersScreen extends ConsumerWidget {
+class MyAnswersScreen extends ConsumerStatefulWidget {
   const MyAnswersScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MyAnswersScreen> createState() => _MyAnswersScreenState();
+}
+
+class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
+  @override
+  Widget build(BuildContext context) {
     final asyncAnswers = ref.watch(myAnswersProvider);
     return asyncAnswers.when(
       error: (error, stackTrace) {
@@ -75,5 +80,11 @@ class MyAnswersScreen extends ConsumerWidget {
         }
       },
     );
+  }
+
+  @override
+  void initState() {
+    ref.refresh(myAnswersProvider);
+    super.initState();
   }
 }
