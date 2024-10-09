@@ -1,11 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final tempUserProvider =
-    NotifierProvider<TempUserNotifier, Map<String, String>?>(() {
-  return TempUserNotifier();
-});
+part 'temp_user_provider.g.dart';
 
-class TempUserNotifier extends Notifier<Map<String, String>?> {
+@riverpod
+class TempUser extends _$TempUser {
   @override
   Map<String, String>? build() {
     return null;

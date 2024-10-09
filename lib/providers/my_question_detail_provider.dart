@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final myQuestionDetailProvider = AsyncNotifierProvider.family<
-    MyQuestionDetailNotifier, Map<String, dynamic>?, String>(() {
-  return MyQuestionDetailNotifier();
-});
+part 'my_question_detail_provider.g.dart';
 
-class MyQuestionDetailNotifier
-    extends FamilyAsyncNotifier<Map<String, dynamic>?, String> {
+@riverpod
+class MyQuestionDetail extends _$MyQuestionDetail {
   @override
-  build(String questionID) async {
+  Future<Map<String, dynamic>?> build(String questionID) async {
     return await getQuestionDetail(questionID);
   }
 

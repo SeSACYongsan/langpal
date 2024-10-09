@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/question.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final questionDetailProvider = FutureProvider.family
-    .autoDispose<Map<String, dynamic>?, String>((ref, questionID) async {
+part 'question_detail_provider.g.dart';
+
+@riverpod
+Future<Map<String, dynamic>?> questionDetail(
+    QuestionDetailRef ref, String questionID) async {
   final firestoreInstance = FirebaseFirestore.instance;
   final questionReference =
       firestoreInstance.collection("questions").doc(questionID);
@@ -55,4 +59,4 @@ final questionDetailProvider = FutureProvider.family
     print(error);
   }
   return null;
-});
+}

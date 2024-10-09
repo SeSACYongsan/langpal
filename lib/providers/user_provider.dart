@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/langpal_user.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final userProvider = AsyncNotifierProvider<UserNotifier, LangpalUser?>(() {
-  return UserNotifier();
-});
+part 'user_provider.g.dart';
 
-class UserNotifier extends AsyncNotifier<LangpalUser?> {
+@riverpod
+class User extends _$User {
   @override
   Future<LangpalUser?> build() async {
     return null;

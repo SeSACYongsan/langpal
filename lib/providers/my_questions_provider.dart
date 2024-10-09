@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_id_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final myQuestionsProvider = FutureProvider<List<Question>?>((ref) async {
+part 'my_questions_provider.g.dart';
+
+@riverpod
+Future<List<Question>?> myQuestions(MyQuestionsRef ref) async {
   final currentUserID = ref.read(currentUserIDProvider);
   final firestoreInstance = FirebaseFirestore.instance;
   final questions = firestoreInstance.collection("questions");
@@ -25,4 +28,4 @@ final myQuestionsProvider = FutureProvider<List<Question>?>((ref) async {
     print(error);
   }
   return null;
-});
+}

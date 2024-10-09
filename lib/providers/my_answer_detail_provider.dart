@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final myAnswerDetailProvider =
-    FutureProvider.family<Map<String, dynamic>?, String>((ref, answerID) async {
+part 'my_answer_detail_provider.g.dart';
+
+@riverpod
+Future<Map<String, dynamic>?> myAnswerDetail(
+    MyAnswerDetailRef ref, String answerID) async {
   final firestoreInstance = FirebaseFirestore.instance;
   final answerSnapshot =
       await firestoreInstance.collection("answers").doc(answerID).get();
@@ -31,4 +35,4 @@ final myAnswerDetailProvider =
     print(error);
   }
   return null;
-});
+}

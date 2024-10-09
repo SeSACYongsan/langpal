@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:langpal/models/question.dart';
+import 'package:langpal/models/question.dart' as model;
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final questionProvider = AsyncNotifierProvider<QuestionNotifier, Question?>(() {
-  return QuestionNotifier();
-});
+part 'question_provider.g.dart';
 
-class QuestionNotifier extends AsyncNotifier<Question?> {
+@riverpod
+class Question extends _$Question {
   @override
-  Future<Question?> build() async {
+  Future<model.Question?> build() async {
     return null;
   }
 
@@ -23,7 +22,7 @@ class QuestionNotifier extends AsyncNotifier<Question?> {
       if (snapshot.exists) {
         if (snapshot.data() != null) {
           final data = snapshot.data()!;
-          final question = Question.fromMap(data);
+          final question = model.Question.fromMap(data);
           print(question);
           state = AsyncData(question);
         } else {

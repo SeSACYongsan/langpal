@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final questionsProvider =
-    NotifierProvider<QuestionsNotifier, List<Question>>(() {
-  return QuestionsNotifier();
-});
+part 'questions_provider.g.dart';
 
-class QuestionsNotifier extends Notifier<List<Question>> {
+@riverpod
+class Questions extends _$Questions {
   @override
   List<Question> build() {
     return [];

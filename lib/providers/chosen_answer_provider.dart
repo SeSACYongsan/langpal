@@ -8,7 +8,7 @@ part 'chosen_answer_provider.g.dart';
 @riverpod
 class ChosenAnswer extends _$ChosenAnswer {
   @override
-  build() {}
+  void build() {}
 
   Future<void> setChosenAnswer(String answerID) async {
     final firestoreInstance = FirebaseFirestore.instance;

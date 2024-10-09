@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/providers/current_user_id_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final myAnswersProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
+part 'my_answers_provider.g.dart';
+
+@riverpod
+Future<Map<String, dynamic>?> myAnswers(MyAnswersRef ref) async {
   final currentUserID = ref.read(currentUserIDProvider);
   final firestoreInstance = FirebaseFirestore.instance;
   final answers = await firestoreInstance
@@ -37,4 +40,4 @@ final myAnswersProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
     print(error);
   }
   return null;
-});
+}

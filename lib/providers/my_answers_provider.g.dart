@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chosen_answer_provider.dart';
+part of 'my_answers_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chosenAnswerHash() => r'533412bef644bd2f1e84aff56362e8558be6b879';
+String _$myAnswersHash() => r'51a8fdeba96449cd8b4415765f7c73fb426bda10';
 
-/// See also [ChosenAnswer].
-@ProviderFor(ChosenAnswer)
-final chosenAnswerProvider =
-    AutoDisposeNotifierProvider<ChosenAnswer, void>.internal(
-  ChosenAnswer.new,
-  name: r'chosenAnswerProvider',
+/// See also [myAnswers].
+@ProviderFor(myAnswers)
+final myAnswersProvider =
+    AutoDisposeFutureProvider<Map<String, dynamic>?>.internal(
+  myAnswers,
+  name: r'myAnswersProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$chosenAnswerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$myAnswersHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ChosenAnswer = AutoDisposeNotifier<void>;
+typedef MyAnswersRef = AutoDisposeFutureProviderRef<Map<String, dynamic>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
