@@ -22,7 +22,7 @@ class User extends _$User {
       if (userSnapshot.exists) {
         print("The user exists");
         final data = userSnapshot.data()!;
-        final user = LangpalUser.fromMap(data);
+        final user = LangpalUser.fromJson(data);
         state = AsyncData(user);
       } else {
         throw Exception("The user doesn't exist");

@@ -6,12 +6,12 @@ part of 'temp_user_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tempUserHash() => r'01b292e70165dd30cee0297df03d79b10535f08d';
+String _$tempUserHash() => r'467dec00ba239250a71e50ff1d5af4642721cc13';
 
 /// See also [TempUser].
 @ProviderFor(TempUser)
 final tempUserProvider =
-    AutoDisposeNotifierProvider<TempUser, Map<String, String>?>.internal(
+    NotifierProvider<TempUser, Map<String, String>?>.internal(
   TempUser.new,
   name: r'tempUserProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final tempUserProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$TempUser = AutoDisposeNotifier<Map<String, String>?>;
+typedef _$TempUser = Notifier<Map<String, String>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

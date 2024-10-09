@@ -17,7 +17,7 @@ Future<Map<String, dynamic>?> myAnswers(MyAnswersRef ref) async {
   try {
     final matchingAnswers = answers.docs.map((document) {
       if (document.exists) {
-        return Answer.fromMap(document.data());
+        return Answer.fromJson(document.data());
       } else {
         throw Exception("The answer document doesn't exist");
       }
@@ -28,7 +28,7 @@ Future<Map<String, dynamic>?> myAnswers(MyAnswersRef ref) async {
     final userSnapshot =
         await firestoreInstance.collection("users").doc(currentUserID).get();
     if (userSnapshot.exists) {
-      final user = LangpalUser.fromMap(userSnapshot.data()!);
+      final user = LangpalUser.fromJson(userSnapshot.data()!);
       return {
         "answers": matchingAnswers,
         "user": user,

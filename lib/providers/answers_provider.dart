@@ -22,7 +22,7 @@ class Answers extends _$Answers {
     try {
       final allAnswers = answerDocuments.map((document) {
         if (document.exists) {
-          return Answer.fromMap(document.data());
+          return Answer.fromJson(document.data());
         } else {
           throw Exception("The document doesn't exist");
         }

@@ -16,7 +16,7 @@ class ChosenAnswer extends _$ChosenAnswer {
         await firestoreInstance.collection("answers").doc(answerID).get();
     try {
       if (answerSnapshot.exists) {
-        final answer = Answer.fromMap(answerSnapshot.data()!);
+        final answer = Answer.fromJson(answerSnapshot.data()!);
         final questionID = answer.questionID;
         final questionSnapshot = await firestoreInstance
             .collection("questions")

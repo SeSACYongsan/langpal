@@ -1,36 +1,17 @@
-class Answer {
-  final String id;
-  final String ownerID;
-  final String ownerUsername;
-  final String questionID;
-  final String content;
-  final DateTime date;
-  Answer({
-    required this.id,
-    required this.ownerID,
-    required this.ownerUsername,
-    required this.questionID,
-    required this.content,
-    required this.date,
-  });
-  factory Answer.fromMap(Map<String, dynamic> map) {
-    return Answer(
-      id: map["id"],
-      ownerID: map["ownerID"],
-      ownerUsername: map["ownerUsername"],
-      questionID: map["questionID"],
-      content: map["content"],
-      date: DateTime.parse(map["date"]),
-    );
-  }
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "ownerID": ownerID,
-      "ownerUsername": ownerUsername,
-      "questionID": questionID,
-      "content": content,
-      "date": date.toString(),
-    };
-  }
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'answer.freezed.dart';
+part 'answer.g.dart';
+
+@freezed
+class Answer with _$Answer {
+  factory Answer({
+    required String id,
+    required String ownerID,
+    required String ownerUsername,
+    required String questionID,
+    required String content,
+    required DateTime date,
+  }) = _Answer;
+  factory Answer.fromJson(Map<String, dynamic> json) => _$AnswerFromJson(json);
 }

@@ -23,13 +23,13 @@ Future<Map<String, dynamic>?> questionDetail(
         final userSnapshot = await userReference.get();
         if (userSnapshot.exists) {
           if (userSnapshot.data() != null) {
-            final user = LangpalUser.fromMap(userSnapshot.data()!);
+            final user = LangpalUser.fromJson(userSnapshot.data()!);
             final answers = firestoreInstance.collection("answers");
             final answersSnapshot =
                 await answers.where("questionID", isEqualTo: questionID).get();
             final matchingAnswers = answersSnapshot.docs.map((document) {
               if (document.exists) {
-                return Answer.fromMap(document.data());
+                return Answer.fromJson(document.data());
               } else {
                 throw Exception("The answer document doesn't exist");
               }

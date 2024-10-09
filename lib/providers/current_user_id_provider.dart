@@ -34,14 +34,15 @@ class CurrentUserID extends _$CurrentUserID {
       username: username,
     );
     final user = LangpalUser(
-      displayName: displayName!,
       userID: userID,
+      displayName: displayName!,
       emailAddress: emailAddress!,
       info: info,
       isPremium: false,
       point: 0,
     );
-    await userReference.set(user.toMap());
+    print(user.toJson());
+    await userReference.set(user.toJson());
   }
 
   @override
@@ -57,7 +58,7 @@ class CurrentUserID extends _$CurrentUserID {
       if (userSnapshot.exists) {
         final user = userSnapshot.data();
         if (user != null) {
-          final langpalUser = LangpalUser.fromMap(user);
+          final langpalUser = LangpalUser.fromJson(user);
           return langpalUser;
         } else {
           throw Exception("The user is null");

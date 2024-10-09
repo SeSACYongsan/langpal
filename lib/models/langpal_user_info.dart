@@ -1,31 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 
-class LangpalUserInfo {
-  final Language firstLanguage;
-  final Language targetLanguage;
-  final Level level;
-  final String username;
-  LangpalUserInfo({
-    required this.firstLanguage,
-    required this.targetLanguage,
-    required this.level,
-    required this.username,
-  });
-  factory LangpalUserInfo.fromMap(Map<String, dynamic> map) {
-    return LangpalUserInfo(
-      firstLanguage: Language.values.byName(map["firstLanguage"]!),
-      targetLanguage: Language.values.byName(map["targetLanguage"]!),
-      level: Level.values.byName(map["level"]!),
-      username: map["username"]!,
-    );
-  }
-  Map<String, dynamic> toMap() {
-    return {
-      "firstLanguage": firstLanguage.name,
-      "targetLanguage": targetLanguage.name,
-      "level": level.name,
-      "username": username,
-    };
-  }
+part 'langpal_user_info.freezed.dart';
+part 'langpal_user_info.g.dart';
+
+@freezed
+class LangpalUserInfo with _$LangpalUserInfo {
+  factory LangpalUserInfo({
+    required Language firstLanguage,
+    required Language targetLanguage,
+    required Level level,
+    required String username,
+  }) = _LangpalUserInfo;
+  factory LangpalUserInfo.fromJson(Map<String, dynamic> json) =>
+      _$LangpalUserInfoFromJson(json);
 }

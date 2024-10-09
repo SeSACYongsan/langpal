@@ -27,7 +27,7 @@ class MyQuestionDetail extends _$MyQuestionDetail {
               await answers.where("questionID", isEqualTo: questionID).get();
           final matchingAnswers = answersReference.docs.map((document) {
             if (document.exists) {
-              return Answer.fromMap(document.data());
+              return Answer.fromJson(document.data());
             } else {
               throw Exception("The answer document doesn't exist");
             }

@@ -13,7 +13,7 @@ Future<Map<String, dynamic>?> myAnswerDetail(
       await firestoreInstance.collection("answers").doc(answerID).get();
   try {
     if (answerSnapshot.exists) {
-      final answer = Answer.fromMap(answerSnapshot.data()!);
+      final answer = Answer.fromJson(answerSnapshot.data()!);
       final questionSnapshot = await firestoreInstance
           .collection("questions")
           .doc(answer.questionID)
