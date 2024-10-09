@@ -16,7 +16,7 @@ Future<Map<String, dynamic>?> questionDetail(
   try {
     if (questionSnapshot.exists) {
       if (questionSnapshot.data() != null) {
-        final question = Question.fromMap(questionSnapshot.data()!);
+        final question = Question.fromJson(questionSnapshot.data()!);
         final ownerID = question.ownerID;
         final userReference =
             firestoreInstance.collection("users").doc(ownerID);

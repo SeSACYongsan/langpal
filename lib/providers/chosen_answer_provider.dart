@@ -23,12 +23,12 @@ class ChosenAnswer extends _$ChosenAnswer {
             .doc(questionID)
             .get();
         if (questionSnapshot.exists) {
-          final question = Question.fromMap(questionSnapshot.data()!);
-          question.chosenAnswerID = answerID;
+          final question = Question.fromJson(questionSnapshot.data()!);
+          final modifiedQuestion = question.copyWith(chosenAnswerID: answerID);
           await firestoreInstance
               .collection("questions")
               .doc(questionID)
-              .set(question.toMap());
+              .set(modifiedQuestion.toJson());
           return;
         } else {
           throw Exception("The question snapshot doesn't exist");

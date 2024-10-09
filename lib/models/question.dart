@@ -1,46 +1,21 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:langpal/models/question_type.dart';
 
-class Question {
-  final String id;
-  final String ownerID;
-  String? chosenAnswerID;
-  final String ownerName;
-  final int point;
-  final QuestionType questionType;
-  final String content;
-  final DateTime date;
-  Question({
-    required this.id,
-    required this.ownerName,
-    required this.ownerID,
-    required this.point,
-    required this.questionType,
-    required this.content,
-    required this.date,
-    this.chosenAnswerID,
-  });
-  factory Question.fromMap(Map<String, dynamic> map) {
-    return Question(
-      id: map["id"],
-      ownerID: map["ownerID"],
-      ownerName: map["ownerName"],
-      point: int.parse(map["point"]),
-      chosenAnswerID: map["chosenAnswerID"],
-      questionType: QuestionType.values.byName(map["questionType"]),
-      content: map["content"],
-      date: DateTime.parse(map["date"]),
-    );
-  }
-  Map<String, dynamic> toMap() {
-    return {
-      "id": id,
-      "ownerID": ownerID,
-      "ownerName": ownerName,
-      "point": point.toString(),
-      "chosenAnswerID": chosenAnswerID,
-      "questionType": questionType.name,
-      "content": content,
-      "date": date.toString(),
-    };
-  }
+part 'question.freezed.dart';
+part 'question.g.dart';
+
+@freezed
+class Question with _$Question {
+  factory Question({
+    required String id,
+    required String ownerName,
+    required String ownerID,
+    required int point,
+    required QuestionType questionType,
+    required String content,
+    required DateTime date,
+    String? chosenAnswerID,
+  }) = _Question;
+  factory Question.fromJson(Map<String, dynamic> json) =>
+      _$QuestionFromJson(json);
 }

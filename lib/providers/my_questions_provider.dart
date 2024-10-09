@@ -15,7 +15,7 @@ Future<List<Question>?> myQuestions(MyQuestionsRef ref) async {
   try {
     final matchingQuestions = questionsData.docs.map((document) {
       if (document.exists) {
-        return Question.fromMap(document.data());
+        return Question.fromJson(document.data());
       } else {
         throw Exception("The question document doesn't exist");
       }

@@ -20,7 +20,7 @@ class MyQuestionDetail extends _$MyQuestionDetail {
     try {
       if (questionSnapshot.exists) {
         if (questionSnapshot.data() != null) {
-          final question = Question.fromMap(questionSnapshot.data()!);
+          final question = Question.fromJson(questionSnapshot.data()!);
           final questionID = question.id;
           final answers = firestoreInstance.collection("answers");
           final answersReference =

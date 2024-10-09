@@ -6,7 +6,7 @@ part of 'question_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$questionHash() => r'd6fd7580d256b340871a48eb703b7b5f1ff0553f';
+String _$questionHash() => r'c975bb7955bf8165a87b11721d6186a7e97f4d97';
 
 /// See also [Question].
 @ProviderFor(Question)

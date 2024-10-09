@@ -22,7 +22,7 @@ class Question extends _$Question {
       if (snapshot.exists) {
         if (snapshot.data() != null) {
           final data = snapshot.data()!;
-          final question = model.Question.fromMap(data);
+          final question = model.Question.fromJson(data);
           print(question);
           state = AsyncData(question);
         } else {

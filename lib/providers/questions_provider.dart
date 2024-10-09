@@ -16,7 +16,7 @@ class Questions extends _$Questions {
     final questions = await firestoreInstance.collection("questions").get();
     final allQuestions = questions.docs.map((doc) {
       final data = doc.data();
-      final question = Question.fromMap(data);
+      final question = Question.fromJson(data);
       return question;
     }).toList();
     allQuestions.sort((a, b) {
@@ -29,7 +29,7 @@ class Questions extends _$Questions {
     final firestoreInstance = FirebaseFirestore.instance;
     final questions = firestoreInstance.collection("questions");
     final questionReference = questions.doc(question.id);
-    await questionReference.set(question.toMap());
+    await questionReference.set(question.toJson());
     final data = state;
     state = [...data, question];
   }

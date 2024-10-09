@@ -19,7 +19,7 @@ Future<Map<String, dynamic>?> myAnswerDetail(
           .doc(answer.questionID)
           .get();
       if (questionSnapshot.exists) {
-        final question = Question.fromMap(questionSnapshot.data()!);
+        final question = Question.fromJson(questionSnapshot.data()!);
         return {
           "question": question,
           "answer": answer,
