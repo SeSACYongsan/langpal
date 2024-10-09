@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/language.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
