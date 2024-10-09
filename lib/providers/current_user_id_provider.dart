@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/langpal_user_info.dart';
@@ -10,13 +9,12 @@ import 'package:langpal/providers/fields/level_dropdown_provider.dart';
 import 'package:langpal/providers/fields/target_language_dropdown_provider.dart';
 import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final currentUserIDProvider =
-    NotifierProvider<CurrentUserIDNotifier, String?>(() {
-  return CurrentUserIDNotifier();
-});
+part 'current_user_id_provider.g.dart';
 
-class CurrentUserIDNotifier extends Notifier<String?> {
+@Riverpod(keepAlive: true)
+class CurrentUserID extends _$CurrentUserID {
   void addToFirestore() async {
     final firstLanguage = ref.read(firstLanguageDropdownProvider);
     final targetLanguage = ref.read(targetLanguageDropdownProvider);
@@ -26,7 +24,7 @@ class CurrentUserIDNotifier extends Notifier<String?> {
     final users = firestoreInstance.collection("users");
     final displayName = ref.read(tempUserProvider)!["displayName"];
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
-    final userID = ref.read(tempUserProvider)!["userID"];
+    final userID = ref.read(tempUserProvider)!["userID"]!;
     final userReference = users.doc(userID);
     state = userID;
     final info = LangpalUserInfo(
@@ -37,7 +35,7 @@ class CurrentUserIDNotifier extends Notifier<String?> {
     );
     final user = LangpalUser(
       displayName: displayName!,
-      userID: userID!,
+      userID: userID,
       emailAddress: emailAddress!,
       info: info,
       isPremium: false,
@@ -47,7 +45,7 @@ class CurrentUserIDNotifier extends Notifier<String?> {
   }
 
   @override
-  build() {
+  String? build() {
     return null;
   }
 

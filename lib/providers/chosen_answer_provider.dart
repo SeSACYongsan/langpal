@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final chosenAnswerProvider = NotifierProvider<ChosenAnswerNotifier, void>(() {
-  return ChosenAnswerNotifier();
-});
+part 'chosen_answer_provider.g.dart';
 
-class ChosenAnswerNotifier extends Notifier<void> {
+@riverpod
+class ChosenAnswer extends _$ChosenAnswer {
   @override
   build() {}
 

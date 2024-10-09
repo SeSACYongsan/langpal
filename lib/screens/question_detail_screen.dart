@@ -246,7 +246,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     final questionID = widget.questionID;
     final newAnswer = Answer(
       id: id,
-      ownerID: ownerID!,
+      ownerID: ownerID.toString(),
       ownerUsername: username,
       questionID: questionID,
       content: content,

@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-final answersProvider =
-    AsyncNotifierProvider<AnswersNotifier, List<Answer>>(() {
-  return AnswersNotifier();
-});
+part 'answers_provider.g.dart';
 
-class AnswersNotifier extends AsyncNotifier<List<Answer>> {
+@riverpod
+class Answers extends _$Answers {
   @override
   Future<List<Answer>> build() async {
     return [];
