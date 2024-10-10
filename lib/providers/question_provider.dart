@@ -13,21 +13,14 @@ class Question extends _$Question {
     return null;
   }
 
-  Future<void> getQuestionByID(String questionID) async {
+  Future<void> fetchQuestionByID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final questions = firestoreInstance.collection("questions");
-    final questionReference = questions.doc(questionID);
-    final snapshot = await questionReference.get();
+    final questionSnapshot =
+        await firestoreInstance.collection("questions").doc(questionID).get();
     try {
-      if (snapshot.exists) {
-        if (snapshot.data() != null) {
-          final data = snapshot.data()!;
-          final question = model.Question.fromJson(data);
-          print(question);
-          state = AsyncData(question);
-        } else {
-          throw Exception("The question snapshot is null");
-        }
+      if (questionSnapshot.exists) {
+        final question = model.Question.fromJson(questionSnapshot.data()!);
+        state = AsyncData(question);
       } else {
         throw Exception("The question doesn't exist");
       }

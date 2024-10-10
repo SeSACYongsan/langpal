@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/components/answer_card.dart';
@@ -7,12 +6,11 @@ import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
-import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/providers/answers_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/providers/question_detail_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
-import 'package:uuid/uuid.dart';
 
 class QuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
@@ -195,7 +193,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               },
                             );
                           } else {
-                            submitAnswer(username: user.info.username);
+                            ref
+                                .read(answersProvider.notifier)
+                                .addAnswerByQuestionID(widget.questionID);
                           }
                         },
                         child: Text(
@@ -227,31 +227,5 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   void initState() {
     answerTextEditingController = TextEditingController();
     super.initState();
-  }
-
-  Future<void> registerAnswer(Answer answer) async {
-    final firestoreInstance = FirebaseFirestore.instance;
-    final answerReference =
-        firestoreInstance.collection("answers").doc(answer.id);
-    await answerReference.set(answer.toJson());
-    ref.read(answerTextFieldProvider.notifier).initializeAnswer();
-    ref.refresh(questionDetailProvider(widget.questionID));
-  }
-
-  Future<void> submitAnswer({required String username}) async {
-    const uuid = Uuid();
-    final content = answerTextEditingController.text;
-    final currentUser = ref.read(currentUserProvider).value!;
-    final id = uuid.v4();
-    final questionID = widget.questionID;
-    final newAnswer = Answer(
-      id: id,
-      ownerID: currentUser.id,
-      ownerUsername: username,
-      questionID: questionID,
-      content: content,
-      date: DateTime.now(),
-    );
-    registerAnswer(newAnswer);
   }
 }
