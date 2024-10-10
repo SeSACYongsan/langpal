@@ -13,13 +13,9 @@ Future<Map<String, dynamic>?> questionDetail(
     ref.read(questionProvider.notifier).fetchQuestionByID(questionID),
     ref.read(userProvider.notifier).fetchUserByQuestionID(questionID),
   ]);
-  final answers = ref.watch(answersProvider).value;
-  final question = ref.watch(questionProvider).value;
-  final user = ref.watch(userProvider).value;
-  if (answers == null || question == null || user == null) {
-    print("Answers: $answers, question: $question, user: $user");
-    return null;
-  }
+  final answers = ref.watch(answersProvider).value!;
+  final question = ref.watch(questionProvider).value!;
+  final user = ref.watch(userProvider).value!;
   return {
     "answers": answers,
     "question": question,
