@@ -41,7 +41,6 @@ class CurrentUserID extends _$CurrentUserID {
       isPremium: false,
       point: 0,
     );
-    print(user.toJson());
     await userReference.set(user.toJson());
   }
 
