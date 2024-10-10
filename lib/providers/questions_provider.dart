@@ -65,6 +65,12 @@ class Questions extends _$Questions {
             } else {
               return question;
             }
+          }).where((question) {
+            if (question.chosenAnswerID != null) {
+              return false;
+            } else {
+              return true;
+            }
           }).toList();
           state = AsyncData(modifiedState);
         } else {
