@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:langpal/models/answer.dart';
-import 'package:langpal/models/question.dart';
+import 'package:langpal/providers/answer_provider.dart';
+import 'package:langpal/providers/question_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'my_answer_detail_provider.g.dart';
@@ -8,30 +7,17 @@ part 'my_answer_detail_provider.g.dart';
 @riverpod
 Future<Map<String, dynamic>?> myAnswerDetail(
     MyAnswerDetailRef ref, String answerID) async {
-  final firestoreInstance = FirebaseFirestore.instance;
-  final answerSnapshot =
-      await firestoreInstance.collection("answers").doc(answerID).get();
-  try {
-    if (answerSnapshot.exists) {
-      final answer = Answer.fromJson(answerSnapshot.data()!);
-      final questionSnapshot = await firestoreInstance
-          .collection("questions")
-          .doc(answer.questionID)
-          .get();
-      if (questionSnapshot.exists) {
-        final question = Question.fromJson(questionSnapshot.data()!);
-        return {
-          "question": question,
-          "answer": answer,
-        };
-      } else {
-        throw Exception("The question snapshot doesn't exist");
-      }
-    } else {
-      throw Exception("The answer snapshot doesn't exist");
-    }
-  } catch (error) {
-    print(error);
+  await Future.wait([
+    ref.read(answerProvider.notifier).fetchAnswerByID(answerID),
+    ref.read(questionProvider.notifier).fetchQuestionByAnswerID(answerID)
+  ]);
+  final answer = ref.watch(answerProvider).value;
+  final question = ref.watch(questionProvider).value;
+  if (answer == null || question == null) {
+    print("Answer: $answer, question: $question");
   }
-  return null;
+  return {
+    "answer": answer,
+    "question": question,
+  };
 }
