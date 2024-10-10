@@ -22,7 +22,16 @@ class Questions extends _$Questions {
     allQuestions.sort((a, b) {
       return a.date.compareTo(b.date);
     });
-    state = allQuestions;
+    final filteredQuestions = allQuestions.where(
+      (question) {
+        if (question.chosenAnswerID != null) {
+          return false;
+        } else {
+          return true;
+        }
+      },
+    ).toList();
+    state = filteredQuestions;
   }
 
   Future<void> saveQuestion(Question question) async {

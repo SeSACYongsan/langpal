@@ -46,23 +46,18 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
               ),
               backgroundColor: Colors.blue,
             ),
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    ...questions.map(
-                      (question) {
-                        return QuestionCard(
-                          question: question,
-                          route:
-                              "/main/my_page/my_questions/detail/${question.id}",
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+            body: ListView.builder(
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: QuestionCard(
+                    question: questions[index],
+                    route:
+                        "/main/my_page/my_questions/detail/${questions[index].id}",
+                  ),
+                );
+              },
+              itemCount: questions.length,
             ),
           );
         }

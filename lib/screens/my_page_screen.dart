@@ -42,7 +42,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.go("/main");
                 },
               ),
               backgroundColor: Colors.blue,
