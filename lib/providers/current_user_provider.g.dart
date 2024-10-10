@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'my_answers_provider.dart';
+part of 'current_user_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myAnswersHash() => r'bbae84ec65f735222055702a04edf15d96bf9c10';
+String _$currentUserHash() => r'bc1a0475ad1dd70f8bec959a34365524fda2cfcc';
 
-/// See also [myAnswers].
-@ProviderFor(myAnswers)
-final myAnswersProvider =
-    AutoDisposeFutureProvider<Map<String, dynamic>?>.internal(
-  myAnswers,
-  name: r'myAnswersProvider',
+/// See also [CurrentUser].
+@ProviderFor(CurrentUser)
+final currentUserProvider =
+    AsyncNotifierProvider<CurrentUser, LangpalUser?>.internal(
+  CurrentUser.new,
+  name: r'currentUserProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$myAnswersHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$currentUserHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef MyAnswersRef = AutoDisposeFutureProviderRef<Map<String, dynamic>?>;
+typedef _$CurrentUser = AsyncNotifier<LangpalUser?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

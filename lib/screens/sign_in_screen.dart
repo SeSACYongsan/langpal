@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:langpal/models/sign_in_status.dart';
-import 'package:langpal/providers/current_user_id_provider.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 
 class SignInScreen extends ConsumerWidget {
   const SignInScreen({super.key});
@@ -58,7 +58,7 @@ class SignInScreen extends ConsumerWidget {
                         child: ElevatedButton.icon(
                           onPressed: () async {
                             final signInStatus = await ref
-                                .read(currentUserIDProvider.notifier)
+                                .read(currentUserProvider.notifier)
                                 .signInWithGoogle();
                             switch (signInStatus) {
                               case SignInStatus.signInFailed:

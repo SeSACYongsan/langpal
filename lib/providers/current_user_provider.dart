@@ -11,11 +11,11 @@ import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'current_user_id_provider.g.dart';
+part 'current_user_provider.g.dart';
 
 @Riverpod(keepAlive: true)
-class CurrentUserID extends _$CurrentUserID {
-  void addToFirestore() async {
+class CurrentUser extends _$CurrentUser {
+  void addToFirestoreAndUpdateUser() async {
     final firstLanguage = ref.read(firstLanguageDropdownProvider);
     final targetLanguage = ref.read(targetLanguageDropdownProvider);
     final level = ref.read(levelDropdownProvider);
@@ -26,7 +26,6 @@ class CurrentUserID extends _$CurrentUserID {
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"]!;
     final userReference = users.doc(userID);
-    state = userID;
     final info = LangpalUserInfo(
       firstLanguage: firstLanguage,
       targetLanguage: targetLanguage,
@@ -34,31 +33,32 @@ class CurrentUserID extends _$CurrentUserID {
       username: username,
     );
     final user = LangpalUser(
-      userID: userID,
+      id: userID,
       displayName: displayName!,
       emailAddress: emailAddress!,
       info: info,
       isPremium: false,
       point: 0,
     );
+    state = AsyncData(user);
     await userReference.set(user.toJson());
   }
 
   @override
-  String? build() {
+  Future<LangpalUser?> build() async {
     return null;
   }
 
-  Future<LangpalUser?> getUser() async {
+  Future<void> fetchUserByID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final userReference = firestoreInstance.collection("users").doc(state);
+    final userReference = firestoreInstance.collection("users").doc(userID);
     final userSnapshot = await userReference.get();
     try {
       if (userSnapshot.exists) {
         final user = userSnapshot.data();
         if (user != null) {
           final langpalUser = LangpalUser.fromJson(user);
-          return langpalUser;
+          state = AsyncData(langpalUser);
         } else {
           throw Exception("The user is null");
         }
@@ -66,9 +66,8 @@ class CurrentUserID extends _$CurrentUserID {
         throw Exception("The user doesn't exist");
       }
     } catch (error) {
-      print(error);
+      state = AsyncError(error, StackTrace.current);
     }
-    return null;
   }
 
   Future<SignInStatus> signInWithGoogle() async {
@@ -91,14 +90,13 @@ class CurrentUserID extends _$CurrentUserID {
           final snapshot = await userReference.get();
           if (snapshot.exists) {
             if (snapshot.data() != null) {
-              print("The snapshot data exists");
-              state = userID;
+              final user = LangpalUser.fromJson(snapshot.data()!);
+              state = AsyncData(user);
               return SignInStatus.userExist;
             } else {
               throw Exception("The snapshot data doesn't exist");
             }
           } else {
-            print("The snapshot doesn't exist");
             final displayName = credential.user!.displayName!;
             final emailAddress = credential.user!.email!;
             final userID = credential.user!.uid;
@@ -116,9 +114,8 @@ class CurrentUserID extends _$CurrentUserID {
         throw Exception("The account is null");
       }
     } catch (error) {
-      print(error);
+      state = AsyncError(error, StackTrace.current);
     }
-    print("The sign-in failed");
     return SignInStatus.signInFailed;
   }
 }

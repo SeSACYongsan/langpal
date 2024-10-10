@@ -7,7 +7,7 @@ part 'langpal_user.g.dart';
 @freezed
 class LangpalUser with _$LangpalUser {
   factory LangpalUser({
-    required String userID,
+    required String id,
     required String displayName,
     required String emailAddress,
     required LangpalUserInfo info,

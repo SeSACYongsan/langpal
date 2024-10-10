@@ -8,7 +8,7 @@ part of 'langpal_user.dart';
 
 _$LangpalUserImpl _$$LangpalUserImplFromJson(Map<String, dynamic> json) =>
     _$LangpalUserImpl(
-      userID: json['userID'] as String,
+      id: json['id'] as String,
       displayName: json['displayName'] as String,
       emailAddress: json['emailAddress'] as String,
       info: LangpalUserInfo.fromJson(json['info'] as Map<String, dynamic>),
@@ -18,7 +18,7 @@ _$LangpalUserImpl _$$LangpalUserImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$LangpalUserImplToJson(_$LangpalUserImpl instance) =>
     <String, dynamic>{
-      'userID': instance.userID,
+      'id': instance.id,
       'displayName': instance.displayName,
       'emailAddress': instance.emailAddress,
       'info': instance.info.toJson(),

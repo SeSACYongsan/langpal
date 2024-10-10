@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
-import 'package:langpal/providers/current_user_id_provider.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'my_answers_provider.g.dart';
 
 @riverpod
 Future<Map<String, dynamic>?> myAnswers(MyAnswersRef ref) async {
-  final currentUserID = ref.read(currentUserIDProvider);
+  final currentUser = ref.read(currentUserProvider).value!;
   final firestoreInstance = FirebaseFirestore.instance;
   final answers = await firestoreInstance
       .collection("answers")
-      .where("ownerID", isEqualTo: currentUserID)
+      .where("ownerID", isEqualTo: currentUser.id)
       .get();
   try {
     final matchingAnswers = answers.docs.map((document) {
@@ -26,7 +26,7 @@ Future<Map<String, dynamic>?> myAnswers(MyAnswersRef ref) async {
       return a.date.compareTo(b.date);
     });
     final userSnapshot =
-        await firestoreInstance.collection("users").doc(currentUserID).get();
+        await firestoreInstance.collection("users").doc(currentUser.id).get();
     if (userSnapshot.exists) {
       final user = LangpalUser.fromJson(userSnapshot.data()!);
       return {

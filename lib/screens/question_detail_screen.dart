@@ -7,7 +7,7 @@ import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
-import 'package:langpal/providers/current_user_id_provider.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/providers/question_detail_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
@@ -241,12 +241,12 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   Future<void> submitAnswer({required String username}) async {
     const uuid = Uuid();
     final content = answerTextEditingController.text;
-    final ownerID = ref.read(currentUserIDProvider);
+    final currentUser = ref.read(currentUserProvider).value!;
     final id = uuid.v4();
     final questionID = widget.questionID;
     final newAnswer = Answer(
       id: id,
-      ownerID: ownerID.toString(),
+      ownerID: currentUser.id,
       ownerUsername: username,
       questionID: questionID,
       content: content,

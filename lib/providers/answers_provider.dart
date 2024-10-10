@@ -11,4 +11,6 @@ class Answers extends _$Answers {
   Future<List<Answer>> build() async {
     return [];
   }
+
+  Future<void> fetchMyAnswers() async {}
 }

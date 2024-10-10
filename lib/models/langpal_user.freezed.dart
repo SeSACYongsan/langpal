@@ -20,15 +20,19 @@ LangpalUser _$LangpalUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LangpalUser {
-  String get userID => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   String get emailAddress => throw _privateConstructorUsedError;
   LangpalUserInfo get info => throw _privateConstructorUsedError;
   bool get isPremium => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
 
+  /// Serializes this LangpalUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LangpalUserCopyWith<LangpalUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -40,7 +44,7 @@ abstract class $LangpalUserCopyWith<$Res> {
       _$LangpalUserCopyWithImpl<$Res, LangpalUser>;
   @useResult
   $Res call(
-      {String userID,
+      {String id,
       String displayName,
       String emailAddress,
       LangpalUserInfo info,
@@ -60,10 +64,12 @@ class _$LangpalUserCopyWithImpl<$Res, $Val extends LangpalUser>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = null,
+    Object? id = null,
     Object? displayName = null,
     Object? emailAddress = null,
     Object? info = null,
@@ -71,9 +77,9 @@ class _$LangpalUserCopyWithImpl<$Res, $Val extends LangpalUser>
     Object? point = null,
   }) {
     return _then(_value.copyWith(
-      userID: null == userID
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       displayName: null == displayName
           ? _value.displayName
@@ -98,6 +104,8 @@ class _$LangpalUserCopyWithImpl<$Res, $Val extends LangpalUser>
     ) as $Val);
   }
 
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $LangpalUserInfoCopyWith<$Res> get info {
@@ -116,7 +124,7 @@ abstract class _$$LangpalUserImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String userID,
+      {String id,
       String displayName,
       String emailAddress,
       LangpalUserInfo info,
@@ -135,10 +143,12 @@ class __$$LangpalUserImplCopyWithImpl<$Res>
       _$LangpalUserImpl _value, $Res Function(_$LangpalUserImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userID = null,
+    Object? id = null,
     Object? displayName = null,
     Object? emailAddress = null,
     Object? info = null,
@@ -146,9 +156,9 @@ class __$$LangpalUserImplCopyWithImpl<$Res>
     Object? point = null,
   }) {
     return _then(_$LangpalUserImpl(
-      userID: null == userID
-          ? _value.userID
-          : userID // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
       displayName: null == displayName
           ? _value.displayName
@@ -178,7 +188,7 @@ class __$$LangpalUserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LangpalUserImpl implements _LangpalUser {
   _$LangpalUserImpl(
-      {required this.userID,
+      {required this.id,
       required this.displayName,
       required this.emailAddress,
       required this.info,
@@ -189,7 +199,7 @@ class _$LangpalUserImpl implements _LangpalUser {
       _$$LangpalUserImplFromJson(json);
 
   @override
-  final String userID;
+  final String id;
   @override
   final String displayName;
   @override
@@ -203,7 +213,7 @@ class _$LangpalUserImpl implements _LangpalUser {
 
   @override
   String toString() {
-    return 'LangpalUser(userID: $userID, displayName: $displayName, emailAddress: $emailAddress, info: $info, isPremium: $isPremium, point: $point)';
+    return 'LangpalUser(id: $id, displayName: $displayName, emailAddress: $emailAddress, info: $info, isPremium: $isPremium, point: $point)';
   }
 
   @override
@@ -211,7 +221,7 @@ class _$LangpalUserImpl implements _LangpalUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LangpalUserImpl &&
-            (identical(other.userID, userID) || other.userID == userID) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
             (identical(other.emailAddress, emailAddress) ||
@@ -222,12 +232,14 @@ class _$LangpalUserImpl implements _LangpalUser {
             (identical(other.point, point) || other.point == point));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, userID, displayName, emailAddress, info, isPremium, point);
+      runtimeType, id, displayName, emailAddress, info, isPremium, point);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LangpalUserImplCopyWith<_$LangpalUserImpl> get copyWith =>
@@ -243,7 +255,7 @@ class _$LangpalUserImpl implements _LangpalUser {
 
 abstract class _LangpalUser implements LangpalUser {
   factory _LangpalUser(
-      {required final String userID,
+      {required final String id,
       required final String displayName,
       required final String emailAddress,
       required final LangpalUserInfo info,
@@ -254,7 +266,7 @@ abstract class _LangpalUser implements LangpalUser {
       _$LangpalUserImpl.fromJson;
 
   @override
-  String get userID;
+  String get id;
   @override
   String get displayName;
   @override
@@ -265,8 +277,11 @@ abstract class _LangpalUser implements LangpalUser {
   bool get isPremium;
   @override
   int get point;
+
+  /// Create a copy of LangpalUser
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LangpalUserImplCopyWith<_$LangpalUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
