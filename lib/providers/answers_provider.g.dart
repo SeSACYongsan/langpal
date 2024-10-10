@@ -6,7 +6,7 @@ part of 'answers_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$answersHash() => r'03622c269192e708a4fbbfe9a183e3ae2a666ddd';
+String _$answersHash() => r'd894d5cdbc24716e482d6e1db2b35c5418c32c7e';
 
 /// See also [Answers].
 @ProviderFor(Answers)

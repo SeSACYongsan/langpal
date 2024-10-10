@@ -78,4 +78,28 @@ class Answers extends _$Answers {
       state = AsyncError(error, StackTrace.current);
     }
   }
+
+  Future<void> fetchMyAnswers() async {
+    final currentUser = ref.read(currentUserProvider).value!;
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answersSnapshot = await firestoreInstance
+        .collection("answers")
+        .where("ownerID", isEqualTo: currentUser.id)
+        .get();
+    try {
+      final answers = answersSnapshot.docs.map((document) {
+        if (document.exists) {
+          return Answer.fromJson(document.data());
+        } else {
+          throw Exception("The answer doesn't exist");
+        }
+      }).toList();
+      answers.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
+      state = AsyncData(answers);
+    } catch (error) {
+      state = AsyncError(error, StackTrace.current);
+    }
+  }
 }

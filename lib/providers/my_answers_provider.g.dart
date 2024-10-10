@@ -6,12 +6,12 @@ part of 'my_answers_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myAnswersHash() => r'bbae84ec65f735222055702a04edf15d96bf9c10';
+String _$myAnswersHash() => r'5a357add64a3fe2928e4ad70fe3e67ef95f9c07c';
 
 /// See also [myAnswers].
 @ProviderFor(myAnswers)
 final myAnswersProvider =
-    AutoDisposeFutureProvider<Map<String, dynamic>?>.internal(
+    AutoDisposeFutureProvider<Map<String, dynamic>>.internal(
   myAnswers,
   name: r'myAnswersProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final myAnswersProvider =
   allTransitiveDependencies: null,
 );
 
-typedef MyAnswersRef = AutoDisposeFutureProviderRef<Map<String, dynamic>?>;
+typedef MyAnswersRef = AutoDisposeFutureProviderRef<Map<String, dynamic>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
