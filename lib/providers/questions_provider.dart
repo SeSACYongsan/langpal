@@ -21,11 +21,7 @@ class Questions extends _$Questions {
     });
     final filteredQuestions = allQuestions.where(
       (question) {
-        if (question.chosenAnswerID != null) {
-          return false;
-        } else {
-          return true;
-        }
+        return question.chosenAnswerID == null;
       },
     ).toList();
     return filteredQuestions;
@@ -66,11 +62,7 @@ class Questions extends _$Questions {
               return question;
             }
           }).where((question) {
-            if (question.chosenAnswerID != null) {
-              return false;
-            } else {
-              return true;
-            }
+            return question.chosenAnswerID == null;
           }).toList();
           state = AsyncData(modifiedState);
         } else {
