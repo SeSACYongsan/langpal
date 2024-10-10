@@ -8,12 +8,18 @@ part 'question_detail_provider.g.dart';
 @riverpod
 Future<Map<String, dynamic>?> questionDetail(
     QuestionDetailRef ref, String questionID) async {
-  final answers = ref.watch(answersProvider).value!;
-  final question = ref.watch(questionProvider).value!;
-  final user = ref.watch(userProvider).value!;
-  await ref.read(answersProvider.notifier).fetchAnswersByQuestionID(questionID);
-  await ref.read(questionProvider.notifier).fetchQuestionByID(questionID);
-  await ref.read(userProvider.notifier).fetchUserByQuestionID(questionID);
+  await Future.wait([
+    ref.read(answersProvider.notifier).fetchAnswersByQuestionID(questionID),
+    ref.read(questionProvider.notifier).fetchQuestionByID(questionID),
+    ref.read(userProvider.notifier).fetchUserByQuestionID(questionID),
+  ]);
+  final answers = ref.watch(answersProvider).value;
+  final question = ref.watch(questionProvider).value;
+  final user = ref.watch(userProvider).value;
+  if (answers == null || question == null || user == null) {
+    print("Answers: $answers, question: $question, user: $user");
+    return null;
+  }
   return {
     "answers": answers,
     "question": question,
