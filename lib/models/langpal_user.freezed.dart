@@ -27,12 +27,8 @@ mixin _$LangpalUser {
   bool get isPremium => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
 
-  /// Serializes this LangpalUser to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $LangpalUserCopyWith<LangpalUser> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -64,8 +60,6 @@ class _$LangpalUserCopyWithImpl<$Res, $Val extends LangpalUser>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -104,8 +98,6 @@ class _$LangpalUserCopyWithImpl<$Res, $Val extends LangpalUser>
     ) as $Val);
   }
 
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $LangpalUserInfoCopyWith<$Res> get info {
@@ -143,8 +135,6 @@ class __$$LangpalUserImplCopyWithImpl<$Res>
       _$LangpalUserImpl _value, $Res Function(_$LangpalUserImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -232,14 +222,12 @@ class _$LangpalUserImpl implements _LangpalUser {
             (identical(other.point, point) || other.point == point));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, displayName, emailAddress, info, isPremium, point);
 
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LangpalUserImplCopyWith<_$LangpalUserImpl> get copyWith =>
@@ -277,11 +265,8 @@ abstract class _LangpalUser implements LangpalUser {
   bool get isPremium;
   @override
   int get point;
-
-  /// Create a copy of LangpalUser
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LangpalUserImplCopyWith<_$LangpalUserImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
