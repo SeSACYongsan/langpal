@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'questions_provider.g.dart';
@@ -25,6 +26,27 @@ class Questions extends _$Questions {
       },
     ).toList();
     return filteredQuestions;
+  }
+
+  Future<void> fetchMyQuestions() async {
+    final currentUser = ref.read(currentUserProvider).value!;
+    final firestoreInstance = FirebaseFirestore.instance;
+    final questionsSnapshot = await firestoreInstance
+        .collection("questions")
+        .where("ownerID", isEqualTo: currentUser.id)
+        .get();
+    try {
+      final questions = questionsSnapshot.docs.map((document) {
+        if (document.exists) {
+          return Question.fromJson(document.data());
+        } else {
+          throw Exception("The question doesn't exist");
+        }
+      }).toList();
+      state = AsyncData(questions);
+    } catch (error) {
+      state = AsyncError(error, StackTrace.current);
+    }
   }
 
   Future<void> saveQuestion(Question question) async {

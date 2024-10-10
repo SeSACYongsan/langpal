@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/components/question_card.dart';
-import 'package:langpal/providers/my_questions_provider.dart';
+import 'package:langpal/providers/questions_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 
@@ -15,7 +15,7 @@ class MyQuestionsScreen extends ConsumerStatefulWidget {
 class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
   @override
   Widget build(BuildContext context) {
-    final asyncQuestions = ref.watch(myQuestionsProvider);
+    final asyncQuestions = ref.watch(questionsProvider);
     return asyncQuestions.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -68,7 +68,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
 
   @override
   void initState() {
-    ref.refresh(myQuestionsProvider);
+    ref.read(questionsProvider.notifier).fetchMyQuestions();
     super.initState();
   }
 }

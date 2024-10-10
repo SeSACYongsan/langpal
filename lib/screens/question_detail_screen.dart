@@ -196,6 +196,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                             ref
                                 .read(answersProvider.notifier)
                                 .addAnswerByQuestionID(widget.questionID);
+                            ref
+                                .read(answerTextFieldProvider.notifier)
+                                .initializeAnswer();
                           }
                         },
                         child: Text(
