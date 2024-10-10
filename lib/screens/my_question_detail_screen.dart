@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/chosen_answer_provider.dart';
 import 'package:langpal/providers/my_question_detail_provider.dart';
+import 'package:langpal/providers/questions_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 
@@ -215,7 +215,7 @@ class _MyQuestionDetailScreenState
             TextButton(
               onPressed: () async {
                 await ref
-                    .read(chosenAnswerProvider.notifier)
+                    .read(questionsProvider.notifier)
                     .setChosenAnswer(answerID);
                 print("Succeeded to set the chosen answer");
                 ref.refresh(myQuestionDetailProvider(widget.questionID));
