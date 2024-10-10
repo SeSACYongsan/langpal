@@ -36,7 +36,6 @@ class _MyQuestionDetailScreenState
         if (data != null) {
           final question = data["question"] as Question;
           final answers = data["answers"] as List<Answer>;
-          final chosenAnswerID = data["chosenAnswerID"] as String?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -108,7 +107,7 @@ class _MyQuestionDetailScreenState
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (chosenAnswerID == null)
+                                if (question.chosenAnswerID == null)
                                   IconButton(
                                     onPressed: () {
                                       onCheckboxChecked(
@@ -118,7 +117,7 @@ class _MyQuestionDetailScreenState
                                     icon: const Icon(
                                         Icons.check_box_outline_blank),
                                   ),
-                                if (chosenAnswerID == answer.id)
+                                if (question.chosenAnswerID == answer.id)
                                   const Icon(
                                     Icons.check_circle,
                                     color: Colors.green,
@@ -191,12 +190,6 @@ class _MyQuestionDetailScreenState
         }
       },
     );
-  }
-
-  @override
-  void initState() {
-    ref.refresh(myQuestionDetailProvider(widget.questionID));
-    super.initState();
   }
 
   void onCheckboxChecked(

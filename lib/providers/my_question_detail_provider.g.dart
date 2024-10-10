@@ -6,7 +6,7 @@ part of 'my_question_detail_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myQuestionDetailHash() => r'77b96787cffe8db71a05e06a927a9ad3717d0f7e';
+String _$myQuestionDetailHash() => r'94b02d12c69277e35e3de53d16c8e44dc9903517';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,25 +29,16 @@ class _SystemHash {
   }
 }
 
-abstract class _$MyQuestionDetail
-    extends BuildlessAutoDisposeAsyncNotifier<Map<String, dynamic>?> {
-  late final String questionID;
-
-  FutureOr<Map<String, dynamic>?> build(
-    String questionID,
-  );
-}
-
-/// See also [MyQuestionDetail].
-@ProviderFor(MyQuestionDetail)
+/// See also [myQuestionDetail].
+@ProviderFor(myQuestionDetail)
 const myQuestionDetailProvider = MyQuestionDetailFamily();
 
-/// See also [MyQuestionDetail].
+/// See also [myQuestionDetail].
 class MyQuestionDetailFamily extends Family<AsyncValue<Map<String, dynamic>?>> {
-  /// See also [MyQuestionDetail].
+  /// See also [myQuestionDetail].
   const MyQuestionDetailFamily();
 
-  /// See also [MyQuestionDetail].
+  /// See also [myQuestionDetail].
   MyQuestionDetailProvider call(
     String questionID,
   ) {
@@ -80,14 +71,17 @@ class MyQuestionDetailFamily extends Family<AsyncValue<Map<String, dynamic>?>> {
   String? get name => r'myQuestionDetailProvider';
 }
 
-/// See also [MyQuestionDetail].
-class MyQuestionDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
-    MyQuestionDetail, Map<String, dynamic>?> {
-  /// See also [MyQuestionDetail].
+/// See also [myQuestionDetail].
+class MyQuestionDetailProvider
+    extends AutoDisposeFutureProvider<Map<String, dynamic>?> {
+  /// See also [myQuestionDetail].
   MyQuestionDetailProvider(
     String questionID,
   ) : this._internal(
-          () => MyQuestionDetail()..questionID = questionID,
+          (ref) => myQuestionDetail(
+            ref as MyQuestionDetailRef,
+            questionID,
+          ),
           from: myQuestionDetailProvider,
           name: r'myQuestionDetailProvider',
           debugGetCreateSourceHash:
@@ -113,20 +107,14 @@ class MyQuestionDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   final String questionID;
 
   @override
-  FutureOr<Map<String, dynamic>?> runNotifierBuild(
-    covariant MyQuestionDetail notifier,
+  Override overrideWith(
+    FutureOr<Map<String, dynamic>?> Function(MyQuestionDetailRef provider)
+        create,
   ) {
-    return notifier.build(
-      questionID,
-    );
-  }
-
-  @override
-  Override overrideWith(MyQuestionDetail Function() create) {
     return ProviderOverride(
       origin: this,
       override: MyQuestionDetailProvider._internal(
-        () => create()..questionID = questionID,
+        (ref) => create(ref as MyQuestionDetailRef),
         from: from,
         name: null,
         dependencies: null,
@@ -138,8 +126,7 @@ class MyQuestionDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<MyQuestionDetail,
-      Map<String, dynamic>?> createElement() {
+  AutoDisposeFutureProviderElement<Map<String, dynamic>?> createElement() {
     return _MyQuestionDetailProviderElement(this);
   }
 
@@ -158,14 +145,14 @@ class MyQuestionDetailProvider extends AutoDisposeAsyncNotifierProviderImpl<
 }
 
 mixin MyQuestionDetailRef
-    on AutoDisposeAsyncNotifierProviderRef<Map<String, dynamic>?> {
+    on AutoDisposeFutureProviderRef<Map<String, dynamic>?> {
   /// The parameter `questionID` of this provider.
   String get questionID;
 }
 
 class _MyQuestionDetailProviderElement
-    extends AutoDisposeAsyncNotifierProviderElement<MyQuestionDetail,
-        Map<String, dynamic>?> with MyQuestionDetailRef {
+    extends AutoDisposeFutureProviderElement<Map<String, dynamic>?>
+    with MyQuestionDetailRef {
   _MyQuestionDetailProviderElement(super.provider);
 
   @override

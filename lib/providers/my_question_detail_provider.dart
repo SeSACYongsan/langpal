@@ -1,55 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:langpal/models/answer.dart';
-import 'package:langpal/models/question.dart';
+import 'package:langpal/providers/answers_provider.dart';
+import 'package:langpal/providers/question_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'my_question_detail_provider.g.dart';
 
 @riverpod
-class MyQuestionDetail extends _$MyQuestionDetail {
-  @override
-  Future<Map<String, dynamic>?> build(String questionID) async {
-    return await getQuestionDetail(questionID);
+Future<Map<String, dynamic>?> myQuestionDetail(
+    MyQuestionDetailRef ref, String questionID) async {
+  await Future.wait([
+    ref.read(questionProvider.notifier).fetchQuestionByID(questionID),
+    ref.read(answersProvider.notifier).fetchAnswersByQuestionID(questionID)
+  ]);
+  final question = ref.watch(questionProvider).value;
+  final answers = ref.watch(answersProvider).value;
+  if (question == null || answers == null) {
+    print("Question: $question, answers: $answers");
   }
-
-  Future<Map<String, dynamic>?> getQuestionDetail(String questionID) async {
-    final firestoreInstance = FirebaseFirestore.instance;
-    final questionReference =
-        firestoreInstance.collection("questions").doc(questionID);
-    final questionSnapshot = await questionReference.get();
-    try {
-      if (questionSnapshot.exists) {
-        if (questionSnapshot.data() != null) {
-          final question = Question.fromJson(questionSnapshot.data()!);
-          final questionID = question.id;
-          final answers = firestoreInstance.collection("answers");
-          final answersReference =
-              await answers.where("questionID", isEqualTo: questionID).get();
-          final matchingAnswers = answersReference.docs.map((document) {
-            if (document.exists) {
-              return Answer.fromJson(document.data());
-            } else {
-              throw Exception("The answer document doesn't exist");
-            }
-          }).toList();
-          matchingAnswers.sort((a, b) {
-            return a.date.compareTo(b.date);
-          });
-          final chosenAnswerID = question.chosenAnswerID;
-          return {
-            "question": question,
-            "answers": matchingAnswers,
-            "chosenAnswerID": chosenAnswerID,
-          };
-        } else {
-          throw Exception("The question data is null");
-        }
-      } else {
-        throw Exception("The question snapshot doesn't exist");
-      }
-    } catch (error) {
-      print(error);
-    }
-    return null;
-  }
+  return {
+    "question": question,
+    "answers": answers,
+  };
 }
