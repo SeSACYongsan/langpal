@@ -43,6 +43,9 @@ class Questions extends _$Questions {
           throw Exception("The question doesn't exist");
         }
       }).toList();
+      questions.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
       state = AsyncData(questions);
     } catch (error) {
       state = AsyncError(error, StackTrace.current);

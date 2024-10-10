@@ -38,6 +38,11 @@ class Answers extends _$Answers {
           throw Exception("The answer doesn't exist");
         }
       }).toList();
+      allAnswers.sort(
+        (a, b) {
+          return a.date.compareTo(b.date);
+        },
+      );
       state = AsyncData(allAnswers);
     } catch (error) {
       state = AsyncError(error, StackTrace.current);
@@ -63,6 +68,11 @@ class Answers extends _$Answers {
           throw Exception("The answer doesn't exist");
         }
       }).toList();
+      answers.sort(
+        (a, b) {
+          return a.date.compareTo(b.date);
+        },
+      );
       state = AsyncData(answers);
     } catch (error) {
       state = AsyncError(error, StackTrace.current);
