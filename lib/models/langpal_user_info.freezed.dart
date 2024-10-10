@@ -25,12 +25,8 @@ mixin _$LangpalUserInfo {
   Level get level => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
 
-  /// Serializes this LangpalUserInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of LangpalUserInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $LangpalUserInfoCopyWith<LangpalUserInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,8 +54,6 @@ class _$LangpalUserInfoCopyWithImpl<$Res, $Val extends LangpalUserInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LangpalUserInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -112,8 +106,6 @@ class __$$LangpalUserInfoImplCopyWithImpl<$Res>
       _$LangpalUserInfoImpl _value, $Res Function(_$LangpalUserInfoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LangpalUserInfo
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -183,14 +175,12 @@ class _$LangpalUserInfoImpl implements _LangpalUserInfo {
                 other.username == username));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, firstLanguage, targetLanguage, level, username);
 
-  /// Create a copy of LangpalUserInfo
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LangpalUserInfoImplCopyWith<_$LangpalUserInfoImpl> get copyWith =>
@@ -223,11 +213,8 @@ abstract class _LangpalUserInfo implements LangpalUserInfo {
   Level get level;
   @override
   String get username;
-
-  /// Create a copy of LangpalUserInfo
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$LangpalUserInfoImplCopyWith<_$LangpalUserInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'questions_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Questions extends _$Questions {
   @override
   List<Question> build() {

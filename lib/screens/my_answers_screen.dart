@@ -46,7 +46,7 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.go("/main/my_page");
                 },
               ),
               backgroundColor: Colors.blue,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
@@ -43,7 +44,7 @@ class MyAnswerDetailScreen extends ConsumerWidget {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  context.go("/main/my_page/my_answers");
                 },
               ),
             ),
