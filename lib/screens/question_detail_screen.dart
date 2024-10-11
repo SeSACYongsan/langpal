@@ -6,7 +6,6 @@ import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
-import 'package:langpal/providers/answers_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
@@ -194,8 +193,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                             );
                           } else {
                             ref
-                                .read(answersProvider.notifier)
-                                .addAnswerByQuestionID(widget.questionID);
+                                .read(questionDetailViewModelProvider.notifier)
+                                .addAnswer(widget.questionID);
                             ref
                                 .read(answerTextFieldProvider.notifier)
                                 .initializeAnswer();

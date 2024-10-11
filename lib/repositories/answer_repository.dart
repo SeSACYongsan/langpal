@@ -2,6 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
 
 class AnswerRepository {
+  Future<void> addAnswer(Answer answer) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance
+        .collection("answers")
+        .doc(answer.id)
+        .set(answer.toJson());
+  }
+
   Future<List<Answer>?> fetchAnswersByQuestionID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final answersSnapshot = await firestoreInstance
