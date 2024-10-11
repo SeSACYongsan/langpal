@@ -1,6 +1,3 @@
-import 'package:langpal/models/answer.dart';
-import 'package:langpal/models/langpal_user.dart';
-import 'package:langpal/models/question.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
@@ -23,14 +20,10 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
 
   Future<void> fetchQuestionDetail(String questionID) async {
     try {
-      final results = await Future.wait([
-        answerRepository.fetchAnswersByQuestionID(questionID),
-        questionRepository.fetchQuestionByID(questionID),
-        userRepository.fetchUserByQuestionID(questionID),
-      ]);
-      final answers = results[0] as List<Answer>?;
-      final question = results[1] as Question?;
-      final user = results[2] as LangpalUser?;
+      final answers =
+          await answerRepository.fetchAnswersByQuestionID(questionID);
+      final question = await questionRepository.fetchQuestionByID(questionID);
+      final user = await userRepository.fetchUserByQuestionID(questionID);
       if (answers == null || question == null || user == null) {
         throw Exception("Failed to fetch data");
       }
