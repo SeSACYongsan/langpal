@@ -8,9 +8,9 @@ import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/answers_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
-import 'package:langpal/providers/question_detail_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
+import 'package:langpal/view_models/question_detail_view_model.dart';
 
 class QuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
@@ -24,7 +24,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   late TextEditingController answerTextEditingController;
   @override
   Widget build(BuildContext context) {
-    final asyncData = ref.watch(questionDetailProvider(widget.questionID));
+    final asyncData = ref.watch(questionDetailViewModelProvider);
     answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
@@ -228,6 +228,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
 
   @override
   void initState() {
+    ref
+        .read(questionDetailViewModelProvider.notifier)
+        .fetchQuestionDetail(widget.questionID);
     answerTextEditingController = TextEditingController();
     super.initState();
   }
