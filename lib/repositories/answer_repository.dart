@@ -35,4 +35,28 @@ class AnswerRepository {
     }
     return null;
   }
+
+  Future<List<Answer>?> fetchAnswersByUserID(String userID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answersSnapshot = await firestoreInstance
+        .collection("answers")
+        .where("ownerID", isEqualTo: userID)
+        .get();
+    try {
+      final answers = answersSnapshot.docs.map((document) {
+        if (document.exists) {
+          return Answer.fromJson(document.data());
+        } else {
+          throw Exception("The answer doesn't exist");
+        }
+      }).toList();
+      answers.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
+      return answers;
+    } catch (error) {
+      print(error);
+    }
+    return null;
+  }
 }
