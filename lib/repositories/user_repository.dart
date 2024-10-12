@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/question.dart';
+import 'package:langpal/utils/logger.dart';
 
 class UserRepository {
   Future<LangpalUser?> fetchUserByQuestionID(String questionID) async {
@@ -23,7 +24,7 @@ class UserRepository {
         throw Exception("The question doesn't exist");
       }
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
     return null;
   }

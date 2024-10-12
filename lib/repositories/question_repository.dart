@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
+import 'package:langpal/utils/logger.dart';
 
 class QuestionRepository {
   Future<void> addQuestion(Question question) async {
@@ -23,7 +24,7 @@ class QuestionRepository {
         throw Exception("The question doesn't exist");
       }
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
     return null;
   }
@@ -47,7 +48,7 @@ class QuestionRepository {
       });
       return questions;
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
     return null;
   }
@@ -71,7 +72,7 @@ class QuestionRepository {
       });
       return questions;
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
     return null;
   }
@@ -102,7 +103,7 @@ class QuestionRepository {
         throw Exception("The answer doesn't exist");
       }
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
   }
 }
