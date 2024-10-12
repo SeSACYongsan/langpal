@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/langpal_user_info.dart';
-import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/providers/fields/first_language_dropdown_provider.dart';
 import 'package:langpal/providers/fields/level_dropdown_provider.dart';
 import 'package:langpal/providers/fields/target_language_dropdown_provider.dart';
@@ -49,52 +46,8 @@ class CurrentUser extends _$CurrentUser {
     return null;
   }
 
-  Future<SignInStatus> signInWithGoogle() async {
-    final googleSignIn = GoogleSignIn();
-    final account = await googleSignIn.signIn();
-    try {
-      if (account != null) {
-        final authentication = await account.authentication;
-        final googleCredential = GoogleAuthProvider.credential(
-          idToken: authentication.idToken,
-          accessToken: authentication.accessToken,
-        );
-        final credential =
-            await FirebaseAuth.instance.signInWithCredential(googleCredential);
-        if (credential.user != null) {
-          final userID = credential.user!.uid;
-          final firestoreInstance = FirebaseFirestore.instance;
-          final users = firestoreInstance.collection("users");
-          final userReference = users.doc(userID);
-          final snapshot = await userReference.get();
-          if (snapshot.exists) {
-            if (snapshot.data() != null) {
-              final user = LangpalUser.fromJson(snapshot.data()!);
-              state = AsyncData(user);
-              return SignInStatus.userExist;
-            } else {
-              throw Exception("The snapshot data doesn't exist");
-            }
-          } else {
-            final displayName = credential.user!.displayName!;
-            final emailAddress = credential.user!.email!;
-            final userID = credential.user!.uid;
-            ref.read(tempUserProvider.notifier).setTempUser({
-              "displayName": displayName,
-              "emailAddress": emailAddress,
-              "userID": userID,
-            });
-            return SignInStatus.userNotExist;
-          }
-        } else {
-          throw Exception("The credential user is null");
-        }
-      } else {
-        throw Exception("The account is null");
-      }
-    } catch (error) {
-      state = AsyncError(error, StackTrace.current);
-    }
-    return SignInStatus.signInFailed;
+  Future<void> setCurrentUser(LangpalUser user) async {
+    state = AsyncData(user);
+    print("Current user set: $state");
   }
 }
