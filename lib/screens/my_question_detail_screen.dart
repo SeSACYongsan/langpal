@@ -8,6 +8,7 @@ import 'package:langpal/providers/my_question_detail_provider.dart';
 import 'package:langpal/providers/questions_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
+import 'package:langpal/view_models/my_question_detail_view_model.dart';
 
 class MyQuestionDetailScreen extends ConsumerStatefulWidget {
   final String questionID;
@@ -24,7 +25,7 @@ class _MyQuestionDetailScreenState
     extends ConsumerState<MyQuestionDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final asyncData = ref.watch(myQuestionDetailProvider(widget.questionID));
+    final asyncData = ref.watch(myQuestionDetailViewModelProvider);
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -190,6 +191,14 @@ class _MyQuestionDetailScreenState
         }
       },
     );
+  }
+
+  @override
+  void initState() {
+    ref
+        .read(myQuestionDetailViewModelProvider.notifier)
+        .fetchMyQuestionDetail(widget.questionID);
+    super.initState();
   }
 
   void onCheckboxChecked(
