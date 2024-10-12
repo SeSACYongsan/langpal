@@ -28,10 +28,12 @@ class QuestionRepository {
     return null;
   }
 
-  Future<List<Question>?> fetchQuestions() async {
+  Future<List<Question>?> fetchQuestionsByUserID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final questionsSnapshot =
-        await firestoreInstance.collection("questions").get();
+    final questionsSnapshot = await firestoreInstance
+        .collection("questions")
+        .where("ownerID", isEqualTo: userID)
+        .get();
     try {
       final questions = questionsSnapshot.docs.map((document) {
         if (document.exists) {
@@ -50,11 +52,11 @@ class QuestionRepository {
     return null;
   }
 
-  Future<List<Question>?> fetchQuestionsByUserID(String userID) async {
+  Future<List<Question>?> fetchUnchosenQuestions() async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questionsSnapshot = await firestoreInstance
         .collection("questions")
-        .where("ownerID", isEqualTo: userID)
+        .where("chosenAnswerID", isNull: true)
         .get();
     try {
       final questions = questionsSnapshot.docs.map((document) {

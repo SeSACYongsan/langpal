@@ -84,7 +84,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   void initState() {
-    ref.read(mainViewModelProvider.notifier).fetchQuestions();
+    ref.read(mainViewModelProvider.notifier).fetchUnchosenQuestions();
     super.initState();
   }
 }
