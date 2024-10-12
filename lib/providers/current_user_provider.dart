@@ -49,27 +49,6 @@ class CurrentUser extends _$CurrentUser {
     return null;
   }
 
-  Future<void> fetchUserByID(String userID) async {
-    final firestoreInstance = FirebaseFirestore.instance;
-    final userReference = firestoreInstance.collection("users").doc(userID);
-    final userSnapshot = await userReference.get();
-    try {
-      if (userSnapshot.exists) {
-        final user = userSnapshot.data();
-        if (user != null) {
-          final langpalUser = LangpalUser.fromJson(user);
-          state = AsyncData(langpalUser);
-        } else {
-          throw Exception("The user is null");
-        }
-      } else {
-        throw Exception("The user doesn't exist");
-      }
-    } catch (error) {
-      state = AsyncError(error, StackTrace.current);
-    }
-  }
-
   Future<SignInStatus> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();

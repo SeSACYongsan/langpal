@@ -46,6 +46,7 @@ dependencies:
     google_sign_in:
     uuid:
     freezed_annotation:
+    logger:
 dev_dependencies:
     flutter_test:
         sdk: flutter
