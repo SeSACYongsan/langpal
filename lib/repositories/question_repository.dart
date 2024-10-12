@@ -63,6 +63,9 @@ class QuestionRepository {
           throw Exception("The question doesn't exist");
         }
       }).toList();
+      questions.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
       return questions;
     } catch (error) {
       print(error);
