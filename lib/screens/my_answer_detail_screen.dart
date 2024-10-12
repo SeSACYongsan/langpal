@@ -4,19 +4,25 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/my_answer_detail_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
+import 'package:langpal/view_models/my_answer_detail_view_model.dart';
 
-class MyAnswerDetailScreen extends ConsumerWidget {
+class MyAnswerDetailScreen extends ConsumerStatefulWidget {
   final String answerID;
   const MyAnswerDetailScreen({
     super.key,
     required this.answerID,
   });
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncData = ref.watch(myAnswerDetailProvider(answerID));
+  ConsumerState<MyAnswerDetailScreen> createState() =>
+      _MyAnswerDetailScreenState();
+}
+
+class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final asyncData = ref.watch(myAnswerDetailViewModelProvider);
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -128,5 +134,13 @@ class MyAnswerDetailScreen extends ConsumerWidget {
         }
       },
     );
+  }
+
+  @override
+  void initState() {
+    ref
+        .read(myAnswerDetailViewModelProvider.notifier)
+        .fetchMyAnswerDetail(widget.answerID);
+    super.initState();
   }
 }

@@ -10,6 +10,23 @@ class AnswerRepository {
         .set(answer.toJson());
   }
 
+  Future<Answer?> fetchAnswerByID(String answerID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answerSnapshot =
+        await firestoreInstance.collection("answers").doc(answerID).get();
+    try {
+      if (answerSnapshot.exists) {
+        final answer = Answer.fromJson(answerSnapshot.data()!);
+        return answer;
+      } else {
+        throw Exception("The answer doesn't exist");
+      }
+    } catch (error) {
+      print(error);
+    }
+    return null;
+  }
+
   Future<List<Answer>?> fetchAnswersByQuestionID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final answersSnapshot = await firestoreInstance
