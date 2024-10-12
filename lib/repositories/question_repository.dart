@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 
 class QuestionRepository {
@@ -71,5 +72,35 @@ class QuestionRepository {
       print(error);
     }
     return null;
+  }
+
+  Future<void> setChosenAnswerByAnswerID(String answerID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answerSnapshot =
+        await firestoreInstance.collection("answers").doc(answerID).get();
+    try {
+      if (answerSnapshot.exists) {
+        final answer = Answer.fromJson(answerSnapshot.data()!);
+        final questionID = answer.questionID;
+        final questionSnapshot = await firestoreInstance
+            .collection("questions")
+            .doc(questionID)
+            .get();
+        if (questionSnapshot.exists) {
+          final question = Question.fromJson(questionSnapshot.data()!);
+          final modifiedQuestion = question.copyWith(chosenAnswerID: answerID);
+          await firestoreInstance
+              .collection("questions")
+              .doc(questionID)
+              .set(modifiedQuestion.toJson());
+        } else {
+          throw Exception("The question doesn't exist");
+        }
+      } else {
+        throw Exception("The answer doesn't exist");
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 }

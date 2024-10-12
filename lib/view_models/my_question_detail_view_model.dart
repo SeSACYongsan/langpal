@@ -23,4 +23,10 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
       "answers": answers,
     });
   }
+
+  Future<void> setChosenAnswer(
+      {required String questionID, required String answerID}) async {
+    await questionRepository.setChosenAnswerByAnswerID(answerID);
+    await fetchMyQuestionDetail(questionID);
+  }
 }
