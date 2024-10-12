@@ -48,4 +48,25 @@ class QuestionRepository {
     }
     return null;
   }
+
+  Future<List<Question>?> fetchQuestionsByUserID(String userID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final questionsSnapshot = await firestoreInstance
+        .collection("questions")
+        .where("ownerID", isEqualTo: userID)
+        .get();
+    try {
+      final questions = questionsSnapshot.docs.map((document) {
+        if (document.exists) {
+          return Question.fromJson(document.data());
+        } else {
+          throw Exception("The question doesn't exist");
+        }
+      }).toList();
+      return questions;
+    } catch (error) {
+      print(error);
+    }
+    return null;
+  }
 }

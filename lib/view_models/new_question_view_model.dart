@@ -13,7 +13,7 @@ part 'new_question_view_model.g.dart';
 
 @riverpod
 class NewQuestionViewModel extends _$NewQuestionViewModel {
-  late QuestionRepository questionRepository;
+  late final QuestionRepository questionRepository;
   Future<void> addQuestion() async {
     final currentUser = ref.read(currentUserProvider).value!;
     final questionType = ref.read(questionTypeDropdownProvider);

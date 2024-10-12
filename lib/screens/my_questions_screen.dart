@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/components/question_card.dart';
-import 'package:langpal/providers/questions_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
+import 'package:langpal/view_models/my_questions_view_model.dart';
 
 class MyQuestionsScreen extends ConsumerStatefulWidget {
   const MyQuestionsScreen({super.key});
@@ -15,7 +15,7 @@ class MyQuestionsScreen extends ConsumerStatefulWidget {
 class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
   @override
   Widget build(BuildContext context) {
-    final asyncQuestions = ref.watch(questionsProvider);
+    final asyncQuestions = ref.watch(myQuestionsViewModelProvider);
     return asyncQuestions.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -68,7 +68,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
 
   @override
   void initState() {
-    ref.read(questionsProvider.notifier).fetchMyQuestions();
+    ref.read(myQuestionsViewModelProvider.notifier).fetchMyQuestions();
     super.initState();
   }
 }
