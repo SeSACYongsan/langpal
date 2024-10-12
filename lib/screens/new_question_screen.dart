@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/new_question_text_field_provider.dart';
 import 'package:langpal/providers/fields/point_slider_provider.dart';
 import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
-import 'package:langpal/providers/questions_provider.dart';
-import 'package:uuid/uuid.dart';
+import 'package:langpal/view_models/new_question_view_model.dart';
 
 class NewQuestionScreen extends ConsumerStatefulWidget {
   const NewQuestionScreen({super.key});
@@ -152,17 +148,11 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                             );
                           });
                     } else {
-                      final newQuestion = await makeQuestion();
-                      ref
-                          .read(questionsProvider.notifier)
-                          .saveQuestion(newQuestion)
-                          .then((value) {
-                        print("Succeeded to save the question");
-                        clearFields();
-                        context.go("/main");
-                      }, onError: (error) {
-                        print("Error: $error");
-                      });
+                      await ref
+                          .read(newQuestionViewModelProvider.notifier)
+                          .addQuestion();
+                      clearFields();
+                      context.go("/main");
                     }
                   },
                   child: Text(
@@ -198,27 +188,5 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     questionTypeTextEditingController = TextEditingController();
     newQuestionTextEditingController = TextEditingController();
     super.initState();
-  }
-
-  Future<Question> makeQuestion() async {
-    final currentUser = ref.read(currentUserProvider).value!;
-    final questionType = ref.read(questionTypeDropdownProvider);
-    final content = newQuestionTextEditingController.text;
-    final point = ref.read(pointSliderProvider).toInt();
-    final firestoreInstance = FirebaseFirestore.instance;
-    final userRef = firestoreInstance.collection("users").doc(currentUser.id);
-    final snapshot = await userRef.get();
-    final ownerName = snapshot.data()!["info"]["username"];
-    const uuid = Uuid();
-    final newQuestion = Question(
-      id: uuid.v4(),
-      ownerName: ownerName.toString(),
-      ownerID: currentUser.id,
-      questionType: questionType,
-      content: content,
-      point: point,
-      date: DateTime.now(),
-    );
-    return newQuestion;
   }
 }
