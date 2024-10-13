@@ -22,6 +22,15 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
     state = AsyncData({
       "question": question,
       "answer": answer,
+      "isEditable": false,
+    });
+  }
+
+  Future<void> setIsEditable(bool isEditable) async {
+    state = AsyncData({
+      "question": state.value!["question"],
+      "answer": state.value!["answer"],
+      "isEditable": isEditable,
     });
   }
 }
