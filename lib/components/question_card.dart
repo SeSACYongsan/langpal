@@ -57,7 +57,7 @@ class QuestionCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          question.ownerName,
+                          question.ownerUsername,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(

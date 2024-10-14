@@ -9,7 +9,7 @@ part of 'question.dart';
 _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
     _$QuestionImpl(
       id: json['id'] as String,
-      ownerName: json['ownerName'] as String,
+      ownerUsername: json['ownerUsername'] as String,
       ownerID: json['ownerID'] as String,
       point: (json['point'] as num).toInt(),
       questionType: $enumDecode(_$QuestionTypeEnumMap, json['questionType']),
@@ -21,7 +21,7 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$QuestionImplToJson(_$QuestionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'ownerName': instance.ownerName,
+      'ownerUsername': instance.ownerUsername,
       'ownerID': instance.ownerID,
       'point': instance.point,
       'questionType': _$QuestionTypeEnumMap[instance.questionType]!,

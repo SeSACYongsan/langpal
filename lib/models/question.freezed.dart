@@ -21,7 +21,7 @@ Question _$QuestionFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Question {
   String get id => throw _privateConstructorUsedError;
-  String get ownerName => throw _privateConstructorUsedError;
+  String get ownerUsername => throw _privateConstructorUsedError;
   String get ownerID => throw _privateConstructorUsedError;
   int get point => throw _privateConstructorUsedError;
   QuestionType get questionType => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $QuestionCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String ownerName,
+      String ownerUsername,
       String ownerID,
       int point,
       QuestionType questionType,
@@ -65,7 +65,7 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
   @override
   $Res call({
     Object? id = null,
-    Object? ownerName = null,
+    Object? ownerUsername = null,
     Object? ownerID = null,
     Object? point = null,
     Object? questionType = null,
@@ -78,9 +78,9 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ownerName: null == ownerName
-          ? _value.ownerName
-          : ownerName // ignore: cast_nullable_to_non_nullable
+      ownerUsername: null == ownerUsername
+          ? _value.ownerUsername
+          : ownerUsername // ignore: cast_nullable_to_non_nullable
               as String,
       ownerID: null == ownerID
           ? _value.ownerID
@@ -120,7 +120,7 @@ abstract class _$$QuestionImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      String ownerName,
+      String ownerUsername,
       String ownerID,
       int point,
       QuestionType questionType,
@@ -141,7 +141,7 @@ class __$$QuestionImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? ownerName = null,
+    Object? ownerUsername = null,
     Object? ownerID = null,
     Object? point = null,
     Object? questionType = null,
@@ -154,9 +154,9 @@ class __$$QuestionImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      ownerName: null == ownerName
-          ? _value.ownerName
-          : ownerName // ignore: cast_nullable_to_non_nullable
+      ownerUsername: null == ownerUsername
+          ? _value.ownerUsername
+          : ownerUsername // ignore: cast_nullable_to_non_nullable
               as String,
       ownerID: null == ownerID
           ? _value.ownerID
@@ -191,7 +191,7 @@ class __$$QuestionImplCopyWithImpl<$Res>
 class _$QuestionImpl implements _Question {
   _$QuestionImpl(
       {required this.id,
-      required this.ownerName,
+      required this.ownerUsername,
       required this.ownerID,
       required this.point,
       required this.questionType,
@@ -205,7 +205,7 @@ class _$QuestionImpl implements _Question {
   @override
   final String id;
   @override
-  final String ownerName;
+  final String ownerUsername;
   @override
   final String ownerID;
   @override
@@ -221,7 +221,7 @@ class _$QuestionImpl implements _Question {
 
   @override
   String toString() {
-    return 'Question(id: $id, ownerName: $ownerName, ownerID: $ownerID, point: $point, questionType: $questionType, content: $content, date: $date, chosenAnswerID: $chosenAnswerID)';
+    return 'Question(id: $id, ownerUsername: $ownerUsername, ownerID: $ownerID, point: $point, questionType: $questionType, content: $content, date: $date, chosenAnswerID: $chosenAnswerID)';
   }
 
   @override
@@ -230,8 +230,8 @@ class _$QuestionImpl implements _Question {
         (other.runtimeType == runtimeType &&
             other is _$QuestionImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.ownerName, ownerName) ||
-                other.ownerName == ownerName) &&
+            (identical(other.ownerUsername, ownerUsername) ||
+                other.ownerUsername == ownerUsername) &&
             (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
             (identical(other.point, point) || other.point == point) &&
             (identical(other.questionType, questionType) ||
@@ -244,8 +244,8 @@ class _$QuestionImpl implements _Question {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, ownerName, ownerID, point,
-      questionType, content, date, chosenAnswerID);
+  int get hashCode => Object.hash(runtimeType, id, ownerUsername, ownerID,
+      point, questionType, content, date, chosenAnswerID);
 
   @JsonKey(ignore: true)
   @override
@@ -264,7 +264,7 @@ class _$QuestionImpl implements _Question {
 abstract class _Question implements Question {
   factory _Question(
       {required final String id,
-      required final String ownerName,
+      required final String ownerUsername,
       required final String ownerID,
       required final int point,
       required final QuestionType questionType,
@@ -278,7 +278,7 @@ abstract class _Question implements Question {
   @override
   String get id;
   @override
-  String get ownerName;
+  String get ownerUsername;
   @override
   String get ownerID;
   @override

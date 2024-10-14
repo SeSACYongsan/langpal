@@ -29,7 +29,7 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
         const uuid = Uuid();
         final question = Question(
           id: uuid.v4(),
-          ownerName: ownerName.toString(),
+          ownerUsername: ownerName.toString(),
           ownerID: currentUser.id,
           questionType: questionType,
           content: content,

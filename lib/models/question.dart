@@ -8,7 +8,7 @@ part 'question.g.dart';
 class Question with _$Question {
   factory Question({
     required String id,
-    required String ownerName,
+    required String ownerUsername,
     required String ownerID,
     required int point,
     required QuestionType questionType,
