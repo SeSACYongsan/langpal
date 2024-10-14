@@ -16,6 +16,7 @@ class NotificationsScreen extends ConsumerStatefulWidget {
 }
 
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
+  bool isCheckboxChecked = false;
   @override
   Widget build(BuildContext context) {
     final asyncNotifications = ref.watch(notificationsViewModelProvider);
@@ -45,7 +46,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
               backgroundColor: Colors.blue,
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: onTapCheckbox,
                   icon: const Icon(
                     Icons.check_box_outlined,
                     color: Colors.white,
@@ -56,34 +57,42 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
             body: ListView.builder(
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(20),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        spreadRadius: 5,
-                        blurRadius: 5,
-                        color: Colors.black12,
-                        offset: Offset(5, 5),
+                child: Row(
+                  children: [
+                    if (isCheckboxChecked)
+                      Checkbox(value: false, onChanged: onCheckboxChanged),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                              spreadRadius: 5,
+                              blurRadius: 5,
+                              color: Colors.black12,
+                              offset: Offset(5, 5),
+                            ),
+                          ],
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              dateFormatter.format(notifications[index].date),
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              notifications[index].content,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        dateFormatter.format(notifications[index].date),
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        notifications[index].content,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               itemCount: notifications.length,
@@ -104,5 +113,13 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   void initState() {
     ref.read(notificationsViewModelProvider.notifier).fetchMyNotifications();
     super.initState();
+  }
+
+  void onCheckboxChanged(bool? value) {}
+
+  void onTapCheckbox() {
+    setState(() {
+      isCheckboxChecked = !isCheckboxChecked;
+    });
   }
 }
