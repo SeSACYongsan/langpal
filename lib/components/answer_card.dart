@@ -80,7 +80,7 @@ class AnswerCard extends ConsumerWidget {
             ),
           );
         } else {
-          return const ErrorScreen(message: "Null");
+          return const ErrorScreen(message: "The snapshot is null");
         }
       },
     );

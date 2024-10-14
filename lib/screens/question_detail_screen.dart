@@ -117,12 +117,13 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    ...answers.map((answer) {
-                      return AnswerCard(
-                        answer: answer,
-                        isProfileVisible: true,
-                      );
-                    }),
+                    ListView.builder(
+                      itemBuilder: (context, index) {
+                        return AnswerCard(
+                            answer: answers[index], isProfileVisible: true);
+                      },
+                      itemCount: answers.length,
+                    ),
                     const SizedBox(height: 30),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(50),
