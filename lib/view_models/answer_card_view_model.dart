@@ -1,3 +1,4 @@
+import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,12 +16,10 @@ class AnswerCardViewModel extends _$AnswerCardViewModel {
     return null;
   }
 
-  Future<void> fetchUserByAnswerID(String answerID) async {
+  Future<LangpalUser?> fetchUserByAnswerID(String answerID) async {
     final answer = await answerRepository.fetchAnswerByID(answerID);
     final ownerID = answer!.ownerID;
     final owner = await userRepository.fetchUserByID(ownerID);
-    state = AsyncData({
-      "owner": owner,
-    });
+    return owner;
   }
 }

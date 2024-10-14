@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
-import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/answer_card_view_model.dart';
 
-class AnswerCard extends ConsumerStatefulWidget {
+class AnswerCard extends ConsumerWidget {
   final Answer answer;
   final bool isProfileVisible;
   const AnswerCard({
@@ -15,31 +14,27 @@ class AnswerCard extends ConsumerStatefulWidget {
     required this.isProfileVisible,
   });
   @override
-  ConsumerState<AnswerCard> createState() => _AnswerCardState();
-}
-
-class _AnswerCardState extends ConsumerState<AnswerCard> {
-  @override
-  Widget build(BuildContext context) {
-    final asyncData = ref.watch(answerCardViewModelProvider);
-    return asyncData.when(
-      loading: () {
-        return const LoadingScreen();
-      },
-      error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
-      },
-      data: (data) {
-        if (data == null) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final futureOwner = ref
+        .read(answerCardViewModelProvider.notifier)
+        .fetchUserByAnswerID(answer.id);
+    return FutureBuilder(
+      future: futureOwner,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
-        } else {
-          final owner = data["owner"] as LangpalUser;
+        }
+        if (snapshot.hasError) {
+          return ErrorScreen(message: snapshot.error.toString());
+        }
+        if (snapshot.hasData) {
+          final owner = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (widget.isProfileVisible)
+                if (isProfileVisible)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
@@ -79,21 +74,15 @@ class _AnswerCardState extends ConsumerState<AnswerCard> {
                     ],
                     color: Colors.white,
                   ),
-                  child: Text(widget.answer.content),
+                  child: Text(answer.content),
                 ),
               ],
             ),
           );
+        } else {
+          return const ErrorScreen(message: "Null");
         }
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    ref
-        .read(answerCardViewModelProvider.notifier)
-        .fetchUserByAnswerID(widget.answer.id);
   }
 }
