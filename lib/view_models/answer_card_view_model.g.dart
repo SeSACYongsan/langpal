@@ -7,7 +7,7 @@ part of 'answer_card_view_model.dart';
 // **************************************************************************
 
 String _$answerCardViewModelHash() =>
-    r'21aa736c7e9a887d2bcc0fbf081408333098dc12';
+    r'9445a9a0500eaf2b4f96fcec65a6680fe1cca875';
 
 /// See also [AnswerCardViewModel].
 @ProviderFor(AnswerCardViewModel)
