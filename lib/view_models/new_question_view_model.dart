@@ -25,11 +25,11 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
     try {
       if (userSnapshot.exists) {
         final user = LangpalUser.fromJson(userSnapshot.data()!);
-        final ownerName = user.info.username;
+        final ownerUsername = user.info.username;
         const uuid = Uuid();
         final question = Question(
           id: uuid.v4(),
-          ownerUsername: ownerName.toString(),
+          ownerUsername: ownerUsername.toString(),
           ownerID: currentUser.id,
           questionType: questionType,
           content: content,
