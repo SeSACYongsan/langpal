@@ -7,7 +7,7 @@ part of 'new_answer_text_field_provider.dart';
 // **************************************************************************
 
 String _$newAnswerTextFieldHash() =>
-    r'5d811e6fc071a7f51ce72bbe2cd3cf992430e5d0';
+    r'0a33106b4f650140bd42949749195a5612ed6c29';
 
 /// See also [NewAnswerTextField].
 @ProviderFor(NewAnswerTextField)

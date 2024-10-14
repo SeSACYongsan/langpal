@@ -77,4 +77,12 @@ class AnswerRepository {
     }
     return null;
   }
+
+  Future<void> updateAnswer(Answer answer) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance
+        .collection("answers")
+        .doc(answer.id)
+        .set(answer.toJson());
+  }
 }

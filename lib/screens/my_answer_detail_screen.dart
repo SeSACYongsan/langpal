@@ -156,7 +156,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                               onChanged: (value) {
                                 ref
                                     .read(newAnswerTextFieldProvider.notifier)
-                                    .setNewAnswer(value);
+                                    .setContent(value);
                               },
                             ),
                           ),
@@ -203,6 +203,9 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     await ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .setIsEditable(true);
+    await ref
+        .read(myAnswerDetailViewModelProvider.notifier)
+        .initializeTextFieldByAnswerID(widget.answerID);
   }
 
   void onTapSubmitButton() async {

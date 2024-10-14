@@ -13,7 +13,7 @@ class NewAnswerTextField extends _$NewAnswerTextField {
     state = "";
   }
 
-  void setNewAnswer(String answer) {
-    state = answer;
+  void setContent(String content) {
+    state = content;
   }
 }

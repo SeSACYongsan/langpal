@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/providers/fields/new_answer_text_field_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
@@ -29,6 +28,11 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
     });
   }
 
+  Future<void> initializeTextFieldByAnswerID(String answerID) async {
+    final answer = state.value!["answer"] as Answer;
+    ref.read(newAnswerTextFieldProvider.notifier).setContent(answer.content);
+  }
+
   Future<void> setIsEditable(bool isEditable) async {
     state = AsyncData({
       "question": state.value!["question"],
@@ -38,28 +42,14 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
   }
 
   Future<void> updateAnswerByAnswerID(String answerID) async {
+    final answer = await answerRepository.fetchAnswerByID(answerID);
     final newContent = ref.read(newAnswerTextFieldProvider);
-    final firestoreInstance = FirebaseFirestore.instance;
-    final answerSnapshot =
-        await firestoreInstance.collection("answers").doc(answerID).get();
-    try {
-      if (answerSnapshot.exists) {
-        final answer = Answer.fromJson(answerSnapshot.data()!);
-        final modifiedAnswer = answer.copyWith(content: newContent);
-        firestoreInstance
-            .collection("answers")
-            .doc(answerID)
-            .set(modifiedAnswer.toJson());
-        state = AsyncData({
-          "question": state.value!["question"],
-          "answer": modifiedAnswer,
-          "isEditable": state.value!["isEditable"],
-        });
-      } else {
-        throw Exception("The answer doesn't exist");
-      }
-    } catch (error, stackTrace) {
-      state = AsyncError(error, stackTrace);
-    }
+    final modifiedAnswer = answer!.copyWith(content: newContent);
+    await answerRepository.updateAnswer(modifiedAnswer);
+    state = AsyncData({
+      "question": state.value!["question"],
+      "answer": modifiedAnswer,
+      "isEditable": state.value!["isEditable"],
+    });
   }
 }
