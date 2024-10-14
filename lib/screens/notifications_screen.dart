@@ -99,4 +99,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
       },
     );
   }
+
+  @override
+  void initState() {
+    ref.read(notificationsViewModelProvider.notifier).fetchMyNotifications();
+    super.initState();
+  }
 }
