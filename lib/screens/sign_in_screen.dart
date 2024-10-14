@@ -96,8 +96,21 @@ class SignInScreen extends ConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
-                          onPressed: () {
-                            context.go("/initialization");
+                          onPressed: () async {
+                            final signInStatus = await ref
+                                .read(signInViewModelProvider.notifier)
+                                .signInWithApple();
+                            switch (signInStatus) {
+                              case SignInStatus.signInFailed:
+                                showSignInFailedDialog(context);
+                                break;
+                              case SignInStatus.userNotExist:
+                                context.go("/initialization");
+                                break;
+                              case SignInStatus.userExist:
+                                context.go("/main");
+                                break;
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 10),

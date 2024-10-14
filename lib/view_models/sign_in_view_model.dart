@@ -20,6 +20,10 @@ class SignInViewModel extends _$SignInViewModel {
     });
   }
 
+  Future<SignInStatus> signInWithApple() async {
+    return SignInStatus.signInFailed;
+  }
+
   Future<SignInStatus> signInWithGoogle() async {
     final googleSignIn = GoogleSignIn();
     final account = await googleSignIn.signIn();
