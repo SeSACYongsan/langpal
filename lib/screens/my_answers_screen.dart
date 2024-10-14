@@ -55,6 +55,8 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
