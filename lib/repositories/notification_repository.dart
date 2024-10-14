@@ -17,6 +17,9 @@ class NotificationRepository {
           throw Exception("The notification doesn't exist");
         }
       }).toList();
+      notifications.sort((a, b) {
+        return a.date.compareTo(b.date);
+      });
       return notifications;
     } catch (error) {
       logger.e(error);
