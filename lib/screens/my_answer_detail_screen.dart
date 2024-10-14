@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/fields/new_answer_text_field_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_answer_detail_view_model.dart';
@@ -20,9 +21,11 @@ class MyAnswerDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
+  late TextEditingController newAnswerTextEditingController;
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myAnswerDetailViewModelProvider);
+    newAnswerTextEditingController.text = ref.watch(newAnswerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(message: error.toString());
@@ -134,11 +137,29 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                         ],
                       )
                     else
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           TextField(
                             keyboardType: TextInputType.text,
+                            controller: newAnswerTextEditingController,
+                            maxLines: 3,
+                            onChanged: (value) {
+                              ref
+                                  .read(newAnswerTextFieldProvider.notifier)
+                                  .setNewAnswer(value);
+                            },
+                          ),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.all(15),
+                              textStyle: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            onPressed: onTapSubmitButton,
+                            child: const Text("수정하기"),
                           ),
                         ],
                       ),
@@ -153,10 +174,17 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
   }
 
   @override
+  void dispose() {
+    newAnswerTextEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .fetchMyAnswerDetail(widget.answerID);
+    newAnswerTextEditingController = TextEditingController();
     super.initState();
   }
 
@@ -164,5 +192,14 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     await ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .setIsEditable(true);
+  }
+
+  void onTapSubmitButton() async {
+    await ref
+        .read(myAnswerDetailViewModelProvider.notifier)
+        .updateAnswerByAnswerID(widget.answerID);
+    await ref
+        .read(myAnswerDetailViewModelProvider.notifier)
+        .setIsEditable(false);
   }
 }
