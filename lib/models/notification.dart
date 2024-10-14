@@ -8,6 +8,7 @@ class Notification with _$Notification {
   factory Notification({
     required String id,
     required String ownerID,
+    required DateTime date,
     required String content,
   }) = _Notification;
   factory Notification.fromJson(Map<String, dynamic> json) =>

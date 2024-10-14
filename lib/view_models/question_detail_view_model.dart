@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
+import 'package:langpal/models/notification.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
@@ -30,6 +32,26 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
     await fetchQuestionDetail(questionID);
   }
 
+  Future<void> addNotificationByQuestionID(String questionID) async {
+    final currentUser = ref.read(currentUserProvider).value!;
+    final question = await questionRepository.fetchQuestionByID(questionID);
+    final ownerID = question!.ownerID;
+    final firestoreInstance = FirebaseFirestore.instance;
+    const uuid = Uuid();
+    if (ownerID != currentUser.id) {
+      final notification = Notification(
+        id: uuid.v4(),
+        ownerID: ownerID,
+        date: DateTime.now(),
+        content: "질문에 답변이 등록되었습니다",
+      );
+      await firestoreInstance
+          .collection("notifications")
+          .doc(notification.id)
+          .set(notification.toJson());
+    }
+  }
+
   @override
   Future<Map<String, dynamic>?> build() async {
     questionRepository = QuestionRepository();
@@ -43,14 +65,12 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final answers =
           await answerRepository.fetchAnswersByQuestionID(questionID);
       final question = await questionRepository.fetchQuestionByID(questionID);
-      final user = await userRepository.fetchUserByQuestionID(questionID);
-      if (answers == null || question == null || user == null) {
-        throw Exception("Failed to fetch data");
-      }
+      final questionOwner =
+          await userRepository.fetchUserByQuestionID(questionID);
       state = AsyncData({
         "answers": answers,
         "question": question,
-        "user": user,
+        "questionOwner": questionOwner,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);

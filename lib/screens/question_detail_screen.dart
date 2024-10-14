@@ -37,7 +37,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           return const LoadingScreen();
         } else {
           final question = data["question"] as Question;
-          final user = data["user"] as LangpalUser;
+          final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           return Scaffold(
             backgroundColor: Colors.white,
@@ -81,11 +81,11 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              user.info.username,
+                              questionOwner.info.username,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              "${user.info.targetLanguage.toKoreanName()} 수준: ${user.info.level.toKoreanName()}",
+                              "${questionOwner.info.targetLanguage.toKoreanName()} 수준: ${questionOwner.info.level.toKoreanName()}",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
@@ -119,7 +119,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     const SizedBox(height: 30),
                     ...answers.map((answer) {
                       return AnswerCard(
-                        user: user,
                         answer: answer,
                         isProfileVisible: true,
                       );
@@ -180,7 +179,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           backgroundColor: Colors.blue,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (answerTextEditingController.text.trim().isEmpty) {
                             showDialog(
                               context: context,
@@ -192,9 +191,12 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               },
                             );
                           } else {
-                            ref
+                            await ref
                                 .read(questionDetailViewModelProvider.notifier)
                                 .addAnswer(widget.questionID);
+                            await ref
+                                .read(questionDetailViewModelProvider.notifier)
+                                .addNotificationByQuestionID(question.id);
                             ref
                                 .read(answerTextFieldProvider.notifier)
                                 .initializeAnswer();

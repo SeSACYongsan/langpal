@@ -66,7 +66,6 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
                           },
                           child: AnswerCard(
                             answer: answer,
-                            user: user,
                             isProfileVisible: false,
                           ),
                         );

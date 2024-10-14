@@ -4,6 +4,23 @@ import 'package:langpal/models/question.dart';
 import 'package:langpal/utils/logger.dart';
 
 class UserRepository {
+  Future<LangpalUser?> fetchUserByID(String userID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final userSnapshot =
+        await firestoreInstance.collection("users").doc(userID).get();
+    try {
+      if (userSnapshot.exists) {
+        final user = LangpalUser.fromJson(userSnapshot.data()!);
+        return user;
+      } else {
+        throw Exception("The user doesn't exist");
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+    return null;
+  }
+
   Future<LangpalUser?> fetchUserByQuestionID(String questionID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final questionSnapshot =

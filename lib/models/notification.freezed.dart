@@ -22,6 +22,7 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) {
 mixin _$Notification {
   String get id => throw _privateConstructorUsedError;
   String get ownerID => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,7 @@ abstract class $NotificationCopyWith<$Res> {
           Notification value, $Res Function(Notification) then) =
       _$NotificationCopyWithImpl<$Res, Notification>;
   @useResult
-  $Res call({String id, String ownerID, String content});
+  $Res call({String id, String ownerID, DateTime date, String content});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
   $Res call({
     Object? id = null,
     Object? ownerID = null,
+    Object? date = null,
     Object? content = null,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +67,10 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
           ? _value.ownerID
           : ownerID // ignore: cast_nullable_to_non_nullable
               as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -81,7 +87,7 @@ abstract class _$$NotificationImplCopyWith<$Res>
       __$$NotificationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String ownerID, String content});
+  $Res call({String id, String ownerID, DateTime date, String content});
 }
 
 /// @nodoc
@@ -97,6 +103,7 @@ class __$$NotificationImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? ownerID = null,
+    Object? date = null,
     Object? content = null,
   }) {
     return _then(_$NotificationImpl(
@@ -108,6 +115,10 @@ class __$$NotificationImplCopyWithImpl<$Res>
           ? _value.ownerID
           : ownerID // ignore: cast_nullable_to_non_nullable
               as String,
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -120,7 +131,10 @@ class __$$NotificationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NotificationImpl implements _Notification {
   _$NotificationImpl(
-      {required this.id, required this.ownerID, required this.content});
+      {required this.id,
+      required this.ownerID,
+      required this.date,
+      required this.content});
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationImplFromJson(json);
@@ -130,11 +144,13 @@ class _$NotificationImpl implements _Notification {
   @override
   final String ownerID;
   @override
+  final DateTime date;
+  @override
   final String content;
 
   @override
   String toString() {
-    return 'Notification(id: $id, ownerID: $ownerID, content: $content)';
+    return 'Notification(id: $id, ownerID: $ownerID, date: $date, content: $content)';
   }
 
   @override
@@ -144,12 +160,13 @@ class _$NotificationImpl implements _Notification {
             other is _$NotificationImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ownerID, ownerID) || other.ownerID == ownerID) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.content, content) || other.content == content));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, ownerID, content);
+  int get hashCode => Object.hash(runtimeType, id, ownerID, date, content);
 
   @JsonKey(ignore: true)
   @override
@@ -169,6 +186,7 @@ abstract class _Notification implements Notification {
   factory _Notification(
       {required final String id,
       required final String ownerID,
+      required final DateTime date,
       required final String content}) = _$NotificationImpl;
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
@@ -178,6 +196,8 @@ abstract class _Notification implements Notification {
   String get id;
   @override
   String get ownerID;
+  @override
+  DateTime get date;
   @override
   String get content;
   @override
