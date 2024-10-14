@@ -39,6 +39,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final question = data["question"] as Question;
           final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
+          final answerOwners = data["answerOwners"] as List<LangpalUser?>;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -121,6 +122,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       itemBuilder: (context, index) {
                         return AnswerCard(
                           answer: answers[index],
+                          owner: answerOwners[index]!,
                           isProfileVisible: true,
                         );
                       },

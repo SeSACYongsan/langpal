@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:langpal/models/answer.dart';
+import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/notification.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
@@ -67,10 +68,16 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final question = await questionRepository.fetchQuestionByID(questionID);
       final questionOwner =
           await userRepository.fetchUserByQuestionID(questionID);
+      List<LangpalUser?> answerOwners = [];
+      for (final answer in answers!) {
+        final owner = await userRepository.fetchUserByID(answer.ownerID);
+        answerOwners.add(owner);
+      }
       state = AsyncData({
         "answers": answers,
         "question": question,
         "questionOwner": questionOwner,
+        "answerOwners": answerOwners,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);

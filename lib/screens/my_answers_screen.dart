@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/components/answer_card.dart';
 import 'package:langpal/models/answer.dart';
+import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_answers_view_model.dart';
@@ -29,6 +30,7 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
           return const LoadingScreen();
         } else {
           final answers = data["answers"] as List<Answer>;
+          final answerOwners = data["answerOwners"] as List<LangpalUser?>;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -52,24 +54,21 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ...answers.map(
-                      (answer) {
-                        return GestureDetector(
-                          onTap: () {
-                            context.go(
-                                "/main/my_page/my_answers/detail/${answer.id}");
-                          },
-                          child: AnswerCard(
-                            answer: answer,
-                            isProfileVisible: false,
-                          ),
-                        );
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        context.go(
+                            "/main/my_page/my_answers/detail/${answers[index].id}");
                       },
-                    ),
-                  ],
+                      child: AnswerCard(
+                        answer: answers[index],
+                        owner: answerOwners[index]!,
+                        isProfileVisible: false,
+                      ),
+                    );
+                  },
+                  itemCount: answers.length,
                 ),
               ),
             ),
