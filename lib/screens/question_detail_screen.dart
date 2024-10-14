@@ -118,6 +118,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     ),
                     const SizedBox(height: 30),
                     ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return AnswerCard(
                             answer: answers[index], isProfileVisible: true);
