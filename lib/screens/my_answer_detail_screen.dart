@@ -140,16 +140,27 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          TextField(
-                            keyboardType: TextInputType.text,
-                            controller: newAnswerTextEditingController,
-                            maxLines: 3,
-                            onChanged: (value) {
-                              ref
-                                  .read(newAnswerTextFieldProvider.notifier)
-                                  .setNewAnswer(value);
-                            },
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.text,
+                              controller: newAnswerTextEditingController,
+                              maxLines: 3,
+                              onChanged: (value) {
+                                ref
+                                    .read(newAnswerTextFieldProvider.notifier)
+                                    .setNewAnswer(value);
+                              },
+                            ),
                           ),
+                          const SizedBox(height: 10),
                           OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               shape: RoundedRectangleBorder(
