@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:langpal/models/notification.dart' as model;
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/notifications_view_model.dart';
@@ -19,12 +20,15 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   bool isCheckboxChecked = false;
   @override
   Widget build(BuildContext context) {
-    final asyncNotifications = ref.watch(notificationsViewModelProvider);
-    return asyncNotifications.when(
-      data: (notifications) {
-        if (notifications == null) {
+    final asyncData = ref.watch(notificationsViewModelProvider);
+    return asyncData.when(
+      data: (data) {
+        if (data == null) {
           return const LoadingScreen();
         } else {
+          final notifications =
+              data["notifications"] as List<model.Notification>;
+          final checkboxes = data["checkboxes"] as List<bool>;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -60,7 +64,12 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                 child: Row(
                   children: [
                     if (isCheckboxChecked)
-                      Checkbox(value: false, onChanged: onCheckboxChanged),
+                      Checkbox(
+                        value: checkboxes[index],
+                        onChanged: (value) {
+                          onCheckboxChanged(value: value, index: index);
+                        },
+                      ),
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(20),
@@ -115,11 +124,18 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     super.initState();
   }
 
-  void onCheckboxChanged(bool? value) {}
+  void onCheckboxChanged({required bool? value, required int index}) {
+    ref
+        .read(notificationsViewModelProvider.notifier)
+        .updateCheckboxes(index: index, value: value);
+  }
 
   void onTapCheckbox() {
-    setState(() {
-      isCheckboxChecked = !isCheckboxChecked;
-    });
+    if (isCheckboxChecked) {
+    } else {
+      setState(() {
+        isCheckboxChecked = true;
+      });
+    }
   }
 }

@@ -1,4 +1,3 @@
-import 'package:langpal/models/notification.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,15 +8,28 @@ part 'notifications_view_model.g.dart';
 class NotificationsViewModel extends _$NotificationsViewModel {
   late final NotificationRepository notificationRepository;
   @override
-  Future<List<Notification>?> build() async {
+  Future<Map<String, dynamic>?> build() async {
     notificationRepository = NotificationRepository();
-    return [];
+    return null;
   }
 
   Future<void> fetchMyNotifications() async {
     final currentUser = ref.read(currentUserProvider).value!;
     final notifications =
         await notificationRepository.fetchNotificationsByUserID(currentUser.id);
-    state = AsyncData(notifications);
+    state = AsyncData({
+      "notifications": notifications,
+      "checkboxes": List.generate(notifications!.length, (_) => false),
+    });
+  }
+
+  Future<void> updateCheckboxes(
+      {required int index, required bool? value}) async {
+    List<bool> checkboxes = state.value!["checkboxes"];
+    checkboxes[index] = value!;
+    state = AsyncData({
+      "notifications": state.value!["notifications"],
+      "checkboxes": checkboxes,
+    });
   }
 }
