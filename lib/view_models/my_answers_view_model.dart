@@ -23,7 +23,6 @@ class MyAnswersViewModel extends _$MyAnswersViewModel {
     final currentUser = ref.read(currentUserProvider).value!;
     final answers = await answerRepository.fetchAnswersByUserID(currentUser.id);
     state = AsyncData({
-      "user": currentUser,
       "answers": answers,
     });
   }

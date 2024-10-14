@@ -13,33 +13,18 @@ class AnswerRepository {
 
   Future<Answer?> fetchAnswerByID(String answerID) async {
     final firestoreInstance = FirebaseFirestore.instance;
-    final foo = firestoreInstance.collection("answers").doc(answerID);
-    print("1");
-    final answerSnapshot0 =
-        firestoreInstance.collection("answers").doc(answerID);
-    print("2");
-    DocumentSnapshot<Map<String, dynamic>> answerSnapshot;
+    final answerSnapshot =
+        await firestoreInstance.collection("answers").doc(answerID).get();
     try {
-      print(answerSnapshot0);
-      await answerSnapshot0.set({'jh': 1111});
-      print('5');
-    } catch (e) {
-      print('4');
-      print(e);
-      return null;
+      if (answerSnapshot.exists) {
+        final answer = Answer.fromJson(answerSnapshot.data()!);
+        return answer;
+      } else {
+        throw Exception("The answer doesn't exist");
+      }
+    } catch (error) {
+      logger.e(error);
     }
-
-    // print("3");
-    // try {
-    //   if (answerSnapshot.exists) {
-    //     final answer = Answer.fromJson(answerSnapshot.data()!);
-    //     return answer;
-    //   } else {
-    //     throw Exception("The answer doesn't exist");
-    //   }
-    // } catch (error) {
-    //   logger.e(error);
-    // }
     return null;
   }
 

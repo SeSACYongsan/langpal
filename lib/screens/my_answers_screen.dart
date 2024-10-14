@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/components/answer_card.dart';
 import 'package:langpal/models/answer.dart';
-import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_answers_view_model.dart';
@@ -29,7 +28,6 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
         if (data == null) {
           return const LoadingScreen();
         } else {
-          final user = data["user"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           return Scaffold(
             backgroundColor: Colors.white,
