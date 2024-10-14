@@ -23,11 +23,9 @@ class AnswerCard extends ConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingScreen();
-        }
-        if (snapshot.hasError) {
+        } else if (snapshot.hasError) {
           return ErrorScreen(message: snapshot.error.toString());
-        }
-        if (snapshot.hasData) {
+        } else if (snapshot.hasData) {
           final owner = snapshot.data!;
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
