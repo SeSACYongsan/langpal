@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/new_question_text_field_provider.dart';
@@ -19,31 +17,19 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
     final questionType = ref.read(questionTypeDropdownProvider);
     final content = ref.read(newQuestionTextFieldProvider);
     final point = ref.read(pointSliderProvider).toInt();
-    final firestoreInstance = FirebaseFirestore.instance;
-    final userSnapshot =
-        await firestoreInstance.collection("users").doc(currentUser.id).get();
-    try {
-      if (userSnapshot.exists) {
-        final user = LangpalUser.fromJson(userSnapshot.data()!);
-        final ownerUsername = user.info.username;
-        const uuid = Uuid();
-        final question = Question(
-          id: uuid.v4(),
-          ownerUsername: ownerUsername.toString(),
-          ownerID: currentUser.id,
-          questionType: questionType,
-          content: content,
-          point: point,
-          date: DateTime.now(),
-        );
-        await questionRepository.addQuestion(question);
-        state = const AsyncData(null);
-      } else {
-        throw Exception("The user doesn't exist");
-      }
-    } catch (error, stackTrace) {
-      state = AsyncError(error, stackTrace);
-    }
+    final ownerUsername = currentUser.info.username;
+    const uuid = Uuid();
+    final question = Question(
+      id: uuid.v4(),
+      ownerUsername: ownerUsername.toString(),
+      ownerID: currentUser.id,
+      questionType: questionType,
+      content: content,
+      point: point,
+      date: DateTime.now(),
+    );
+    await questionRepository.addQuestion(question);
+    state = const AsyncData(null);
   }
 
   @override
