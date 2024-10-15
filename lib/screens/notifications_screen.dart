@@ -130,8 +130,35 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         .updateCheckboxes(index: index, value: value);
   }
 
-  void onTapCheckbox() {
-    if (isCheckboxChecked) {
+  void onTapCheckbox() async {
+    final numberOfCheckedCheckboxes = await ref
+        .read(notificationsViewModelProvider.notifier)
+        .fetchNumberOfCheckedCheckboxes();
+    if (isCheckboxChecked && numberOfCheckedCheckboxes != 0) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("$numberOfCheckedCheckboxes건의 알림을 읽음으로 처리하겠어요?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("예")),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("아니요")),
+            ],
+          );
+        },
+      );
+    } else if (isCheckboxChecked && numberOfCheckedCheckboxes == 0) {
+      setState(() {
+        isCheckboxChecked = false;
+      });
     } else {
       setState(() {
         isCheckboxChecked = true;
