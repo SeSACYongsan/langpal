@@ -3,6 +3,14 @@ import 'package:langpal/models/notification.dart';
 import 'package:langpal/utils/logger.dart';
 
 class NotificationRepository {
+  Future<void> addNotification(Notification notification) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance
+        .collection("notifications")
+        .doc(notification.id)
+        .set(notification.toJson());
+  }
+
   Future<List<Notification>?> fetchNotificationsByUserID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final notificationsSnapshot = await firestoreInstance

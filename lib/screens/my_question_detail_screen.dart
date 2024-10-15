@@ -218,6 +218,9 @@ class _MyQuestionDetailScreenState
                     .read(myQuestionDetailViewModelProvider.notifier)
                     .setChosenAnswer(
                         questionID: widget.questionID, answerID: answerID);
+                await ref
+                    .read(myQuestionDetailViewModelProvider.notifier)
+                    .addNotification();
                 Navigator.of(context).pop();
               },
               child: Text(
