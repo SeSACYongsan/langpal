@@ -221,7 +221,9 @@ class _MyQuestionDetailScreenState
                 await ref
                     .read(myQuestionDetailViewModelProvider.notifier)
                     .addNotification(answerID);
-                Navigator.of(context).pop();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               },
               child: Text(
                 "선택",

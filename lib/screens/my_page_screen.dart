@@ -195,12 +195,14 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
 
   Future<void> onTapSignOut(BuildContext context) async {
     await ref.read(myPageViewModelProvider.notifier).signOut();
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("성공적으로 로그아웃하였습니다"),
-      ),
-    );
-    context.go("/");
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("성공적으로 로그아웃하였습니다"),
+        ),
+      );
+      context.go("/");
+    }
   }
 }

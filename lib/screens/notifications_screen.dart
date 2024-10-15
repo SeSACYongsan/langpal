@@ -134,7 +134,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
     final numberOfCheckedCheckboxes = await ref
         .read(notificationsViewModelProvider.notifier)
         .fetchNumberOfCheckedCheckboxes();
-    if (isCheckboxChecked && numberOfCheckedCheckboxes != 0) {
+    if (isCheckboxChecked &&
+        numberOfCheckedCheckboxes != 0 &&
+        context.mounted) {
       showDialog(
         context: context,
         builder: (context) {
@@ -146,7 +148,9 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                     await ref
                         .read(notificationsViewModelProvider.notifier)
                         .setRead();
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   },
                   child: const Text("예")),
               TextButton(

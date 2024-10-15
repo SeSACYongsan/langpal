@@ -152,7 +152,9 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                           .read(newQuestionViewModelProvider.notifier)
                           .addQuestion();
                       clearFields();
-                      context.go("/main");
+                      if (context.mounted) {
+                        context.go("/main");
+                      }
                     }
                   },
                   child: Text(

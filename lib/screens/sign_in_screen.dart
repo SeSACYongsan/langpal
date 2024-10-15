@@ -62,13 +62,19 @@ class SignInScreen extends ConsumerWidget {
                                 .signInWithGoogle();
                             switch (signInStatus) {
                               case SignInStatus.signInFailed:
-                                showSignInFailedDialog(context);
+                                if (context.mounted) {
+                                  showSignInFailedDialog(context);
+                                }
                                 break;
                               case SignInStatus.userNotExist:
-                                context.go("/initialization");
+                                if (context.mounted) {
+                                  context.go("/initialization");
+                                }
                                 break;
                               case SignInStatus.userExist:
-                                context.go("/main");
+                                if (context.mounted) {
+                                  context.go("/main");
+                                }
                                 break;
                             }
                           },
@@ -100,16 +106,18 @@ class SignInScreen extends ConsumerWidget {
                             final signInStatus = await ref
                                 .read(signInViewModelProvider.notifier)
                                 .signInWithApple();
-                            switch (signInStatus) {
-                              case SignInStatus.signInFailed:
-                                showSignInFailedDialog(context);
-                                break;
-                              case SignInStatus.userNotExist:
-                                context.go("/initialization");
-                                break;
-                              case SignInStatus.userExist:
-                                context.go("/main");
-                                break;
+                            if (context.mounted) {
+                              switch (signInStatus) {
+                                case SignInStatus.signInFailed:
+                                  showSignInFailedDialog(context);
+                                  break;
+                                case SignInStatus.userNotExist:
+                                  context.go("/initialization");
+                                  break;
+                                case SignInStatus.userExist:
+                                  context.go("/main");
+                                  break;
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(
