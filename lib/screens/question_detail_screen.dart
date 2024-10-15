@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:langpal/components/answer_card.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
@@ -24,6 +26,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(questionDetailViewModelProvider);
+    final currentUser = ref.read(currentUserProvider).value!;
     answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
@@ -95,6 +98,30 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                             ),
                           ],
                         ),
+                        const Spacer(),
+                        if (questionOwner.id == currentUser.id)
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: onTapEditButton,
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  onTapDeleteButton(
+                                      context: context,
+                                      questionID: question.id);
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -242,4 +269,53 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     answerTextEditingController = TextEditingController();
     super.initState();
   }
+
+  void onTapDeleteButton({
+    required BuildContext context,
+    required String questionID,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("정말 삭제하시겠어요?"),
+          icon: const Icon(Icons.info),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ref
+                    .read(questionDetailViewModelProvider.notifier)
+                    .deleteQuestionByID(questionID);
+                if (context.mounted) {
+                  context.go("/main");
+                }
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("질문이 성공적으로 삭제되었습니다"),
+                  ),
+                );
+              },
+              child: const Text(
+                "삭제",
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text("취소"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void onTapEditButton() {}
 }

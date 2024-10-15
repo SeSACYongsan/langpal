@@ -11,6 +11,22 @@ class AnswerRepository {
         .set(answer.toJson());
   }
 
+  Future<void> deleteAnswersByQuestionID(String questionID) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    final answersSnapshot = await firestoreInstance
+        .collection("answers")
+        .where("questionID", isEqualTo: questionID)
+        .get();
+    try {
+      answersSnapshot.docs.forEach((document) async {
+        final answer = Answer.fromJson(document.data());
+        await firestoreInstance.collection("answers").doc(answer.id).delete();
+      });
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
   Future<Answer?> fetchAnswerByID(String answerID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final answerSnapshot =

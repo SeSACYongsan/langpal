@@ -7,7 +7,7 @@ part of 'question_detail_view_model.dart';
 // **************************************************************************
 
 String _$questionDetailViewModelHash() =>
-    r'85cbf6de56188b5b6e1ad26b4ee7c57495c24dc1';
+    r'933011b5e0bac184610541e7c80b84cf53baf171';
 
 /// See also [QuestionDetailViewModel].
 @ProviderFor(QuestionDetailViewModel)

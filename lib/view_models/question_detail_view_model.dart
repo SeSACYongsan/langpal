@@ -59,6 +59,12 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
     return null;
   }
 
+  Future<void> deleteQuestionByID(String questionID) async {
+    await questionRepository.deleteQuestionByID(questionID);
+    await answerRepository.deleteAnswersByQuestionID(questionID);
+    state = const AsyncData(null);
+  }
+
   Future<void> fetchQuestionDetail(String questionID) async {
     try {
       final answers =
