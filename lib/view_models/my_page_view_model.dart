@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,5 +17,10 @@ class MyPageViewModel extends _$MyPageViewModel {
     final currentUser = ref.read(currentUserProvider).value;
     print("But currentUser is $currentUser");
     state = AsyncData(currentUser);
+  }
+
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    await ref.read(currentUserProvider.notifier).reset();
   }
 }

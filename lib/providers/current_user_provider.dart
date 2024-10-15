@@ -10,6 +10,10 @@ class CurrentUser extends _$CurrentUser {
     return null;
   }
 
+  Future<void> reset() async {
+    state = const AsyncData(null);
+  }
+
   Future<void> setCurrentUser(LangpalUser user) async {
     state = AsyncData(user);
     print("Current user set: $state");
