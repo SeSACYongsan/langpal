@@ -220,7 +220,7 @@ class _MyQuestionDetailScreenState
                         questionID: widget.questionID, answerID: answerID);
                 await ref
                     .read(myQuestionDetailViewModelProvider.notifier)
-                    .addNotification();
+                    .addNotification(answerID);
                 Navigator.of(context).pop();
               },
               child: Text(
