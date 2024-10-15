@@ -4,6 +4,11 @@ import 'package:langpal/models/question.dart';
 import 'package:langpal/utils/logger.dart';
 
 class UserRepository {
+  Future<void> addUser(LangpalUser user) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance.collection("users").doc(user.id).set(user.toJson());
+  }
+
   Future<LangpalUser?> fetchUserByID(String userID) async {
     final firestoreInstance = FirebaseFirestore.instance;
     final userSnapshot =
