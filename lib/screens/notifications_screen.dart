@@ -142,7 +142,10 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
             title: Text("$numberOfCheckedCheckboxes건의 알림을 읽음으로 처리하겠어요?"),
             actions: [
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await ref
+                        .read(notificationsViewModelProvider.notifier)
+                        .setRead();
                     Navigator.of(context).pop();
                   },
                   child: const Text("예")),

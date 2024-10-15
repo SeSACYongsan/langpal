@@ -26,4 +26,14 @@ class NotificationRepository {
     }
     return null;
   }
+
+  Future<void> removeNotifications(List<Notification> notifications) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    for (final notification in notifications) {
+      await firestoreInstance
+          .collection("notifications")
+          .doc(notification.id)
+          .delete();
+    }
+  }
 }

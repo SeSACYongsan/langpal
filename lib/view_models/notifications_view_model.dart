@@ -1,3 +1,4 @@
+import 'package:langpal/models/notification.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,6 +30,25 @@ class NotificationsViewModel extends _$NotificationsViewModel {
       return checkbox;
     }).length;
     return numberOfCheckedCheckboxes;
+  }
+
+  Future<void> setRead() async {
+    final checkboxes = state.value!["checkboxes"] as List<bool>;
+    final notifications = state.value!["notifications"] as List<Notification>;
+    List<Notification> targetNotifications = [];
+    List<Notification> remainingNotifications = [];
+    List.generate(notifications.length, (index) {
+      if (checkboxes[index]) {
+        targetNotifications.add(notifications[index]);
+      } else {
+        remainingNotifications.add(notifications[index]);
+      }
+    });
+    await notificationRepository.removeNotifications(targetNotifications);
+    state = AsyncData({
+      "checkboxes": List.generate(remainingNotifications.length, (_) => false),
+      "notifications": remainingNotifications,
+    });
   }
 
   Future<void> updateCheckboxes(
