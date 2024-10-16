@@ -28,12 +28,12 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
     });
   }
 
-  Future<void> initializeTextFieldByAnswerID(String answerID) async {
+  void initializeTextFieldByAnswerID(String answerID) {
     final answer = state.value!["answer"] as Answer;
     ref.read(newAnswerTextFieldProvider.notifier).setContent(answer.content);
   }
 
-  Future<void> setIsEditable(bool isEditable) async {
+  void setIsEditable(bool isEditable) {
     state = AsyncData({
       "question": state.value!["question"],
       "answer": state.value!["answer"],

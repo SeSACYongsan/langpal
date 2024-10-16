@@ -199,11 +199,9 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     super.initState();
   }
 
-  void onTapEditButton() async {
-    await ref
-        .read(myAnswerDetailViewModelProvider.notifier)
-        .setIsEditable(true);
-    await ref
+  void onTapEditButton() {
+    ref.read(myAnswerDetailViewModelProvider.notifier).setIsEditable(true);
+    ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .initializeTextFieldByAnswerID(widget.answerID);
   }
@@ -212,8 +210,6 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     await ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .updateAnswerByAnswerID(widget.answerID);
-    await ref
-        .read(myAnswerDetailViewModelProvider.notifier)
-        .setIsEditable(false);
+    ref.read(myAnswerDetailViewModelProvider.notifier).setIsEditable(false);
   }
 }

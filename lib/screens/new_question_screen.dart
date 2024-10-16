@@ -49,7 +49,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  ref.read(newQuestionViewModelProvider.notifier).resetFields();
+                  ref.read(newQuestionViewModelProvider.notifier).resetState();
                   Navigator.of(context).pop();
                 },
               ),
@@ -170,7 +170,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
 
   @override
   void initState() {
-    ref.read(newQuestionViewModelProvider.notifier).resetFields();
+    ref.read(newQuestionViewModelProvider.notifier).resetState();
     super.initState();
   }
 
@@ -190,7 +190,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
           });
     } else {
       await ref.read(newQuestionViewModelProvider.notifier).addQuestion();
-      await ref.read(newQuestionViewModelProvider.notifier).resetFields();
+      ref.read(newQuestionViewModelProvider.notifier).resetState();
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
