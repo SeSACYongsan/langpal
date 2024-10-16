@@ -187,13 +187,28 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
         ref.read(questionEditViewModelProvider).value!["content"] as String;
     if (content.trim().isEmpty) {
       showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              title: Text("내용을 입력해주세요"),
-              icon: Icon(Icons.info),
-            );
-          });
-    } else {}
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("내용을 입력해주세요"),
+            icon: Icon(Icons.info),
+          );
+        },
+      );
+    } else {
+      await ref
+          .read(questionEditViewModelProvider.notifier)
+          .submitQuestionByQuestionID(widget.questionID);
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("질문이 성공적으로 수정되었습니다"),
+        ),
+      );
+      clearFields();
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 }

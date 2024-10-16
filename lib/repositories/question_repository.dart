@@ -111,4 +111,12 @@ class QuestionRepository {
       logger.e(error);
     }
   }
+
+  Future<void> updateQuestion(Question question) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance
+        .collection("questions")
+        .doc(question.id)
+        .set(question.toJson());
+  }
 }

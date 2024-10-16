@@ -238,6 +238,14 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   @override
+  void didUpdateWidget(covariant QuestionDetailScreen oldWidget) {
+    ref
+        .read(questionDetailViewModelProvider.notifier)
+        .fetchQuestionDetail(widget.questionID);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     answerTextEditingController.dispose();
     super.dispose();

@@ -56,4 +56,14 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
       "point": state.value!["point"] as double,
     });
   }
+
+  Future<void> submitQuestionByQuestionID(String questionID) async {
+    final question = await questionRepository.fetchQuestionByID(questionID);
+    final questionType = state.value!["questionType"] as QuestionType;
+    final content = state.value!["content"] as String;
+    final point = state.value!["point"] as double;
+    final modifiedQuestion = question!.copyWith(
+        questionType: questionType, content: content, point: point.toInt());
+    await questionRepository.updateQuestion(modifiedQuestion);
+  }
 }
