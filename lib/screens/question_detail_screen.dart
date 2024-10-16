@@ -103,7 +103,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: onTapEditButton,
+                                onPressed: () {
+                                  onTapEditButton(question.id);
+                                },
                                 icon: const Icon(
                                   Icons.edit,
                                   color: Colors.blue,
@@ -297,7 +299,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     );
   }
 
-  void onTapEditButton() {}
+  void onTapEditButton(String questionID) {
+    context.go("/main/questions/$questionID/edit");
+  }
 
   Future<void> onTapSubmitButton(String questionID) async {
     if (answerTextEditingController.text.trim().isEmpty) {

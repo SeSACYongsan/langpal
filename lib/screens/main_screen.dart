@@ -21,7 +21,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         return const LoadingScreen();
       },
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       data: (questions) {
         if (questions == null) {

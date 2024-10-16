@@ -11,6 +11,7 @@ import 'package:langpal/screens/new_question_screen.dart';
 import 'package:langpal/screens/notifications_screen.dart';
 import 'package:langpal/screens/profile_setting_screen.dart';
 import 'package:langpal/screens/question_detail_screen.dart';
+import 'package:langpal/screens/question_edit_screen.dart';
 import 'package:langpal/screens/sign_in_screen.dart';
 import 'package:langpal/screens/subscription_plans_screen.dart';
 
@@ -44,6 +45,20 @@ final router = GoRouter(
               return QuestionDetailScreen(questionID: questionID);
             }
           },
+          routes: [
+            GoRoute(
+              path: "edit",
+              builder: (context, state) {
+                final questionID = state.pathParameters["question_id"];
+                if (questionID == null) {
+                  return const ErrorScreen(
+                      error: "The question id is null for some reason");
+                } else {
+                  return QuestionEditScreen(questionID: questionID);
+                }
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: "notifications",
