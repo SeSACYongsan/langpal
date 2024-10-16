@@ -25,6 +25,14 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
     });
   }
 
+  Future<void> resetFields() async {
+    state = const AsyncData({
+      "questionType": QuestionType.what,
+      "content": "",
+      "point": 50.0,
+    });
+  }
+
   Future<void> setContent(String content) async {
     state = AsyncData({
       "questionType": state.value!["questionType"] as QuestionType,

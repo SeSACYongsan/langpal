@@ -2,8 +2,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/fields/point_slider_provider.dart';
-import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/question_edit_view_model.dart';
@@ -172,9 +170,8 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
     );
   }
 
-  void clearFields() {
-    ref.read(questionTypeDropdownProvider.notifier).initializeQuestionType();
-    ref.read(pointSliderProvider.notifier).initializePoint();
+  void clearFields() async {
+    await ref.read(questionEditViewModelProvider.notifier).resetFields();
   }
 
   @override
@@ -185,5 +182,18 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
     super.initState();
   }
 
-  Future<void> onTapSubmitButton() async {}
+  Future<void> onTapSubmitButton() async {
+    final content =
+        ref.read(questionEditViewModelProvider).value!["content"] as String;
+    if (content.trim().isEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              title: Text("내용을 입력해주세요"),
+              icon: Icon(Icons.info),
+            );
+          });
+    } else {}
+  }
 }

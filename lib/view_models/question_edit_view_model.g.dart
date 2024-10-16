@@ -7,7 +7,7 @@ part of 'question_edit_view_model.dart';
 // **************************************************************************
 
 String _$questionEditViewModelHash() =>
-    r'b6e296af919bb15ed95c5490a2835fc91347ebc4';
+    r'f9dad6c9aa70b0a88882dedaca242ef1e8946aa9';
 
 /// See also [QuestionEditViewModel].
 @ProviderFor(QuestionEditViewModel)
