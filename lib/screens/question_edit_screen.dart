@@ -157,7 +157,7 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
                           await onTapSubmitButton();
                         },
                         child: Text(
-                          "등록",
+                          "수정",
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: Colors.white,
