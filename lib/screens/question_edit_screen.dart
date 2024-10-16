@@ -170,8 +170,8 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
     );
   }
 
-  void clearFields() async {
-    await ref.read(questionEditViewModelProvider.notifier).resetFields();
+  void clearFields() {
+    ref.read(questionEditViewModelProvider.notifier).resetState();
   }
 
   @override

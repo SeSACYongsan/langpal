@@ -25,36 +25,24 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
     });
   }
 
-  Future<void> resetFields() async {
-    state = const AsyncData({
-      "questionType": QuestionType.what,
-      "content": "",
-      "point": 50.0,
-    });
+  void resetState() {
+    updateState(
+      questionType: QuestionType.what,
+      content: "",
+      point: 50.0,
+    );
   }
 
-  Future<void> setContent(String content) async {
-    state = AsyncData({
-      "questionType": state.value!["questionType"] as QuestionType,
-      "content": content,
-      "point": state.value!["point"] as double,
-    });
+  void setContent(String content) {
+    updateState(content: content);
   }
 
-  Future<void> setPoint(double point) async {
-    state = AsyncData({
-      "questionType": state.value!["questionType"] as QuestionType,
-      "content": state.value!["content"] as String,
-      "point": point,
-    });
+  void setPoint(double point) {
+    updateState(point: point);
   }
 
-  Future<void> setQuestionType(QuestionType questionType) async {
-    state = AsyncData({
-      "questionType": questionType,
-      "content": state.value!["content"] as String,
-      "point": state.value!["point"] as double,
-    });
+  void setQuestionType(QuestionType questionType) {
+    updateState(questionType: questionType);
   }
 
   Future<void> submitQuestionByQuestionID(String questionID) async {
@@ -65,5 +53,15 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
     final modifiedQuestion = question!
         .copyWith(questionType: questionType, content: content, point: point);
     await questionRepository.updateQuestion(modifiedQuestion);
+  }
+
+  void updateState(
+      {QuestionType? questionType, String? content, double? point}) {
+    state = AsyncData({
+      "questionType":
+          questionType ?? state.value!["questionType"] as QuestionType,
+      "content": content ?? state.value!["content"] as String,
+      "point": point ?? state.value!["point"] as double,
+    });
   }
 }
