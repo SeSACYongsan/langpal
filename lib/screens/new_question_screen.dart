@@ -197,9 +197,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
           content: Text("질문이 성공적으로 등록되었습니다"),
         ),
       );
-      if (context.mounted) {
-        context.go("/main");
-      }
+      context.go("/main");
     }
   }
 }

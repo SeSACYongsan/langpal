@@ -206,9 +206,7 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
         ),
       );
       clearFields();
-      if (context.mounted) {
-        Navigator.of(context).pop();
-      }
+      Navigator.of(context).pop();
     }
   }
 }

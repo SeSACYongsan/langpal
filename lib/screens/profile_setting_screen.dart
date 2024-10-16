@@ -99,7 +99,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                               padding: const EdgeInsets.all(15),
                               elevation: 10,
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (username.isEmpty) {
                                 showDialog(
                                     context: context,
@@ -110,7 +110,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                       );
                                     });
                               } else {
-                                ref
+                                await ref
                                     .read(profileSettingViewModelProvider
                                         .notifier)
                                     .addToFirestoreAndUpdateUser();

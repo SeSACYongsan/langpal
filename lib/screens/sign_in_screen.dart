@@ -123,18 +123,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   Future<void> onTapSignInWithApple() async {
     final signInStatus =
         await ref.read(signInViewModelProvider.notifier).signInWithApple();
-    if (context.mounted) {
-      switch (signInStatus) {
-        case SignInStatus.signInFailed:
-          showSignInFailedDialog(context);
-          break;
-        case SignInStatus.userNotExist:
-          context.go("/initialization");
-          break;
-        case SignInStatus.userExist:
-          context.go("/main");
-          break;
-      }
+    switch (signInStatus) {
+      case SignInStatus.signInFailed:
+        showSignInFailedDialog(context);
+        break;
+      case SignInStatus.userNotExist:
+        context.go("/initialization");
+        break;
+      case SignInStatus.userExist:
+        context.go("/main");
+        break;
     }
   }
 
@@ -143,19 +141,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         await ref.read(signInViewModelProvider.notifier).signInWithGoogle();
     switch (signInStatus) {
       case SignInStatus.signInFailed:
-        if (context.mounted) {
-          showSignInFailedDialog(context);
-        }
+        showSignInFailedDialog(context);
         break;
       case SignInStatus.userNotExist:
-        if (context.mounted) {
-          context.go("/initialization");
-        }
+        context.go("/initialization");
         break;
       case SignInStatus.userExist:
-        if (context.mounted) {
-          context.go("/main");
-        }
+        context.go("/main");
         break;
     }
   }
