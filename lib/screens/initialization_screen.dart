@@ -67,8 +67,8 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                               Center(
                                 child: DropdownMenu(
                                   initialSelection: Language.korean,
-                                  onSelected: (value) async {
-                                    await ref
+                                  onSelected: (value) {
+                                    ref
                                         .read(initializationViewModelProvider
                                             .notifier)
                                         .setFirstLanguage(value!);
@@ -96,8 +96,8 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
                               Center(
                                 child: DropdownMenu(
                                   initialSelection: Language.english,
-                                  onSelected: (value) async {
-                                    await ref
+                                  onSelected: (value) {
+                                    ref
                                         .read(initializationViewModelProvider
                                             .notifier)
                                         .setTargetLanguage(value!);
@@ -187,9 +187,7 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
 
   @override
   void initState() {
-    Future(() {
-      ref.read(initializationViewModelProvider.notifier).resetFields();
-    });
+    ref.read(initializationViewModelProvider.notifier).resetState();
     super.initState();
   }
 }

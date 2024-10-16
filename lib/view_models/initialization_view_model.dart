@@ -11,35 +11,37 @@ class InitializationViewModel extends _$InitializationViewModel {
     return null;
   }
 
-  Future<void> resetFields() async {
-    state = const AsyncData({
-      "firstLanguage": Language.korean,
-      "targetLanguage": Language.english,
-      "level": Level.beginner,
-    });
+  void resetState() {
+    updateState(
+      firstLanguage: Language.korean,
+      targetLanguage: Language.english,
+      level: Level.beginner,
+    );
   }
 
-  Future<void> setFirstLanguage(Language firstLanguage) async {
-    state = AsyncData({
-      "firstLanguage": firstLanguage,
-      "targetLanguage": state.value!["targetLanguage"] as Language,
-      "level": state.value!["level"] as Level,
-    });
+  void setFirstLanguage(Language firstLanguage) {
+    updateState(firstLanguage: firstLanguage);
   }
 
-  Future<void> setLevel(Level level) async {
-    state = AsyncData({
-      "firstLanguage": state.value!["firstLanguage"] as Language,
-      "targetLanguage": state.value!["targetLanguage"] as Language,
-      "level": level,
-    });
+  void setLevel(Level level) {
+    updateState(level: level);
   }
 
-  Future<void> setTargetLanguage(Language targetLanguage) async {
+  void setTargetLanguage(Language targetLanguage) {
+    updateState(targetLanguage: targetLanguage);
+  }
+
+  void updateState({
+    Language? firstLanguage,
+    Language? targetLanguage,
+    Level? level,
+  }) {
     state = AsyncData({
-      "firstLanguage": state.value!["firstLanguage"] as Language,
-      "targetLanguage": targetLanguage,
-      "level": state.value!["level"] as Level,
+      "firstLanguage":
+          firstLanguage ?? state.value!["firstLanguage"] as Language,
+      "targetLanguage":
+          targetLanguage ?? state.value!["targetLanguage"] as Language,
+      "level": level ?? state.value!["Level"] as Level,
     });
   }
 }
