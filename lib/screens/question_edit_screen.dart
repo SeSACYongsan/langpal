@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/fields/new_question_text_field_provider.dart';
 import 'package:langpal/providers/fields/point_slider_provider.dart';
 import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
@@ -21,12 +20,8 @@ class QuestionEditScreen extends ConsumerStatefulWidget {
 }
 
 class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
-  late TextEditingController questionTypeTextEditingController;
-  late TextEditingController newQuestionTextEditingController;
   @override
   Widget build(BuildContext context) {
-    questionTypeTextEditingController.text =
-        ref.watch(questionTypeDropdownProvider).toKoreanName();
     final currentPoint = ref.watch(pointSliderProvider);
     final asyncData = ref.watch(questionEditViewModelProvider);
     return asyncData.when(
@@ -41,6 +36,9 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
           return const LoadingScreen();
         } else {
           final question = data["question"] as Question;
+          final questionType = data["questionType"] as QuestionType;
+          final content = data["content"] as String;
+          final point = data["point"] as double;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -76,10 +74,10 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
                             color: Colors.white,
                           ),
                         ),
-                        value: ref.watch(questionTypeDropdownProvider),
+                        value: questionType,
                         onChanged: (value) {
                           ref
-                              .read(questionTypeDropdownProvider.notifier)
+                              .read(questionEditViewModelProvider.notifier)
                               .setQuestionType(value!);
                         },
                         isExpanded: true,
@@ -97,7 +95,7 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextFormField(
-                          initialValue: question.content,
+                          initialValue: content,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "질문을 입력하세요",
@@ -106,14 +104,14 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
                           maxLines: 5,
                           onChanged: (value) {
                             ref
-                                .read(newQuestionTextFieldProvider.notifier)
-                                .setString(value);
+                                .read(questionEditViewModelProvider.notifier)
+                                .setContent(value);
                           },
                         ),
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        currentPoint.toStringAsFixed(0),
+                        point.toStringAsFixed(0),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
@@ -125,14 +123,15 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
                           ),
                           Expanded(
                             child: Slider(
-                              value: ref.watch(pointSliderProvider),
+                              value: point,
                               min: 0,
                               max: 100,
                               thumbColor: Colors.blue,
                               activeColor: Colors.blue,
                               onChanged: (newValue) {
                                 ref
-                                    .read(pointSliderProvider.notifier)
+                                    .read(
+                                        questionEditViewModelProvider.notifier)
                                     .setPoint(newValue);
                               },
                             ),
@@ -183,10 +182,9 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
 
   @override
   void initState() {
-    questionTypeTextEditingController = TextEditingController();
     ref
         .read(questionEditViewModelProvider.notifier)
-        .fetchQuestionByID(widget.questionID);
+        .fetchQuestionDetailByID(widget.questionID);
     super.initState();
   }
 
