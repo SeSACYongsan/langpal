@@ -18,7 +18,7 @@ class SignInViewModel extends _$SignInViewModel {
     });
   }
 
-  Future<SignInStatus> signInWithApple() async {
+  SignInStatus signInWithApple() {
     return SignInStatus.signInFailed;
   }
 
