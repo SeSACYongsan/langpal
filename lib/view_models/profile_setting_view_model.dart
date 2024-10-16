@@ -50,13 +50,13 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
     return null;
   }
 
-  Future<void> resetField() async {
+  void resetState() {
     state = const AsyncData({
       "username": "",
     });
   }
 
-  Future<void> setUsername(String username) async {
+  void setUsername(String username) {
     state = AsyncData({
       "username": username,
     });

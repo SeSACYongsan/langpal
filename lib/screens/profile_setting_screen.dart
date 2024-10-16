@@ -81,8 +81,8 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                 SizedBox(
                                   width: 200,
                                   child: TextField(
-                                    onChanged: (value) async {
-                                      await ref
+                                    onChanged: (value) {
+                                      ref
                                           .read(profileSettingViewModelProvider
                                               .notifier)
                                           .setUsername(value);
@@ -123,9 +123,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   @override
   void initState() {
     super.initState();
-    Future(() {
-      ref.read(profileSettingViewModelProvider.notifier).resetField();
-    });
+    ref.read(profileSettingViewModelProvider.notifier).resetState();
   }
 
   Future<void> onTapNext(String username) async {
