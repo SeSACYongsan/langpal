@@ -214,27 +214,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () async {
-                          if (answerTextEditingController.text.trim().isEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  title: Text("내용을 입력해주세요"),
-                                  icon: Icon(Icons.error),
-                                );
-                              },
-                            );
-                          } else {
-                            await ref
-                                .read(questionDetailViewModelProvider.notifier)
-                                .addAnswer(widget.questionID);
-                            await ref
-                                .read(questionDetailViewModelProvider.notifier)
-                                .addNotificationByQuestionID(question.id);
-                            ref
-                                .read(answerTextFieldProvider.notifier)
-                                .initializeAnswer();
-                          }
+                          await onTapSubmitButton(question.id);
                         },
                         child: Text(
                           "답변하기",
@@ -318,4 +298,32 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   void onTapEditButton() {}
+
+  Future<void> onTapSubmitButton(String questionID) async {
+    if (answerTextEditingController.text.trim().isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("내용을 입력해주세요"),
+            icon: Icon(Icons.error),
+          );
+        },
+      );
+    } else {
+      await ref
+          .read(questionDetailViewModelProvider.notifier)
+          .addAnswer(widget.questionID);
+      await ref
+          .read(questionDetailViewModelProvider.notifier)
+          .addNotificationByQuestionID(questionID);
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("답변이 성공적으로 등록되었습니다"),
+        ),
+      );
+      ref.read(answerTextFieldProvider.notifier).initializeAnswer();
+    }
+  }
 }
