@@ -7,7 +7,7 @@ part of 'initialization_view_model.dart';
 // **************************************************************************
 
 String _$initializationViewModelHash() =>
-    r'e7e38a8459c7f9a5590abe188637545c240055ca';
+    r'9905632c3dc9510c4b93ea41bc422a88f06ffaec';
 
 /// See also [InitializationViewModel].
 @ProviderFor(InitializationViewModel)
