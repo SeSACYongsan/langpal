@@ -138,24 +138,7 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                     elevation: 10,
                   ),
                   onPressed: () async {
-                    if (newQuestionTextEditingController.text.trim().isEmpty) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AlertDialog(
-                              title: Text("내용을 입력해주세요"),
-                              icon: Icon(Icons.error),
-                            );
-                          });
-                    } else {
-                      await ref
-                          .read(newQuestionViewModelProvider.notifier)
-                          .addQuestion();
-                      clearFields();
-                      if (context.mounted) {
-                        context.go("/main");
-                      }
-                    }
+                    await onTapSubmitButton();
                   },
                   child: Text(
                     "등록",
@@ -190,5 +173,30 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
     questionTypeTextEditingController = TextEditingController();
     newQuestionTextEditingController = TextEditingController();
     super.initState();
+  }
+
+  Future<void> onTapSubmitButton() async {
+    if (newQuestionTextEditingController.text.trim().isEmpty) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              title: Text("내용을 입력해주세요"),
+              icon: Icon(Icons.error),
+            );
+          });
+    } else {
+      await ref.read(newQuestionViewModelProvider.notifier).addQuestion();
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("질문이 성공적으로 등록되었습니다"),
+        ),
+      );
+      clearFields();
+      if (context.mounted) {
+        context.go("/main");
+      }
+    }
   }
 }
