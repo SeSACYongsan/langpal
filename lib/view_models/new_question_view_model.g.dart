@@ -7,12 +7,12 @@ part of 'new_question_view_model.dart';
 // **************************************************************************
 
 String _$newQuestionViewModelHash() =>
-    r'dab6ccdbaec34d33ba17d1e00488b97c028854c5';
+    r'16b198148a178d0e02acc99b484733f7a3b26ba1';
 
 /// See also [NewQuestionViewModel].
 @ProviderFor(NewQuestionViewModel)
-final newQuestionViewModelProvider =
-    AutoDisposeAsyncNotifierProvider<NewQuestionViewModel, void>.internal(
+final newQuestionViewModelProvider = AutoDisposeAsyncNotifierProvider<
+    NewQuestionViewModel, Map<String, dynamic>?>.internal(
   NewQuestionViewModel.new,
   name: r'newQuestionViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,7 @@ final newQuestionViewModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$NewQuestionViewModel = AutoDisposeAsyncNotifier<void>;
+typedef _$NewQuestionViewModel
+    = AutoDisposeAsyncNotifier<Map<String, dynamic>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
