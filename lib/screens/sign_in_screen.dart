@@ -5,10 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/view_models/sign_in_view_model.dart';
 
-class SignInScreen extends ConsumerWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends ConsumerState<SignInScreen> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
@@ -57,26 +62,7 @@ class SignInScreen extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
                           onPressed: () async {
-                            final signInStatus = await ref
-                                .read(signInViewModelProvider.notifier)
-                                .signInWithGoogle();
-                            switch (signInStatus) {
-                              case SignInStatus.signInFailed:
-                                if (context.mounted) {
-                                  showSignInFailedDialog(context);
-                                }
-                                break;
-                              case SignInStatus.userNotExist:
-                                if (context.mounted) {
-                                  context.go("/initialization");
-                                }
-                                break;
-                              case SignInStatus.userExist:
-                                if (context.mounted) {
-                                  context.go("/main");
-                                }
-                                break;
-                            }
+                            await onTapSignInWithGoogle();
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 10,
@@ -103,22 +89,7 @@ class SignInScreen extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton.icon(
                           onPressed: () async {
-                            final signInStatus = await ref
-                                .read(signInViewModelProvider.notifier)
-                                .signInWithApple();
-                            if (context.mounted) {
-                              switch (signInStatus) {
-                                case SignInStatus.signInFailed:
-                                  showSignInFailedDialog(context);
-                                  break;
-                                case SignInStatus.userNotExist:
-                                  context.go("/initialization");
-                                  break;
-                                case SignInStatus.userExist:
-                                  context.go("/main");
-                                  break;
-                              }
-                            }
+                            await onTapSignInWithApple();
                           },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -147,6 +118,46 @@ class SignInScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  Future<void> onTapSignInWithApple() async {
+    final signInStatus =
+        await ref.read(signInViewModelProvider.notifier).signInWithApple();
+    if (context.mounted) {
+      switch (signInStatus) {
+        case SignInStatus.signInFailed:
+          showSignInFailedDialog(context);
+          break;
+        case SignInStatus.userNotExist:
+          context.go("/initialization");
+          break;
+        case SignInStatus.userExist:
+          context.go("/main");
+          break;
+      }
+    }
+  }
+
+  Future<void> onTapSignInWithGoogle() async {
+    final signInStatus =
+        await ref.read(signInViewModelProvider.notifier).signInWithGoogle();
+    switch (signInStatus) {
+      case SignInStatus.signInFailed:
+        if (context.mounted) {
+          showSignInFailedDialog(context);
+        }
+        break;
+      case SignInStatus.userNotExist:
+        if (context.mounted) {
+          context.go("/initialization");
+        }
+        break;
+      case SignInStatus.userExist:
+        if (context.mounted) {
+          context.go("/main");
+        }
+        break;
+    }
   }
 
   void showSignInFailedDialog(BuildContext context) {
