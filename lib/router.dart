@@ -38,7 +38,7 @@ final router = GoRouter(
             final questionID = state.pathParameters["question_id"];
             if (questionID == null) {
               return const ErrorScreen(
-                message: "The question id is null for some reason",
+                error: "The question id is null for some reason",
               );
             } else {
               return QuestionDetailScreen(questionID: questionID);
@@ -67,7 +67,7 @@ final router = GoRouter(
                       );
                     } else {
                       return const ErrorScreen(
-                          message: "The question id is null for some reason");
+                          error: "The question id is null for some reason");
                     }
                   },
                 ),
@@ -83,7 +83,7 @@ final router = GoRouter(
                     final answerID = state.pathParameters["answer_id"];
                     if (answerID == null) {
                       return const ErrorScreen(
-                          message: "The answer id is null for some reason");
+                          error: "The answer id is null for some reason");
                     } else {
                       return MyAnswerDetailScreen(answerID: answerID);
                     }

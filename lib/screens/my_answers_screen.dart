@@ -20,7 +20,7 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
     final asyncData = ref.watch(myAnswersViewModelProvider);
     return asyncData.when(
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       loading: () {
         return const LoadingScreen();

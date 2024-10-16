@@ -110,7 +110,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         }
       },
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       loading: () {
         return const LoadingScreen();

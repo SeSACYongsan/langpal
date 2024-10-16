@@ -28,7 +28,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     newAnswerTextEditingController.text = ref.watch(newAnswerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       loading: () {
         return const LoadingScreen();

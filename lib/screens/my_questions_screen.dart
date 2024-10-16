@@ -18,7 +18,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
     final asyncQuestions = ref.watch(myQuestionsViewModelProvider);
     return asyncQuestions.when(
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       loading: () {
         return const LoadingScreen();

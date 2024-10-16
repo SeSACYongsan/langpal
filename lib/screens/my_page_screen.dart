@@ -21,7 +21,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         return const LoadingScreen();
       },
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       data: (user) {
         if (user == null) {

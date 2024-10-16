@@ -30,7 +30,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
     answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
-        return ErrorScreen(message: error.toString());
+        return ErrorScreen(error: error);
       },
       loading: () {
         return const LoadingScreen();
