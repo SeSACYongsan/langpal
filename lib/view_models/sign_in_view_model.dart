@@ -14,9 +14,7 @@ class SignInViewModel extends _$SignInViewModel {
   @override
   Future<void> build() async {
     ref.listen(currentUserProvider, (previous, next) {
-      if (next is AsyncData) {
-        print("Current user changed to $next");
-      }
+      if (next is AsyncData) {}
     });
   }
 

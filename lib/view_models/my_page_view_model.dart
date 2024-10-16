@@ -13,9 +13,7 @@ class MyPageViewModel extends _$MyPageViewModel {
   }
 
   Future<void> fetchCurrentUser() async {
-    print(ref.read(currentUserProvider));
     final currentUser = ref.read(currentUserProvider).value;
-    print("But currentUser is $currentUser");
     state = AsyncData(currentUser);
   }
 

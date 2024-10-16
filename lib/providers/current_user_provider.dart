@@ -16,6 +16,5 @@ class CurrentUser extends _$CurrentUser {
 
   Future<void> setCurrentUser(LangpalUser user) async {
     state = AsyncData(user);
-    print("Current user set: $state");
   }
 }
