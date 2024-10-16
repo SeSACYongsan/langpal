@@ -24,7 +24,7 @@ class NotificationsViewModel extends _$NotificationsViewModel {
     });
   }
 
-  Future<int> fetchNumberOfCheckedCheckboxes() async {
+  int fetchNumberOfCheckedCheckboxes() {
     final checkboxes = state.value!["checkboxes"] as List<bool>;
     final numberOfCheckedCheckboxes = checkboxes.where((checkbox) {
       return checkbox;
@@ -51,8 +51,7 @@ class NotificationsViewModel extends _$NotificationsViewModel {
     });
   }
 
-  Future<void> updateCheckboxes(
-      {required int index, required bool? value}) async {
+  void updateCheckboxes({required int index, required bool? value}) {
     List<bool> checkboxes = state.value!["checkboxes"];
     checkboxes[index] = value!;
     state = AsyncData({
