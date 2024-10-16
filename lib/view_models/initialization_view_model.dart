@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'initialization_view_model.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class InitializationViewModel extends _$InitializationViewModel {
   @override
   Future<Map<String, dynamic>?> build() async {

@@ -100,22 +100,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                               elevation: 10,
                             ),
                             onPressed: () async {
-                              if (username.isEmpty) {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const AlertDialog(
-                                        icon: Icon(Icons.error),
-                                        title: Text("닉네임을 입력해주세요"),
-                                      );
-                                    });
-                              } else {
-                                await ref
-                                    .read(profileSettingViewModelProvider
-                                        .notifier)
-                                    .addToFirestoreAndUpdateUser();
-                                context.go("/main");
-                              }
+                              await onTapNext(username);
                             },
                             child: Text(
                               "다음으로",
@@ -141,5 +126,24 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
     Future(() {
       ref.read(profileSettingViewModelProvider.notifier).resetField();
     });
+  }
+
+  Future<void> onTapNext(String username) async {
+    if (username.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            icon: Icon(Icons.error),
+            title: Text("닉네임을 입력해주세요"),
+          );
+        },
+      );
+    } else {
+      await ref
+          .read(profileSettingViewModelProvider.notifier)
+          .addToFirestoreAndUpdateUser();
+      context.go("/main");
+    }
   }
 }

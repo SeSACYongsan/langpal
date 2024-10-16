@@ -7,11 +7,11 @@ part of 'initialization_view_model.dart';
 // **************************************************************************
 
 String _$initializationViewModelHash() =>
-    r'bf944c8b310e2254f105917ef9a3c739f916cb03';
+    r'e7e38a8459c7f9a5590abe188637545c240055ca';
 
 /// See also [InitializationViewModel].
 @ProviderFor(InitializationViewModel)
-final initializationViewModelProvider = AutoDisposeAsyncNotifierProvider<
+final initializationViewModelProvider = AsyncNotifierProvider<
     InitializationViewModel, Map<String, dynamic>?>.internal(
   InitializationViewModel.new,
   name: r'initializationViewModelProvider',
@@ -22,7 +22,6 @@ final initializationViewModelProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$InitializationViewModel
-    = AutoDisposeAsyncNotifier<Map<String, dynamic>?>;
+typedef _$InitializationViewModel = AsyncNotifier<Map<String, dynamic>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

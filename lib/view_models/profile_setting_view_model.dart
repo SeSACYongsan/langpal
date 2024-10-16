@@ -3,7 +3,6 @@ import 'package:langpal/models/langpal_user_info.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/providers/current_user_provider.dart';
-import 'package:langpal/providers/fields/username_text_field_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 import 'package:langpal/repositories/user_repository.dart';
 import 'package:langpal/view_models/initialization_view_model.dart';
@@ -23,7 +22,7 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
         .value!["targetLanguage"] as Language;
     final level =
         ref.read(initializationViewModelProvider).value!["level"] as Level;
-    final username = ref.read(usernameTextFieldProvider);
+    final username = state.value!["username"] as String;
     final displayName = ref.read(tempUserProvider)!["displayName"];
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"]!;
