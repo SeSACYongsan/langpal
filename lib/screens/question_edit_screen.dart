@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
 import 'package:langpal/providers/fields/point_slider_provider.dart';
 import 'package:langpal/providers/fields/question_type_dropdown_provider.dart';
@@ -22,7 +21,6 @@ class QuestionEditScreen extends ConsumerStatefulWidget {
 class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
   @override
   Widget build(BuildContext context) {
-    final currentPoint = ref.watch(pointSliderProvider);
     final asyncData = ref.watch(questionEditViewModelProvider);
     return asyncData.when(
       loading: () {
@@ -35,7 +33,6 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
         if (data == null) {
           return const LoadingScreen();
         } else {
-          final question = data["question"] as Question;
           final questionType = data["questionType"] as QuestionType;
           final content = data["content"] as String;
           final point = data["point"] as double;

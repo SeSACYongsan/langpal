@@ -1,4 +1,3 @@
-import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -20,7 +19,6 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
     final content = question.content;
     final point = question.point.toDouble();
     state = AsyncData({
-      "question": question,
       "questionType": questionType,
       "content": content,
       "point": point,
@@ -29,7 +27,6 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
 
   Future<void> setContent(String content) async {
     state = AsyncData({
-      "question": state.value!["question"] as Question,
       "questionType": state.value!["questionType"] as QuestionType,
       "content": content,
       "point": state.value!["point"] as double,
@@ -38,7 +35,6 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
 
   Future<void> setPoint(double point) async {
     state = AsyncData({
-      "question": state.value!["question"] as Question,
       "questionType": state.value!["questionType"] as QuestionType,
       "content": state.value!["content"] as String,
       "point": point,
@@ -47,7 +43,6 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
 
   Future<void> setQuestionType(QuestionType questionType) async {
     state = AsyncData({
-      "question": state.value!["question"] as Question,
       "questionType": questionType,
       "content": state.value!["content"] as String,
       "point": state.value!["point"] as double,
