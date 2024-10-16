@@ -62,8 +62,8 @@ class QuestionEditViewModel extends _$QuestionEditViewModel {
     final questionType = state.value!["questionType"] as QuestionType;
     final content = state.value!["content"] as String;
     final point = state.value!["point"] as double;
-    final modifiedQuestion = question!.copyWith(
-        questionType: questionType, content: content, point: point.toInt());
+    final modifiedQuestion = question!
+        .copyWith(questionType: questionType, content: content, point: point);
     await questionRepository.updateQuestion(modifiedQuestion);
   }
 }

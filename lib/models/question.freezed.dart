@@ -23,7 +23,7 @@ mixin _$Question {
   String get id => throw _privateConstructorUsedError;
   String get ownerUsername => throw _privateConstructorUsedError;
   String get ownerID => throw _privateConstructorUsedError;
-  int get point => throw _privateConstructorUsedError;
+  double get point => throw _privateConstructorUsedError;
   QuestionType get questionType => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $QuestionCopyWith<$Res> {
       {String id,
       String ownerUsername,
       String ownerID,
-      int point,
+      double point,
       QuestionType questionType,
       String content,
       DateTime date,
@@ -89,7 +89,7 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       questionType: null == questionType
           ? _value.questionType
           : questionType // ignore: cast_nullable_to_non_nullable
@@ -122,7 +122,7 @@ abstract class _$$QuestionImplCopyWith<$Res>
       {String id,
       String ownerUsername,
       String ownerID,
-      int point,
+      double point,
       QuestionType questionType,
       String content,
       DateTime date,
@@ -165,7 +165,7 @@ class __$$QuestionImplCopyWithImpl<$Res>
       point: null == point
           ? _value.point
           : point // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       questionType: null == questionType
           ? _value.questionType
           : questionType // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$QuestionImpl implements _Question {
   @override
   final String ownerID;
   @override
-  final int point;
+  final double point;
   @override
   final QuestionType questionType;
   @override
@@ -266,7 +266,7 @@ abstract class _Question implements Question {
       {required final String id,
       required final String ownerUsername,
       required final String ownerID,
-      required final int point,
+      required final double point,
       required final QuestionType questionType,
       required final String content,
       required final DateTime date,
@@ -282,7 +282,7 @@ abstract class _Question implements Question {
   @override
   String get ownerID;
   @override
-  int get point;
+  double get point;
   @override
   QuestionType get questionType;
   @override

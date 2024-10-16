@@ -23,7 +23,7 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
       ownerID: currentUser.id,
       questionType: questionType,
       content: content,
-      point: point.toInt(),
+      point: point,
       date: DateTime.now(),
     );
     await questionRepository.addQuestion(question);

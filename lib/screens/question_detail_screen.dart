@@ -93,7 +93,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
-                              "${question.point} pt",
+                              "${question.point.toStringAsFixed(0)} pt",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],

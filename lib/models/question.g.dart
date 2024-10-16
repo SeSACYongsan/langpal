@@ -11,7 +11,7 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       ownerUsername: json['ownerUsername'] as String,
       ownerID: json['ownerID'] as String,
-      point: (json['point'] as num).toInt(),
+      point: (json['point'] as num).toDouble(),
       questionType: $enumDecode(_$QuestionTypeEnumMap, json['questionType']),
       content: json['content'] as String,
       date: DateTime.parse(json['date'] as String),

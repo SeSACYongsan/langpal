@@ -10,7 +10,7 @@ class Question with _$Question {
     required String id,
     required String ownerUsername,
     required String ownerID,
-    required int point,
+    required double point,
     required QuestionType questionType,
     required String content,
     required DateTime date,

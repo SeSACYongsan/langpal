@@ -61,7 +61,7 @@ class QuestionCard extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
-                          "${question.point.toString()}pt",
+                          "${question.point.toStringAsFixed(0)}pt",
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ],
