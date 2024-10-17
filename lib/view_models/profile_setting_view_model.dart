@@ -25,6 +25,7 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
     final level =
         ref.read(initializationViewModelProvider).value!["level"] as Level;
     final username = state.value!["username"] as String;
+    final profilePhoto = state.value!["profilePhoto"] as XFile?;
     final displayName = ref.read(tempUserProvider)!["displayName"];
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"]!;

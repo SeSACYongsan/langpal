@@ -7,7 +7,7 @@ part of 'profile_setting_view_model.dart';
 // **************************************************************************
 
 String _$profileSettingViewModelHash() =>
-    r'2ed52e561671eca8578376c22ff7395108c46dc4';
+    r'd78676c8b504c0538f0a14569de204824eab1cf7';
 
 /// See also [ProfileSettingViewModel].
 @ProviderFor(ProfileSettingViewModel)
