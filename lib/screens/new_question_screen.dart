@@ -170,7 +170,11 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
 
   @override
   void initState() {
-    ref.read(newQuestionViewModelProvider.notifier).resetState();
+    Future(
+      () {
+        ref.read(newQuestionViewModelProvider.notifier).resetState();
+      },
+    );
     super.initState();
   }
 
