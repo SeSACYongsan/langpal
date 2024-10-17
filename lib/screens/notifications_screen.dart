@@ -131,7 +131,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   }
 
   void onTapCheckbox() async {
-    final numberOfCheckedCheckboxes = await ref
+    final numberOfCheckedCheckboxes = ref
         .read(notificationsViewModelProvider.notifier)
         .fetchNumberOfCheckedCheckboxes();
     if (isCheckboxChecked && numberOfCheckedCheckboxes != 0) {

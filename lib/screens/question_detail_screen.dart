@@ -41,7 +41,6 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           final answerOwners = data["answerOwners"] as List<LangpalUser?>;
-          final answer = data["answer"] as String;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
