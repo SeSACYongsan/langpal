@@ -79,7 +79,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         final owner = await userRepository.fetchUserByID(answer.ownerID);
         answerOwners.add(owner);
       }
-      final profilePhoto =
+      final questionOwnerProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(question!.ownerID);
       state = AsyncData({
         "answers": answers,
@@ -87,7 +87,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         "questionOwner": questionOwner,
         "answerOwners": answerOwners,
         "answer": "",
-        "profilePhoto": profilePhoto,
+        "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);

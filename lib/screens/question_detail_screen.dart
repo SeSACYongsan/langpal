@@ -43,7 +43,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           final answerOwners = data["answerOwners"] as List<LangpalUser?>;
-          final profilePhoto = data["profilePhoto"] as Uint8List?;
+          final questionOwnerProfilePhoto =
+              data["questionOwnerProfilePhoto"] as Uint8List?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -71,7 +72,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (profilePhoto == null)
+                        if (questionOwnerProfilePhoto == null)
                           ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Image.asset(
@@ -85,7 +86,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                         else
                           CircleAvatar(
                             radius: 30,
-                            backgroundImage: MemoryImage(profilePhoto),
+                            backgroundImage:
+                                MemoryImage(questionOwnerProfilePhoto),
                           ),
                         const SizedBox(width: 20),
                         Column(
