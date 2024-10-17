@@ -1,4 +1,5 @@
 import "dart:io";
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +12,12 @@ class UserRepository {
   Future<void> addUser(LangpalUser user) async {
     final firestoreInstance = FirebaseFirestore.instance;
     await firestoreInstance.collection("users").doc(user.id).set(user.toJson());
+  }
+
+  Future<Uint8List?> fetchProfilePhotoByUserID(String userID) async {
+    final storageInstance = FirebaseStorage.instance;
+    final data = await storageInstance.ref("profilePhotos/$userID").getData();
+    return data;
   }
 
   Future<LangpalUser?> fetchUserByID(String userID) async {

@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
@@ -15,18 +17,20 @@ class MyPageScreen extends ConsumerStatefulWidget {
 class _MyPageScreenState extends ConsumerState<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
-    final asyncUser = ref.watch(myPageViewModelProvider);
-    return asyncUser.when(
+    final asyncData = ref.watch(myPageViewModelProvider);
+    return asyncData.when(
       loading: () {
         return const LoadingScreen();
       },
       error: (error, stackTrace) {
         return ErrorScreen(error: error);
       },
-      data: (user) {
-        if (user == null) {
+      data: (data) {
+        if (data == null) {
           return const LoadingScreen();
         } else {
+          final user = data["currentUser"] as LangpalUser;
+          final profilePhoto = data["profilePhoto"] as Uint8List?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -53,15 +57,21 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(1000),
-                      child: Image.asset(
-                        "assets/images/profile.png",
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.person);
-                        },
+                    if (profilePhoto == null)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(1000),
+                        child: Image.asset(
+                          "assets/images/profile.png",
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.person);
+                          },
+                        ),
+                      )
+                    else
+                      CircleAvatar(
+                        radius: 150,
+                        backgroundImage: MemoryImage(profilePhoto),
                       ),
-                    ),
                     const SizedBox(height: 30),
                     Text(
                       "${user.info.username} (${user.isPremium ? "프리미엄 회원" : "일반 회원"})",

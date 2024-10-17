@@ -6,12 +6,12 @@ part of 'my_page_view_model.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$myPageViewModelHash() => r'e009567677f617d577ba1c28bf238966920be5f3';
+String _$myPageViewModelHash() => r'36e79e406cd6252b844590d876fd2383481bd835';
 
 /// See also [MyPageViewModel].
 @ProviderFor(MyPageViewModel)
-final myPageViewModelProvider =
-    AutoDisposeAsyncNotifierProvider<MyPageViewModel, LangpalUser?>.internal(
+final myPageViewModelProvider = AutoDisposeAsyncNotifierProvider<
+    MyPageViewModel, Map<String, dynamic>?>.internal(
   MyPageViewModel.new,
   name: r'myPageViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final myPageViewModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$MyPageViewModel = AutoDisposeAsyncNotifier<LangpalUser?>;
+typedef _$MyPageViewModel = AutoDisposeAsyncNotifier<Map<String, dynamic>?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
