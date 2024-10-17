@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/notification.dart';
@@ -77,12 +79,15 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         final owner = await userRepository.fetchUserByID(answer.ownerID);
         answerOwners.add(owner);
       }
+      final profilePhoto =
+          await userRepository.fetchProfilePhotoByUserID(question!.ownerID);
       state = AsyncData({
         "answers": answers,
         "question": question,
         "questionOwner": questionOwner,
         "answerOwners": answerOwners,
         "answer": "",
+        "profilePhoto": profilePhoto,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
@@ -96,6 +101,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       "questionOwner": state.value!["questionOwner"] as LangpalUser,
       "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
       "answer": "",
+      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
     });
   }
 
@@ -106,6 +112,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       "questionOwner": state.value!["questionOwner"] as LangpalUser,
       "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
       "answer": answer,
+      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
     });
   }
 }

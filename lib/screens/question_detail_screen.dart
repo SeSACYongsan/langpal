@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +43,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           final answerOwners = data["answerOwners"] as List<LangpalUser?>;
+          final profilePhoto = data["profilePhoto"] as Uint8List?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -68,16 +71,22 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.asset(
-                            "assets/images/profile.png",
-                            width: 70,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.person);
-                            },
+                        if (profilePhoto == null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              "assets/images/profile.png",
+                              width: 70,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.person);
+                              },
+                            ),
+                          )
+                        else
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundImage: MemoryImage(profilePhoto),
                           ),
-                        ),
                         const SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
