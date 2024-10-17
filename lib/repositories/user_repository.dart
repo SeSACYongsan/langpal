@@ -1,4 +1,8 @@
+import "dart:io";
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/utils/logger.dart';
@@ -49,5 +53,14 @@ class UserRepository {
       logger.e(error);
     }
     return null;
+  }
+
+  Future<void> uploadProfilePhoto({
+    required XFile? profilePhoto,
+    required String userID,
+  }) async {
+    final storageInstance = FirebaseStorage.instance;
+    final file = File(profilePhoto!.path);
+    await storageInstance.ref("profilePhotos/$userID").putFile(file);
   }
 }

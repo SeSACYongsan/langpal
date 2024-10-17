@@ -31,7 +31,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
           return const LoadingScreen();
         } else {
           final username = data["username"] as String;
-          final profileImage = data["profileImage"] as XFile?;
+          final profileImage = data["profilePhoto"] as XFile?;
           return Scaffold(
             body: Stack(
               children: [

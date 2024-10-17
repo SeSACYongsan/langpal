@@ -45,6 +45,10 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
     );
     await ref.read(currentUserProvider.notifier).setCurrentUser(user);
     await userRepository.addUser(user);
+    await userRepository.uploadProfilePhoto(
+      profilePhoto: profilePhoto,
+      userID: userID,
+    );
   }
 
   @override
@@ -61,10 +65,10 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
       if (pickedImage != null) {
         state = AsyncData({
           "username": state.value!["username"] as String,
-          "profileImage": pickedImage,
+          "profilePhoto": pickedImage,
         });
       } else {
-        throw Exception("The picked image is null");
+        throw Exception("The picked photo is null");
       }
     } catch (error) {
       logger.e(error);
@@ -74,14 +78,14 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
   void resetState() {
     state = const AsyncData({
       "username": "",
-      "profileImage": null,
+      "profilePhoto": null,
     });
   }
 
   void setUsername(String username) {
     state = AsyncData({
       "username": username,
-      "profileImage": state.value!["profileImage"] as XFile?
+      "profilePhoto": state.value!["profilePhoto"] as XFile?
     });
   }
 }

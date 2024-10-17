@@ -40,6 +40,7 @@ dependencies:
     intl:
     dropdown_button2:
     cloud_firestore:
+    firebase_storage:
     firebase_core:
     firebase_auth:
     firebase_ui_auth:
