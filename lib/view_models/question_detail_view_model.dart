@@ -1,8 +1,8 @@
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/notification.dart';
+import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_provider.dart';
-import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
@@ -20,7 +20,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
   late final NotificationRepository notificationRepository;
   Future<void> addAnswer(String questionID) async {
     const uuid = Uuid();
-    final content = ref.read(answerTextFieldProvider);
+    final content = state.value!["answer"] as String;
     final currentUser = ref.read(currentUserProvider).value!;
     final answer = Answer(
       id: uuid.v4(),
@@ -82,9 +82,30 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         "question": question,
         "questionOwner": questionOwner,
         "answerOwners": answerOwners,
+        "answer": "",
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
     }
+  }
+
+  void resetAnswer() {
+    state = AsyncData({
+      "answers": state.value!["answers"] as List<Answer>,
+      "question": state.value!["question"] as Question,
+      "questionOwner": state.value!["questionOwner"] as LangpalUser,
+      "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
+      "answer": "",
+    });
+  }
+
+  void setAnswer(String answer) {
+    state = AsyncData({
+      "answers": state.value!["answers"] as List<Answer>,
+      "question": state.value!["question"] as Question,
+      "questionOwner": state.value!["questionOwner"] as LangpalUser,
+      "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
+      "answer": answer,
+    });
   }
 }

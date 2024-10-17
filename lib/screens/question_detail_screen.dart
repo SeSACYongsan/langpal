@@ -8,7 +8,6 @@ import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_provider.dart';
-import 'package:langpal/providers/fields/answer_text_field_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/question_detail_view_model.dart';
@@ -22,12 +21,11 @@ class QuestionDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
-  late TextEditingController answerTextEditingController;
+  late TextEditingController textEditingController;
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(questionDetailViewModelProvider);
     final currentUser = ref.read(currentUserProvider).value!;
-    answerTextEditingController.text = ref.watch(answerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(error: error);
@@ -43,6 +41,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final questionOwner = data["questionOwner"] as LangpalUser;
           final answers = data["answers"] as List<Answer>;
           final answerOwners = data["answerOwners"] as List<LangpalUser?>;
+          final answer = data["answer"] as String;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -187,7 +186,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextField(
-                          controller: answerTextEditingController,
+                          controller: textEditingController,
                           keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
@@ -196,7 +195,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           maxLines: 8,
                           onChanged: (value) {
                             ref
-                                .read(answerTextFieldProvider.notifier)
+                                .read(questionDetailViewModelProvider.notifier)
                                 .setAnswer(value);
                           },
                         ),
@@ -246,17 +245,11 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   @override
-  void dispose() {
-    answerTextEditingController.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     ref
         .read(questionDetailViewModelProvider.notifier)
         .fetchQuestionDetail(widget.questionID);
-    answerTextEditingController = TextEditingController();
+    textEditingController = TextEditingController();
     super.initState();
   }
 
@@ -312,7 +305,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   Future<void> onTapSubmitButton(String questionID) async {
-    if (answerTextEditingController.text.trim().isEmpty) {
+    final answer =
+        ref.read(questionDetailViewModelProvider).value!["answer"] as String;
+    if (answer.trim().isEmpty) {
       showDialog(
         context: context,
         builder: (context) {
@@ -335,7 +330,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           content: Text("답변이 성공적으로 등록되었습니다"),
         ),
       );
-      ref.read(answerTextFieldProvider.notifier).initializeAnswer();
+      ref.read(questionDetailViewModelProvider.notifier).resetAnswer();
+      textEditingController.text = "";
     }
   }
 }
