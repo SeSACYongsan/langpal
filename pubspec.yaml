@@ -36,6 +36,7 @@ dependencies:
     cupertino_icons:
     go_router:
     flutter_riverpod:
+    flutter_image_compress:
     riverpod_annotation:
     intl:
     dropdown_button2:
