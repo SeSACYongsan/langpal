@@ -66,6 +66,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 question: questions[index],
                 route: "/main/questions/${questions[index].id}",
                 profilePhoto: profilePhotos[index],
+                isProfileVisible: true,
               ),
               itemCount: questions.length,
             ),

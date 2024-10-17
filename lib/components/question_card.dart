@@ -7,39 +7,46 @@ class QuestionCard extends StatelessWidget {
   final Question question;
   final String route;
   final Uint8List? profilePhoto;
+  final bool isProfileVisible;
   const QuestionCard({
     super.key,
     required this.question,
     required this.route,
     required this.profilePhoto,
+    required this.isProfileVisible,
   });
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (profilePhoto == null)
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                "assets/images/profile.png",
-                width: 70,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(
-                    Icons.person,
-                    size: 70,
-                  );
-                },
+          if (isProfileVisible)
+            if (profilePhoto == null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Image.asset(
+                  "assets/images/profile.png",
+                  width: 70,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.person,
+                      size: 70,
+                    );
+                  },
+                ),
+              )
+            else
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: MemoryImage(profilePhoto!),
+                  ),
+                  const SizedBox(width: 20),
+                ],
               ),
-            )
-          else
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: MemoryImage(profilePhoto!),
-            ),
-          const SizedBox(width: 20),
           Expanded(
             child: GestureDetector(
               onTap: () {
