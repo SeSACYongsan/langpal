@@ -1,5 +1,5 @@
 import 'package:langpal/models/answer.dart';
-import 'package:langpal/providers/fields/new_answer_text_field_provider.dart';
+import 'package:langpal/models/question.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,35 +21,49 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
     final answer = await answerRepository.fetchAnswerByID(answerID);
     final question =
         await questionRepository.fetchQuestionByID(answer!.questionID);
-    state = AsyncData({
-      "question": question,
-      "answer": answer,
-      "isEditable": false,
-    });
+    updateState(
+      question: question,
+      answer: answer,
+      isEditable: false,
+      answerText: "",
+    );
   }
 
   void initializeTextFieldByAnswerID(String answerID) {
     final answer = state.value!["answer"] as Answer;
-    ref.read(newAnswerTextFieldProvider.notifier).setContent(answer.content);
+    updateState(answerText: answer.content);
+  }
+
+  void setAnswerText(String answerText) {
+    updateState(answerText: answerText);
   }
 
   void setIsEditable(bool isEditable) {
-    state = AsyncData({
-      "question": state.value!["question"],
-      "answer": state.value!["answer"],
-      "isEditable": isEditable,
-    });
+    updateState(isEditable: isEditable);
   }
 
   Future<void> updateAnswerByAnswerID(String answerID) async {
     final answer = await answerRepository.fetchAnswerByID(answerID);
-    final newContent = ref.read(newAnswerTextFieldProvider);
+    final newContent = state.value!["answerText"] as String;
     final modifiedAnswer = answer!.copyWith(content: newContent);
     await answerRepository.updateAnswer(modifiedAnswer);
+    updateState(
+      answer: modifiedAnswer,
+      answerText: modifiedAnswer.content,
+    );
+  }
+
+  void updateState({
+    Question? question,
+    Answer? answer,
+    bool? isEditable,
+    String? answerText,
+  }) {
     state = AsyncData({
-      "question": state.value!["question"],
-      "answer": modifiedAnswer,
-      "isEditable": state.value!["isEditable"],
+      "question": question ?? state.value!["question"] as Question,
+      "answer": answer ?? state.value!["answer"] as Answer,
+      "isEditable": isEditable ?? state.value!["isEditable"] as bool,
+      "answerText": answerText ?? state.value!["answerText"] as String,
     });
   }
 }

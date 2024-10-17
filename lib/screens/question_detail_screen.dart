@@ -244,6 +244,12 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     ref
         .read(questionDetailViewModelProvider.notifier)

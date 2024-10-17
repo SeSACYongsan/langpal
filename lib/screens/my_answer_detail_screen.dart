@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
-import 'package:langpal/providers/fields/new_answer_text_field_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_answer_detail_view_model.dart';
@@ -21,11 +20,10 @@ class MyAnswerDetailScreen extends ConsumerStatefulWidget {
 }
 
 class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
-  late TextEditingController newAnswerTextEditingController;
+  late TextEditingController textEditingController;
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myAnswerDetailViewModelProvider);
-    newAnswerTextEditingController.text = ref.watch(newAnswerTextFieldProvider);
     return asyncData.when(
       error: (error, stackTrace) {
         return ErrorScreen(error: error);
@@ -131,7 +129,9 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                               padding: const EdgeInsets.all(15),
                               textStyle: Theme.of(context).textTheme.titleLarge,
                             ),
-                            onPressed: onTapEditButton,
+                            onPressed: () {
+                              onTapEditButton(answer.content);
+                            },
                             child: const Text("수정하기"),
                           ),
                         ],
@@ -151,12 +151,13 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                                 border: InputBorder.none,
                               ),
                               keyboardType: TextInputType.text,
-                              controller: newAnswerTextEditingController,
+                              controller: textEditingController,
                               maxLines: 3,
                               onChanged: (value) {
                                 ref
-                                    .read(newAnswerTextFieldProvider.notifier)
-                                    .setContent(value);
+                                    .read(myAnswerDetailViewModelProvider
+                                        .notifier)
+                                    .setAnswerText(value);
                               },
                             ),
                           ),
@@ -186,7 +187,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
 
   @override
   void dispose() {
-    newAnswerTextEditingController.dispose();
+    textEditingController.dispose();
     super.dispose();
   }
 
@@ -195,15 +196,16 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
     ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .fetchMyAnswerDetail(widget.answerID);
-    newAnswerTextEditingController = TextEditingController();
+    textEditingController = TextEditingController();
     super.initState();
   }
 
-  void onTapEditButton() {
+  void onTapEditButton(String content) {
     ref.read(myAnswerDetailViewModelProvider.notifier).setIsEditable(true);
     ref
         .read(myAnswerDetailViewModelProvider.notifier)
         .initializeTextFieldByAnswerID(widget.answerID);
+    textEditingController.text = content;
   }
 
   void onTapSubmitButton() async {
