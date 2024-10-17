@@ -1,9 +1,8 @@
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/profile_setting_view_model.dart';
@@ -31,7 +30,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
           return const LoadingScreen();
         } else {
           final username = data["username"] as String;
-          final profileImage = data["profilePhoto"] as XFile?;
+          final profileImage = data["profilePhoto"] as Uint8List?;
           return Scaffold(
             body: Stack(
               children: [
@@ -88,9 +87,8 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                     },
                                     child: CircleAvatar(
                                       radius: 200,
-                                      backgroundImage: FileImage(
-                                        File(profileImage.path),
-                                      ),
+                                      backgroundImage:
+                                          MemoryImage(profileImage),
                                     ),
                                   ),
                                 const SizedBox(height: 30),

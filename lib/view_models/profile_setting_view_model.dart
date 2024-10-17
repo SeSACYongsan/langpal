@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/langpal_user_info.dart';
@@ -25,7 +28,7 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
     final level =
         ref.read(initializationViewModelProvider).value!["level"] as Level;
     final username = state.value!["username"] as String;
-    final profilePhoto = state.value!["profilePhoto"] as XFile?;
+    final profilePhoto = state.value!["profilePhoto"] as Uint8List?;
     final displayName = ref.read(tempUserProvider)!["displayName"];
     final emailAddress = ref.read(tempUserProvider)!["emailAddress"];
     final userID = ref.read(tempUserProvider)!["userID"]!;
@@ -63,9 +66,13 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
         await imagePicker.pickImage(source: ImageSource.gallery);
     try {
       if (pickedImage != null) {
+        final compressedImage = await FlutterImageCompress.compressWithFile(
+          pickedImage.path,
+          quality: 1,
+        );
         state = AsyncData({
           "username": state.value!["username"] as String,
-          "profilePhoto": pickedImage,
+          "profilePhoto": compressedImage,
         });
       } else {
         throw Exception("The picked photo is null");
@@ -85,7 +92,7 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
   void setUsername(String username) {
     state = AsyncData({
       "username": username,
-      "profilePhoto": state.value!["profilePhoto"] as XFile?
+      "profilePhoto": state.value!["profilePhoto"] as Uint8List?
     });
   }
 }
