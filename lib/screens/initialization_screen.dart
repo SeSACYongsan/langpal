@@ -187,7 +187,9 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
 
   @override
   void initState() {
-    ref.read(initializationViewModelProvider.notifier).resetState();
+    Future(() {
+      ref.read(initializationViewModelProvider.notifier).resetState();
+    });
     super.initState();
   }
 }

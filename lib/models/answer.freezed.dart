@@ -27,8 +27,12 @@ mixin _$Answer {
   String get content => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
 
+  /// Serializes this Answer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Answer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AnswerCopyWith<Answer> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -56,6 +60,8 @@ class _$AnswerCopyWithImpl<$Res, $Val extends Answer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Answer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +125,8 @@ class __$$AnswerImplCopyWithImpl<$Res>
       _$AnswerImpl _value, $Res Function(_$AnswerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Answer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -205,12 +213,14 @@ class _$AnswerImpl implements _Answer {
             (identical(other.date, date) || other.date == date));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, ownerID, ownerUsername, questionID, content, date);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Answer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AnswerImplCopyWith<_$AnswerImpl> get copyWith =>
@@ -247,8 +257,11 @@ abstract class _Answer implements Answer {
   String get content;
   @override
   DateTime get date;
+
+  /// Create a copy of Answer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AnswerImplCopyWith<_$AnswerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

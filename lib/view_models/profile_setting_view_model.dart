@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/langpal_user_info.dart';
 import 'package:langpal/models/language.dart';
@@ -5,6 +6,7 @@ import 'package:langpal/models/level.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 import 'package:langpal/repositories/user_repository.dart';
+import 'package:langpal/utils/logger.dart';
 import 'package:langpal/view_models/initialization_view_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -50,15 +52,35 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
     return null;
   }
 
+  Future<void> getImageFromGallery() async {
+    final imagePicker = ImagePicker();
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    try {
+      if (pickedImage != null) {
+        state = AsyncData({
+          "username": state.value!["username"] as String,
+          "profileImage": pickedImage,
+        });
+      } else {
+        throw Exception("The picked image is null");
+      }
+    } catch (error) {
+      logger.e(error);
+    }
+  }
+
   void resetState() {
     state = const AsyncData({
       "username": "",
+      "profileImage": null,
     });
   }
 
   void setUsername(String username) {
     state = AsyncData({
       "username": username,
+      "profileImage": state.value!["profileImage"] as XFile?
     });
   }
 }

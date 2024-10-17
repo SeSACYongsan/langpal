@@ -1,6 +1,9 @@
+import "dart:io";
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/profile_setting_view_model.dart';
@@ -28,6 +31,7 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
           return const LoadingScreen();
         } else {
           final username = data["username"] as String;
+          final profileImage = data["profileImage"] as XFile?;
           return Scaffold(
             body: Stack(
               children: [
@@ -60,19 +64,31 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                             ),
                             child: Column(
                               children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.all(90),
-                                    elevation: 5,
-                                    shape: const CircleBorder(),
+                                if (profileImage == null)
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.all(90),
+                                      elevation: 5,
+                                      shape: const CircleBorder(),
+                                    ),
+                                    onPressed: () async {
+                                      await onTapProfilePhoto();
+                                    },
+                                    child: Text(
+                                      "프로필 사진",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ),
+                                  )
+                                else
+                                  SizedBox(
+                                    width: 300,
+                                    height: 300,
+                                    child: Image.file(
+                                      File(profileImage.path),
+                                    ),
                                   ),
-                                  onPressed: () {},
-                                  child: Text(
-                                    "프로필 사진",
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
                                 const SizedBox(height: 30),
                                 Text(
                                   "닉네임 입력",
@@ -123,7 +139,9 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(profileSettingViewModelProvider.notifier).resetState();
+    Future(() {
+      ref.read(profileSettingViewModelProvider.notifier).resetState();
+    });
   }
 
   Future<void> onTapNext(String username) async {
@@ -143,5 +161,11 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
           .addToFirestoreAndUpdateUser();
       context.go("/main");
     }
+  }
+
+  Future<void> onTapProfilePhoto() async {
+    await ref
+        .read(profileSettingViewModelProvider.notifier)
+        .getImageFromGallery();
   }
 }
