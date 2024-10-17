@@ -85,6 +85,9 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       }
       final questionOwnerProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(question!.ownerID);
+      final currentUser = ref.read(currentUserProvider).value!;
+      final currentUserProfilePhoto =
+          await userRepository.fetchProfilePhotoByUserID(currentUser.id);
       state = AsyncData({
         "answers": answers,
         "question": question,
@@ -93,6 +96,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         "answer": "",
         "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
         "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
+        "currentUserProfilePhoto": currentUserProfilePhoto,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
@@ -110,6 +114,8 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
           state.value!["questionOwnerProfilePhoto"] as Uint8List?,
       "answerOwnerProfilePhotos":
           state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
+      "currentUserProfilePhoto":
+          state.value!["currentUserProfilePhoto"] as Uint8List?,
     });
   }
 
@@ -124,6 +130,8 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
           state.value!["questionOwnerProfilePhoto"] as Uint8List?,
       "answerOwnerProfilePhotos":
           state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
+      "currentUserProfilePhoto":
+          state.value!["currentUserProfilePhoto"] as Uint8List?,
     });
   }
 }

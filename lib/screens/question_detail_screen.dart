@@ -47,6 +47,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
               data["questionOwnerProfilePhoto"] as Uint8List?;
           final answerOwnerProfilePhotos =
               data["answerOwnerProfilePhotos"] as List<Uint8List?>;
+          final currentUserProfilePhoto =
+              data["currentUserProfilePhoto"] as Uint8List?;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -172,16 +174,22 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       itemCount: answers.length,
                     ),
                     const SizedBox(height: 30),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.asset(
-                        "assets/images/profile.png",
-                        width: 70,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.person);
-                        },
+                    if (currentUserProfilePhoto == null)
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          "assets/images/profile.png",
+                          width: 70,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.person);
+                          },
+                        ),
+                      )
+                    else
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: MemoryImage(currentUserProfilePhoto),
                       ),
-                    ),
                     const SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
