@@ -55,6 +55,7 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
                     question: questions[index],
                     route:
                         "/main/my_page/my_questions/detail/${questions[index].id}",
+                    profilePhoto: null,
                   ),
                 );
               },

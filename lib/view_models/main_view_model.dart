@@ -1,5 +1,6 @@
-import 'package:langpal/models/question.dart';
+import 'package:flutter/foundation.dart';
 import 'package:langpal/repositories/question_repository.dart';
+import 'package:langpal/repositories/user_repository.dart';
 import 'package:langpal/view_models/my_question_detail_view_model.dart';
 import 'package:langpal/view_models/new_question_view_model.dart';
 import 'package:langpal/view_models/question_detail_view_model.dart';
@@ -9,10 +10,12 @@ part 'main_view_model.g.dart';
 
 @riverpod
 class MainViewModel extends _$MainViewModel {
+  late final UserRepository userRepository;
   late final QuestionRepository questionRepository;
   @override
-  Future<List<Question>?> build() async {
+  Future<Map<String, dynamic>?> build() async {
     questionRepository = QuestionRepository();
+    userRepository = UserRepository();
     ref.listen(newQuestionViewModelProvider, (previous, next) {
       if (next is AsyncData) {
         fetchUnchosenQuestions();
@@ -33,6 +36,16 @@ class MainViewModel extends _$MainViewModel {
 
   Future<void> fetchUnchosenQuestions() async {
     final questions = await questionRepository.fetchUnchosenQuestions();
-    state = AsyncData(questions);
+    final questionOwnerIDs = questions!.map((question) => question.ownerID);
+    List<Uint8List?> questionOwnerProfilePhotos = [];
+    for (final questionOwnerID in questionOwnerIDs) {
+      final profilePhoto =
+          await userRepository.fetchProfilePhotoByUserID(questionOwnerID);
+      questionOwnerProfilePhotos.add(profilePhoto);
+    }
+    state = AsyncData({
+      "questions": questions,
+      "profilePhotos": questionOwnerProfilePhotos,
+    });
   }
 }

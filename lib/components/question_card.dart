@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/question.dart';
@@ -5,10 +6,12 @@ import 'package:langpal/models/question.dart';
 class QuestionCard extends StatelessWidget {
   final Question question;
   final String route;
+  final Uint8List? profilePhoto;
   const QuestionCard({
     super.key,
     required this.question,
     required this.route,
+    required this.profilePhoto,
   });
   @override
   Widget build(BuildContext context) {
@@ -17,19 +20,25 @@ class QuestionCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              "assets/images/profile.png",
-              width: 70,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(
-                  Icons.person,
-                  size: 70,
-                );
-              },
+          if (profilePhoto == null)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                "assets/images/profile.png",
+                width: 70,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.person,
+                    size: 70,
+                  );
+                },
+              ),
+            )
+          else
+            CircleAvatar(
+              radius: 30,
+              backgroundImage: MemoryImage(profilePhoto!),
             ),
-          ),
           const SizedBox(width: 20),
           Expanded(
             child: GestureDetector(
