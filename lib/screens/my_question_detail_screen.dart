@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +37,8 @@ class _MyQuestionDetailScreenState
         if (data != null) {
           final question = data["question"] as Question;
           final answers = data["answers"] as List<Answer>;
+          final answerOwnerProfilePhotos =
+              data["answerOwnerProfilePhotos"] as List<Uint8List?>;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -99,8 +103,10 @@ class _MyQuestionDetailScreenState
                         textAlign: TextAlign.center,
                       )
                     else
-                      ...answers.map(
-                        (answer) {
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
                             child: Row(
@@ -110,13 +116,15 @@ class _MyQuestionDetailScreenState
                                   IconButton(
                                     onPressed: () {
                                       onCheckboxChecked(
-                                          answerID: answer.id,
-                                          context: context);
+                                        answerID: answers[index].id,
+                                        context: context,
+                                      );
                                     },
                                     icon: const Icon(
                                         Icons.check_box_outline_blank),
                                   ),
-                                if (question.chosenAnswerID == answer.id)
+                                if (question.chosenAnswerID ==
+                                    answers[index].id)
                                   const Icon(
                                     Icons.check_circle,
                                     color: Colors.green,
@@ -129,21 +137,32 @@ class _MyQuestionDetailScreenState
                                     children: [
                                       Row(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            child: Image.asset(
-                                              "assets/images/profile.png",
-                                              width: 70,
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return const Icon(Icons.person);
-                                              },
+                                          if (answerOwnerProfilePhotos[index] ==
+                                              null)
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              child: Image.asset(
+                                                "assets/images/profile.png",
+                                                width: 70,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return const Icon(
+                                                      Icons.person);
+                                                },
+                                              ),
+                                            )
+                                          else
+                                            CircleAvatar(
+                                              radius: 30,
+                                              backgroundImage: MemoryImage(
+                                                answerOwnerProfilePhotos[
+                                                    index]!,
+                                              ),
                                             ),
-                                          ),
                                           const SizedBox(width: 10),
                                           Text(
-                                            answer.ownerUsername,
+                                            answers[index].ownerUsername,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleLarge,
@@ -165,7 +184,7 @@ class _MyQuestionDetailScreenState
                                         ),
                                         padding: const EdgeInsets.all(20),
                                         child: Text(
-                                          answer.content,
+                                          answers[index].content,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleMedium,
@@ -178,7 +197,8 @@ class _MyQuestionDetailScreenState
                             ),
                           );
                         },
-                      ),
+                        itemCount: answers.length,
+                      )
                   ],
                 ),
               ),

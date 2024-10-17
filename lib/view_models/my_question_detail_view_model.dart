@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:langpal/models/notification.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
+import 'package:langpal/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,6 +15,7 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
   late final AnswerRepository answerRepository;
   late final QuestionRepository questionRepository;
   late final NotificationRepository notificationRepository;
+  late final UserRepository userRepository;
   Future<void> addNotification(String answerID) async {
     const uuid = Uuid();
     final answer = await answerRepository.fetchAnswerByID(answerID);
@@ -30,15 +34,24 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
     answerRepository = AnswerRepository();
     questionRepository = QuestionRepository();
     notificationRepository = NotificationRepository();
+    userRepository = UserRepository();
     return null;
   }
 
   Future<void> fetchMyQuestionDetail(String questionID) async {
     final question = await questionRepository.fetchQuestionByID(questionID);
     final answers = await answerRepository.fetchAnswersByQuestionID(questionID);
+    List<Uint8List?> answerOwnerProfilePhotos = [];
+    for (final answer in answers!) {
+      final answerOwnerID = answer.ownerID;
+      final profilePhoto =
+          await userRepository.fetchProfilePhotoByUserID(answerOwnerID);
+      answerOwnerProfilePhotos.add(profilePhoto);
+    }
     state = AsyncData({
       "question": question,
       "answers": answers,
+      "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
     });
   }
 
