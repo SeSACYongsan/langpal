@@ -1,4 +1,4 @@
-import "dart:io";
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -82,11 +82,15 @@ class _ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                     ),
                                   )
                                 else
-                                  SizedBox(
-                                    width: 300,
-                                    height: 300,
-                                    child: Image.file(
-                                      File(profileImage.path),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await onTapProfilePhoto();
+                                    },
+                                    child: CircleAvatar(
+                                      radius: 200,
+                                      backgroundImage: FileImage(
+                                        File(profileImage.path),
+                                      ),
                                     ),
                                   ),
                                 const SizedBox(height: 30),
