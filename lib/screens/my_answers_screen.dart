@@ -67,6 +67,7 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
                         answer: answers[index],
                         owner: answerOwners[index]!,
                         isProfileVisible: false,
+                        profilePhoto: null,
                       ),
                     );
                   },

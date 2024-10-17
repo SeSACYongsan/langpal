@@ -45,6 +45,8 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
           final answerOwners = data["answerOwners"] as List<LangpalUser?>;
           final questionOwnerProfilePhoto =
               data["questionOwnerProfilePhoto"] as Uint8List?;
+          final answerOwnerProfilePhotos =
+              data["answerOwnerProfilePhotos"] as List<Uint8List?>;
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -164,6 +166,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                           answer: answers[index],
                           owner: answerOwners[index]!,
                           isProfileVisible: true,
+                          profilePhoto: answerOwnerProfilePhotos[index],
                         );
                       },
                       itemCount: answers.length,

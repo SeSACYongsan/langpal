@@ -75,9 +75,13 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final questionOwner =
           await userRepository.fetchUserByQuestionID(questionID);
       List<LangpalUser?> answerOwners = [];
+      List<Uint8List?> answerOwnerProfilePhotos = [];
       for (final answer in answers!) {
         final owner = await userRepository.fetchUserByID(answer.ownerID);
+        final answerOwnerProfilePhoto =
+            await userRepository.fetchProfilePhotoByUserID(answer.ownerID);
         answerOwners.add(owner);
+        answerOwnerProfilePhotos.add(answerOwnerProfilePhoto);
       }
       final questionOwnerProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(question!.ownerID);
@@ -88,6 +92,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         "answerOwners": answerOwners,
         "answer": "",
         "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
+        "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
       });
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
@@ -101,7 +106,10 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       "questionOwner": state.value!["questionOwner"] as LangpalUser,
       "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
       "answer": "",
-      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
+      "questionOwnerProfilePhoto":
+          state.value!["questionOwnerProfilePhoto"] as Uint8List?,
+      "answerOwnerProfilePhotos":
+          state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
     });
   }
 
@@ -112,7 +120,10 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       "questionOwner": state.value!["questionOwner"] as LangpalUser,
       "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
       "answer": answer,
-      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
+      "questionOwnerProfilePhoto":
+          state.value!["questionOwnerProfilePhoto"] as Uint8List?,
+      "answerOwnerProfilePhotos":
+          state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
     });
   }
 }

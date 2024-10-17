@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/answer.dart';
@@ -7,11 +9,13 @@ class AnswerCard extends ConsumerWidget {
   final Answer answer;
   final LangpalUser owner;
   final bool isProfileVisible;
+  final Uint8List? profilePhoto;
   const AnswerCard({
     super.key,
     required this.answer,
     required this.owner,
     required this.isProfileVisible,
+    required this.profilePhoto,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,19 +29,25 @@ class AnswerCard extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      "assets/images/profile.png",
-                      width: 70,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.person,
-                          size: 70,
-                        );
-                      },
+                  if (profilePhoto == null)
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset(
+                        "assets/images/profile.png",
+                        width: 70,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.person,
+                            size: 70,
+                          );
+                        },
+                      ),
+                    )
+                  else
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: MemoryImage(profilePhoto!),
                     ),
-                  ),
                   const SizedBox(width: 20),
                   Text(
                     owner.info.username,
