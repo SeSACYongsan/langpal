@@ -37,10 +37,16 @@ class MainViewModel extends _$MainViewModel {
   Future<void> fetchUnchosenQuestions() async {
     final questions = await questionRepository.fetchUnchosenQuestions();
     final questionOwnerIDs = questions!.map((question) => question.ownerID);
-    List<Uint8List?> questionOwnerProfilePhotos = [];
-    for (final questionOwnerID in questionOwnerIDs) {
+    final questionOwnerIDSet = Set.from(questionOwnerIDs);
+    final questionOwnerProfilePhotoMap = {};
+    for (final questionOwnerID in questionOwnerIDSet) {
       final profilePhoto =
           await userRepository.fetchProfilePhotoByUserID(questionOwnerID);
+      questionOwnerProfilePhotoMap[questionOwnerID] = profilePhoto;
+    }
+    List<Uint8List?> questionOwnerProfilePhotos = [];
+    for (final questionOwnerID in questionOwnerIDs) {
+      final profilePhoto = questionOwnerProfilePhotoMap[questionOwnerID];
       questionOwnerProfilePhotos.add(profilePhoto);
     }
     state = AsyncData({
