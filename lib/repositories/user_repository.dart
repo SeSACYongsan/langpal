@@ -14,8 +14,13 @@ class UserRepository {
 
   Future<Uint8List?> fetchProfilePhotoByUserID(String userID) async {
     final storageInstance = FirebaseStorage.instance;
-    final data = await storageInstance.ref("profilePhotos/$userID").getData();
-    return data;
+    try {
+      final data = await storageInstance.ref("profilePhotos/$userID").getData();
+      return data;
+    } catch (error) {
+      logger.e(error);
+      return null;
+    }
   }
 
   Future<LangpalUser?> fetchUserByID(String userID) async {

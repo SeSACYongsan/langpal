@@ -24,18 +24,23 @@ class QuestionCard extends StatelessWidget {
         children: [
           if (isProfileVisible)
             if (profilePhoto == null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  "assets/images/profile.png",
-                  width: 70,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.person,
-                      size: 70,
-                    );
-                  },
-                ),
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      "assets/images/profile.png",
+                      width: 70,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.person,
+                          size: 70,
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                ],
               )
             else
               Row(
