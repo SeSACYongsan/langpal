@@ -75,13 +75,22 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final questionOwner =
           await userRepository.fetchUserByQuestionID(questionID);
       List<LangpalUser?> answerOwners = [];
+      List<String> answerOwnerIDs = [];
       List<Uint8List?> answerOwnerProfilePhotos = [];
+      Map<String, Uint8List?> answerOwnerProfilePhotoMap = {};
       for (final answer in answers!) {
         final owner = await userRepository.fetchUserByID(answer.ownerID);
-        final answerOwnerProfilePhoto =
-            await userRepository.fetchProfilePhotoByUserID(answer.ownerID);
         answerOwners.add(owner);
-        answerOwnerProfilePhotos.add(answerOwnerProfilePhoto);
+        answerOwnerIDs.add(owner!.id);
+      }
+      final answerOwnerIDSet = Set.from(answerOwnerIDs);
+      for (final answerOwnerID in answerOwnerIDSet) {
+        final profilePhoto =
+            await userRepository.fetchProfilePhotoByUserID(answerOwnerID);
+        answerOwnerProfilePhotoMap[answerOwnerID] = profilePhoto;
+      }
+      for (final answerOwnerID in answerOwnerIDs) {
+        answerOwnerProfilePhotos.add(answerOwnerProfilePhotoMap[answerOwnerID]);
       }
       final questionOwnerProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(question!.ownerID);

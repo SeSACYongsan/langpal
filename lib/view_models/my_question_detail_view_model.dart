@@ -41,12 +41,17 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
   Future<void> fetchMyQuestionDetail(String questionID) async {
     final question = await questionRepository.fetchQuestionByID(questionID);
     final answers = await answerRepository.fetchAnswersByQuestionID(questionID);
+    final answerOwnerIDs = answers!.map((answer) => answer.ownerID);
+    final answerOwnerIDSet = Set.from(answerOwnerIDs);
+    Map<String, Uint8List?> answerOwnerProfilePhotoMap = {};
     List<Uint8List?> answerOwnerProfilePhotos = [];
-    for (final answer in answers!) {
-      final answerOwnerID = answer.ownerID;
+    for (final answerOwnerID in answerOwnerIDSet) {
       final profilePhoto =
           await userRepository.fetchProfilePhotoByUserID(answerOwnerID);
-      answerOwnerProfilePhotos.add(profilePhoto);
+      answerOwnerProfilePhotoMap[answerOwnerID] = profilePhoto;
+    }
+    for (final answerOwnerID in answerOwnerIDs) {
+      answerOwnerProfilePhotos.add(answerOwnerProfilePhotoMap[answerOwnerID]);
     }
     state = AsyncData({
       "question": question,
