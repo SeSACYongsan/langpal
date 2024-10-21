@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
 import 'package:langpal/view_models/my_question_detail_view_model.dart';
+import 'package:langpal/view_models/my_questions_view_model.dart';
 import 'package:langpal/view_models/new_question_view_model.dart';
 import 'package:langpal/view_models/question_detail_view_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -27,6 +28,11 @@ class MainViewModel extends _$MainViewModel {
       }
     });
     ref.listen(questionDetailViewModelProvider, (previous, next) {
+      if (next is AsyncData) {
+        fetchUnchosenQuestions();
+      }
+    });
+    ref.listen(myQuestionsViewModelProvider, (previous, next) {
       if (next is AsyncData) {
         fetchUnchosenQuestions();
       }

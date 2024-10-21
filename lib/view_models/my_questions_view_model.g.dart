@@ -7,7 +7,7 @@ part of 'my_questions_view_model.dart';
 // **************************************************************************
 
 String _$myQuestionsViewModelHash() =>
-    r'2360ffad70b5533b41c70af49e523a72aad6a288';
+    r'22d9675b470d5587e441c8c1834d4527f6ade43b';
 
 /// See also [MyQuestionsViewModel].
 @ProviderFor(MyQuestionsViewModel)
