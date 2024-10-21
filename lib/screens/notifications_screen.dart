@@ -58,54 +58,64 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                 ),
               ],
             ),
-            body: ListView.builder(
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    if (isCheckboxChecked)
-                      Checkbox(
-                        value: checkboxes[index],
-                        onChanged: (value) {
-                          onCheckboxChanged(value: value, index: index);
-                        },
-                      ),
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              spreadRadius: 5,
-                              blurRadius: 5,
-                              color: Colors.black12,
-                              offset: Offset(5, 5),
+            body: notifications.isEmpty
+                ? Center(
+                    child: Text(
+                      "알림이 없어요",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        children: [
+                          if (isCheckboxChecked)
+                            Checkbox(
+                              value: checkboxes[index],
+                              onChanged: (value) {
+                                onCheckboxChanged(value: value, index: index);
+                              },
                             ),
-                          ],
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              dateFormatter.format(notifications[index].date),
-                              style: Theme.of(context).textTheme.titleSmall,
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    spreadRadius: 5,
+                                    blurRadius: 5,
+                                    color: Colors.black12,
+                                    offset: Offset(5, 5),
+                                  ),
+                                ],
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    dateFormatter
+                                        .format(notifications[index].date),
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    notifications[index].content,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 10),
-                            Text(
-                              notifications[index].content,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              itemCount: notifications.length,
-            ),
+                    itemCount: notifications.length,
+                  ),
           );
         }
       },
