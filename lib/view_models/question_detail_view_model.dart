@@ -22,7 +22,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
   late final NotificationRepository notificationRepository;
   Future<void> addAnswer(String questionID) async {
     const uuid = Uuid();
-    final content = state.value!["answer"] as String;
+    final content = state.value!["answerText"] as String;
     final currentUser = ref.read(currentUserProvider).value!;
     final answer = Answer(
       id: uuid.v4(),
@@ -97,49 +97,52 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final currentUser = ref.read(currentUserProvider).value!;
       final currentUserProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(currentUser.id);
-      state = AsyncData({
-        "answers": answers,
-        "question": question,
-        "questionOwner": questionOwner,
-        "answerOwners": answerOwners,
-        "answer": "",
-        "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
-        "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
-        "currentUserProfilePhoto": currentUserProfilePhoto,
-      });
+      updateState(
+        answers: answers,
+        question: question,
+        questionOwner: questionOwner,
+        answerOwners: answerOwners,
+        answerText: "",
+        questionOwnerProfilePhoto: questionOwnerProfilePhoto,
+        answerOwnerProfilePhotos: answerOwnerProfilePhotos,
+        currentUserProfilePhoto: currentUserProfilePhoto,
+      );
     } catch (error, stackTrace) {
       state = AsyncError(error, stackTrace);
     }
   }
 
   void resetAnswer() {
-    state = AsyncData({
-      "answers": state.value!["answers"] as List<Answer>,
-      "question": state.value!["question"] as Question,
-      "questionOwner": state.value!["questionOwner"] as LangpalUser,
-      "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
-      "answer": "",
-      "questionOwnerProfilePhoto":
-          state.value!["questionOwnerProfilePhoto"] as Uint8List?,
-      "answerOwnerProfilePhotos":
-          state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
-      "currentUserProfilePhoto":
-          state.value!["currentUserProfilePhoto"] as Uint8List?,
-    });
+    updateState(answerText: "");
   }
 
-  void setAnswer(String answer) {
+  void setAnswer(String answerText) {
+    updateState(answerText: answerText);
+  }
+
+  void updateState({
+    List<Answer>? answers,
+    Question? question,
+    LangpalUser? questionOwner,
+    List<LangpalUser?>? answerOwners,
+    String? answerText,
+    Uint8List? questionOwnerProfilePhoto,
+    List<Uint8List?>? answerOwnerProfilePhotos,
+    Uint8List? currentUserProfilePhoto,
+  }) {
     state = AsyncData({
-      "answers": state.value!["answers"] as List<Answer>,
-      "question": state.value!["question"] as Question,
-      "questionOwner": state.value!["questionOwner"] as LangpalUser,
-      "answerOwners": state.value!["answerOwners"] as List<LangpalUser?>,
-      "answer": answer,
-      "questionOwnerProfilePhoto":
+      "answers": answers ?? state.value!["answers"] as List<Answer>,
+      "question": question ?? state.value!["question"] as Question,
+      "questionOwner":
+          questionOwner ?? state.value!["questionOwner"] as LangpalUser,
+      "answerOwners":
+          answerOwners ?? state.value!["answerOwners"] as List<LangpalUser?>,
+      "answerText": answerText ?? state.value!["answerText"] as String,
+      "questionOwnerProfilePhoto": questionOwnerProfilePhoto ??
           state.value!["questionOwnerProfilePhoto"] as Uint8List?,
-      "answerOwnerProfilePhotos":
+      "answerOwnerProfilePhotos": answerOwnerProfilePhotos ??
           state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
-      "currentUserProfilePhoto":
+      "currentUserProfilePhoto": currentUserProfilePhoto ??
           state.value!["currentUserProfilePhoto"] as Uint8List?,
     });
   }

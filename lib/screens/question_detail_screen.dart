@@ -332,8 +332,9 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   Future<void> onTapSubmitButton(String questionID) async {
-    final answer =
-        ref.read(questionDetailViewModelProvider).value!["answer"] as String;
+    final answer = ref
+        .read(questionDetailViewModelProvider)
+        .value!["answerText"] as String;
     if (answer.trim().isEmpty) {
       showDialog(
         context: context,
