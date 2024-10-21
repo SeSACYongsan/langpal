@@ -60,38 +60,12 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: QuestionCard(
-                                question: questions[index],
-                                route:
-                                    "/main/my_page/my_questions/detail/${questions[index].id}",
-                                profilePhoto: null,
-                                isProfileVisible: false,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.blue,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    onTapDeleteButton(questions[index].id);
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                        child: QuestionCard(
+                          question: questions[index],
+                          route:
+                              "/main/my_page/my_questions/detail/${questions[index].id}",
+                          profilePhoto: null,
+                          isProfileVisible: false,
                         ),
                       );
                     },
@@ -107,44 +81,5 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
   void initState() {
     ref.read(myQuestionsViewModelProvider.notifier).fetchMyQuestions();
     super.initState();
-  }
-
-  void onTapDeleteButton(String questionID) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("정말 삭제하시겠어요?"),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                await ref
-                    .read(myQuestionsViewModelProvider.notifier)
-                    .deleteQuestionByID(questionID);
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("질문이 성공적으로 삭제되었습니다"),
-                  ),
-                );
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                "삭제",
-                style: TextStyle(
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("취소"),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
