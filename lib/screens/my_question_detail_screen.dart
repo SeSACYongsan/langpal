@@ -65,31 +65,60 @@ class _MyQuestionDetailScreenState
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(5, 5),
-                            color: Colors.black12,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(5, 5),
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Text(
+                                  question.content,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  question.questionType.toKoreanName(),
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            question.content,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(
-                            question.questionType.toKoreanName(),
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(width: 20),
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.blue,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                onTapDeleteButton(widget.questionID);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -259,6 +288,43 @@ class _MyQuestionDetailScreenState
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  void onTapDeleteButton(String questionID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("정말 질문을 삭제하시겠어요?"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await ref
+                    .read(myQuestionDetailViewModelProvider.notifier)
+                    .deleteQuestionByID(questionID);
+                context.go("/main/my_page/my_questions");
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("질문이 성공적으로 삭제되었습니다"),
+                  ),
+                );
+              },
+              child: const Text(
+                "삭제",
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("취소"),
+            )
           ],
         );
       },
