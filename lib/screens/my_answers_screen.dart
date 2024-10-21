@@ -54,25 +54,32 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(30),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        context.go(
-                            "/main/my_page/my_answers/detail/${answers[index].id}");
-                      },
-                      child: AnswerCard(
-                        answer: answers[index],
-                        owner: answerOwners[index]!,
-                        isProfileVisible: false,
-                        profilePhoto: null,
+                child: answers.isEmpty
+                    ? Center(
+                        child: Text(
+                          "답변이 없어요",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              context.go(
+                                  "/main/my_page/my_answers/detail/${answers[index].id}");
+                            },
+                            child: AnswerCard(
+                              answer: answers[index],
+                              owner: answerOwners[index]!,
+                              isProfileVisible: false,
+                              profilePhoto: null,
+                            ),
+                          );
+                        },
+                        itemCount: answers.length,
                       ),
-                    );
-                  },
-                  itemCount: answers.length,
-                ),
               ),
             ),
           );
