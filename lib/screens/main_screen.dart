@@ -61,15 +61,22 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                 },
               ),
             ),
-            body: ListView.builder(
-              itemBuilder: (context, index) => QuestionCard(
-                question: questions[index],
-                route: "/main/questions/${questions[index].id}",
-                profilePhoto: profilePhotos[index],
-                isProfileVisible: true,
-              ),
-              itemCount: questions.length,
-            ),
+            body: questions.isEmpty
+                ? Center(
+                    child: Text(
+                      "질문이 없어요",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) => QuestionCard(
+                      question: questions[index],
+                      route: "/main/questions/${questions[index].id}",
+                      profilePhoto: profilePhotos[index],
+                      isProfileVisible: true,
+                    ),
+                    itemCount: questions.length,
+                  ),
             backgroundColor: Colors.white,
             floatingActionButton: FloatingActionButton(
               onPressed: () {

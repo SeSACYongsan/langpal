@@ -39,7 +39,7 @@ class QuestionCard extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                 ],
               )
             else
