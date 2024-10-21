@@ -55,8 +55,11 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
     updateState(questionType: questionType);
   }
 
-  void updateState(
-      {QuestionType? questionType, String? content, double? point}) {
+  void updateState({
+    QuestionType? questionType,
+    String? content,
+    double? point,
+  }) {
     state = AsyncData({
       "questionType":
           questionType ?? state.value!["questionType"] as QuestionType,
