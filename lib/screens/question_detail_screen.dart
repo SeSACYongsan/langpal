@@ -160,19 +160,27 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return AnswerCard(
-                          answer: answers[index],
-                          owner: answerOwners[index]!,
-                          isProfileVisible: true,
-                          profilePhoto: answerOwnerProfilePhotos[index],
-                        );
-                      },
-                      itemCount: answers.length,
-                    ),
+                    if (answers.isEmpty)
+                      Center(
+                        child: Text(
+                          "답변이 없어요",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      )
+                    else
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return AnswerCard(
+                            answer: answers[index],
+                            owner: answerOwners[index]!,
+                            isProfileVisible: true,
+                            profilePhoto: answerOwnerProfilePhotos[index],
+                          );
+                        },
+                        itemCount: answers.length,
+                      ),
                     const SizedBox(height: 30),
                     if (currentUserProfilePhoto == null)
                       ClipRRect(
