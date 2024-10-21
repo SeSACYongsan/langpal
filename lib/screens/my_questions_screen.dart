@@ -49,21 +49,28 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
               ),
               backgroundColor: Colors.blue,
             ),
-            body: ListView.builder(
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: QuestionCard(
-                    question: questions[index],
-                    route:
-                        "/main/my_page/my_questions/detail/${questions[index].id}",
-                    profilePhoto: null,
-                    isProfileVisible: false,
+            body: questions.isEmpty
+                ? Center(
+                    child: Text(
+                      "질문이 없어요",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: QuestionCard(
+                          question: questions[index],
+                          route:
+                              "/main/my_page/my_questions/detail/${questions[index].id}",
+                          profilePhoto: null,
+                          isProfileVisible: false,
+                        ),
+                      );
+                    },
+                    itemCount: questions.length,
                   ),
-                );
-              },
-              itemCount: questions.length,
-            ),
           );
         }
       },
