@@ -65,6 +65,11 @@ class UserRepository {
     return null;
   }
 
+  Future<void> updateUser(LangpalUser user) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await firestoreInstance.collection("users").doc(user.id).set(user.toJson());
+  }
+
   Future<void> uploadProfilePhoto({
     required Uint8List? profilePhoto,
     required String userID,

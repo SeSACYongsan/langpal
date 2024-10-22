@@ -121,8 +121,13 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
                               value: point,
                               min: 0,
                               max: 100,
+                              divisions: 100,
                               thumbColor: Colors.blue,
                               activeColor: Colors.blue,
+                              label: ref
+                                  .read(newQuestionViewModelProvider)
+                                  .value!["point"]
+                                  .toStringAsFixed(0),
                               onChanged: (newValue) {
                                 ref
                                     .read(newQuestionViewModelProvider.notifier)
@@ -207,6 +212,8 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
       );
     } else {
       await ref.read(newQuestionViewModelProvider.notifier).addQuestion();
+      final point = ref.read(newQuestionViewModelProvider).value!["point"];
+      ref.read(newQuestionViewModelProvider.notifier).updatePoint(-point);
       ref.read(newQuestionViewModelProvider.notifier).resetState();
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
