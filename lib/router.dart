@@ -85,6 +85,20 @@ final router = GoRouter(
                           error: "The question id is null for some reason");
                     }
                   },
+                  routes: [
+                    GoRoute(
+                      path: "edit",
+                      builder: (context, state) {
+                        final questionID = state.pathParameters["question_id"];
+                        if (questionID != null) {
+                          return QuestionEditScreen(questionID: questionID);
+                        } else {
+                          return ErrorScreen(
+                              error: "The question id is null for some reason");
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

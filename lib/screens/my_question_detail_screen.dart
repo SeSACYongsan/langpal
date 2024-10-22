@@ -101,7 +101,9 @@ class _MyQuestionDetailScreenState
                         Row(
                           children: [
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                onTapEditButton(widget.questionID);
+                              },
                               icon: const Icon(
                                 Icons.edit,
                                 color: Colors.blue,
@@ -227,7 +229,7 @@ class _MyQuestionDetailScreenState
                           );
                         },
                         itemCount: answers.length,
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -238,6 +240,14 @@ class _MyQuestionDetailScreenState
         }
       },
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant MyQuestionDetailScreen oldWidget) {
+    ref
+        .read(myQuestionDetailViewModelProvider.notifier)
+        .fetchMyQuestionDetail(widget.questionID);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -329,5 +339,9 @@ class _MyQuestionDetailScreenState
         );
       },
     );
+  }
+
+  void onTapEditButton(String questionID) {
+    context.go("/main/my_page/my_questions/detail/$questionID/edit");
   }
 }
