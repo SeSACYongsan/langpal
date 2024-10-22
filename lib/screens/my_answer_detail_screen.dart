@@ -134,6 +134,23 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                             },
                             child: const Text("수정하기"),
                           ),
+                          SizedBox(height: 10),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding: const EdgeInsets.all(15),
+                                textStyle:
+                                    Theme.of(context).textTheme.titleLarge),
+                            onPressed: onTapDeleteButton,
+                            child: const Text(
+                              "삭제",
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
                         ],
                       )
                     else
@@ -198,6 +215,39 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
         .fetchMyAnswerDetail(widget.answerID);
     textEditingController = TextEditingController();
     super.initState();
+  }
+
+  void onTapDeleteButton() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("정말 삭제하시겠어요?"),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await ref
+                    .read(myAnswerDetailViewModelProvider.notifier)
+                    .deleteAnswerByID(widget.answerID);
+                context.go("/main/my_page/my_answers");
+              },
+              child: Text(
+                "삭제",
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("취소"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void onTapEditButton(String content) {

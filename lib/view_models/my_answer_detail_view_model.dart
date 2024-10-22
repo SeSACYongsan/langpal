@@ -17,6 +17,11 @@ class MyAnswerDetailViewModel extends _$MyAnswerDetailViewModel {
     return null;
   }
 
+  Future<void> deleteAnswerByID(String answerID) async {
+    await answerRepository.deleteAnswerByID(answerID);
+    updateState();
+  }
+
   Future<void> fetchMyAnswerDetail(String answerID) async {
     final answer = await answerRepository.fetchAnswerByID(answerID);
     final question =

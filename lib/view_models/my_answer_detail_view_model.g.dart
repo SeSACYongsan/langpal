@@ -7,7 +7,7 @@ part of 'my_answer_detail_view_model.dart';
 // **************************************************************************
 
 String _$myAnswerDetailViewModelHash() =>
-    r'79aac0e5fe517146fab6984b927a10fe24a7eebe';
+    r'90bb2c47f04f6315371e4ba1db3e8e8638e5aec0';
 
 /// See also [MyAnswerDetailViewModel].
 @ProviderFor(MyAnswerDetailViewModel)
