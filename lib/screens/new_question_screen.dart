@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/new_question_view_model.dart';
@@ -185,13 +186,25 @@ class _NewQuestionScreenState extends ConsumerState<NewQuestionScreen> {
         .trim()
         .isEmpty) {
       showDialog(
-          context: context,
-          builder: (context) {
-            return const AlertDialog(
-              title: Text("내용을 입력해주세요"),
-              icon: Icon(Icons.error),
-            );
-          });
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            title: Text("내용을 입력해주세요"),
+            icon: Icon(Icons.error),
+          );
+        },
+      );
+    } else if (ref.read(newQuestionViewModelProvider).value!["point"] >
+        ref.read(currentUserProvider).value!.point) {
+      final currentUserPoint = ref.read(currentUserProvider).value!.point;
+      showDialog(
+        context: context,
+        builder: (builder) {
+          return AlertDialog(
+            title: Text("포인트가 부족합니다. (현재 포인트: $currentUserPoint)"),
+          );
+        },
+      );
     } else {
       await ref.read(newQuestionViewModelProvider.notifier).addQuestion();
       ref.read(newQuestionViewModelProvider.notifier).resetState();
