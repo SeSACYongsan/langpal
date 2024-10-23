@@ -134,7 +134,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                             },
                             child: const Text("수정하기"),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -222,7 +222,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("정말 삭제하시겠어요?"),
+          title: const Text("정말 삭제하시겠어요?"),
           actions: [
             TextButton(
               onPressed: () async {
@@ -231,7 +231,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
                     .deleteAnswerByID(widget.answerID);
                 context.go("/main/my_page/my_answers");
               },
-              child: Text(
+              child: const Text(
                 "삭제",
                 style: TextStyle(
                   color: Colors.red,
@@ -242,7 +242,7 @@ class _MyAnswerDetailScreenState extends ConsumerState<MyAnswerDetailScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("취소"),
+              child: const Text("취소"),
             ),
           ],
         );

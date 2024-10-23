@@ -93,7 +93,7 @@ final router = GoRouter(
                         if (questionID != null) {
                           return QuestionEditScreen(questionID: questionID);
                         } else {
-                          return ErrorScreen(
+                          return const ErrorScreen(
                               error: "The question id is null for some reason");
                         }
                       },

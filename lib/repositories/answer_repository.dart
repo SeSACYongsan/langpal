@@ -23,10 +23,14 @@ class AnswerRepository {
         .where("questionID", isEqualTo: questionID)
         .get();
     try {
-      answersSnapshot.docs.forEach((document) async {
-        final answer = Answer.fromJson(document.data());
-        await firestoreInstance.collection("answers").doc(answer.id).delete();
-      });
+      for (final document in answersSnapshot.docs) {
+        if (document.exists) {
+          final answer = Answer.fromJson(document.data());
+          await firestoreInstance.collection("answers").doc(answer.id).delete();
+        } else {
+          throw Exception("The answer doesn't exist");
+        }
+      }
     } catch (error) {
       logger.e(error);
     }
