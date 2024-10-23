@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_question_detail_view_model.dart';
@@ -21,8 +22,8 @@ class MyQuestionDetailScreen extends ConsumerStatefulWidget {
       _MyQuestionDetailScreenState();
 }
 
-class _MyQuestionDetailScreenState
-    extends ConsumerState<MyQuestionDetailScreen> {
+class _MyQuestionDetailScreenState extends ConsumerState<MyQuestionDetailScreen>
+    with RouteAwareMixin {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myQuestionDetailViewModelProvider);
@@ -243,11 +244,19 @@ class _MyQuestionDetailScreenState
   }
 
   @override
-  void didUpdateWidget(covariant MyQuestionDetailScreen oldWidget) {
+  void didPopNext() {
     ref
         .read(myQuestionDetailViewModelProvider.notifier)
         .fetchMyQuestionDetail(widget.questionID);
-    super.didUpdateWidget(oldWidget);
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref
+        .read(myQuestionDetailViewModelProvider.notifier)
+        .fetchMyQuestionDetail(widget.questionID);
+    super.didPush();
   }
 
   @override
