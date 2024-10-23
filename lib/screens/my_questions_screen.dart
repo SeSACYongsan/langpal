@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/components/question_card.dart';
 import 'package:langpal/models/question.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_questions_view_model.dart';
@@ -13,7 +14,8 @@ class MyQuestionsScreen extends ConsumerStatefulWidget {
   ConsumerState<MyQuestionsScreen> createState() => _MyQuestionsScreenState();
 }
 
-class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
+class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen>
+    with RouteAwareMixin {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myQuestionsViewModelProvider);
@@ -75,6 +77,18 @@ class _MyQuestionsScreenState extends ConsumerState<MyQuestionsScreen> {
         }
       },
     );
+  }
+
+  @override
+  void didPopNext() {
+    ref.read(myQuestionsViewModelProvider.notifier).fetchMyQuestions();
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref.read(myQuestionsViewModelProvider.notifier).fetchMyQuestions();
+    super.didPush();
   }
 
   @override
