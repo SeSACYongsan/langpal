@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
-import 'package:langpal/view_models/question_detail_view_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'main_view_model.g.dart';
@@ -14,11 +13,6 @@ class MainViewModel extends _$MainViewModel {
   Future<Map<String, dynamic>?> build() async {
     questionRepository = QuestionRepository();
     userRepository = UserRepository();
-    ref.listen(questionDetailViewModelProvider, (previous, next) {
-      if (next is AsyncData) {
-        fetchUnchosenQuestions();
-      }
-    });
     return null;
   }
 
