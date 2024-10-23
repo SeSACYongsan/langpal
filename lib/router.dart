@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/initialization_screen.dart';
@@ -15,7 +16,11 @@ import 'package:langpal/screens/question_edit_screen.dart';
 import 'package:langpal/screens/sign_in_screen.dart';
 import 'package:langpal/screens/subscription_plans_screen.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 final router = GoRouter(
+  observers: [routeObserver],
   routes: [
     GoRoute(
       path: "/",
@@ -134,3 +139,40 @@ final router = GoRouter(
     ),
   ],
 );
+
+mixin RouteAwareMixin<T extends StatefulWidget> on State<T>
+    implements RouteAware {
+  @override
+  void didPop() {
+    print("didPop");
+  }
+
+  @override
+  void didPopNext() {
+    print("didPopNext");
+  }
+
+  @override
+  void didPush() {
+    print("didPush");
+  }
+
+  @override
+  void didPushNext() {
+    print("didPushNext");
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      routeObserver.subscribe(this, ModalRoute.of(context)!);
+    });
+  }
+}

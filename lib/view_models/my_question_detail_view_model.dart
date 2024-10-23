@@ -71,6 +71,15 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
     required String answerID,
   }) async {
     await questionRepository.setChosenAnswerByAnswerID(answerID);
+    final answer = await answerRepository.fetchAnswerByID(answerID);
+    final question = await questionRepository.fetchQuestionByID(questionID);
+    final point = question!.point.toInt();
+    final answerOwnerID = answer!.ownerID;
+    final answerOwner = await userRepository.fetchUserByID(answerOwnerID);
+    final initialPoint = answerOwner!.point;
+    final modifiedAnswerOwner =
+        answerOwner.copyWith(point: initialPoint + point);
+    await userRepository.updateUser(modifiedAnswerOwner);
     await fetchMyQuestionDetail(questionID);
   }
 }

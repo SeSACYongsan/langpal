@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/language.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_page_view_model.dart';
@@ -14,7 +15,8 @@ class MyPageScreen extends ConsumerStatefulWidget {
   ConsumerState<MyPageScreen> createState() => _MyPageScreenState();
 }
 
-class _MyPageScreenState extends ConsumerState<MyPageScreen> {
+class _MyPageScreenState extends ConsumerState<MyPageScreen>
+    with RouteAwareMixin {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myPageViewModelProvider);
@@ -193,6 +195,18 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         }
       },
     );
+  }
+
+  @override
+  void didPopNext() {
+    ref.read(myPageViewModelProvider.notifier).fetchCurrentUser();
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref.read(myPageViewModelProvider.notifier).fetchCurrentUser();
+    super.didPush();
   }
 
   @override
