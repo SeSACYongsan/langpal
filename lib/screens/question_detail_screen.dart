@@ -10,6 +10,7 @@ import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
 import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_provider.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/question_detail_view_model.dart';
@@ -22,7 +23,8 @@ class QuestionDetailScreen extends ConsumerStatefulWidget {
       _QuestionDetailScreenState();
 }
 
-class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
+class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen>
+    with RouteAwareMixin {
   late TextEditingController textEditingController;
   @override
   Widget build(BuildContext context) {
@@ -266,11 +268,19 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen> {
   }
 
   @override
-  void didUpdateWidget(covariant QuestionDetailScreen oldWidget) {
+  void didPopNext() {
     ref
         .read(questionDetailViewModelProvider.notifier)
         .fetchQuestionDetail(widget.questionID);
-    super.didUpdateWidget(oldWidget);
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref
+        .read(questionDetailViewModelProvider.notifier)
+        .fetchQuestionDetail(widget.questionID);
+    super.didPush();
   }
 
   @override
