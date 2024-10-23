@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:langpal/components/answer_card.dart';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/my_answers_view_model.dart';
@@ -14,7 +15,8 @@ class MyAnswersScreen extends ConsumerStatefulWidget {
   ConsumerState<MyAnswersScreen> createState() => _MyAnswersScreenState();
 }
 
-class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
+class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen>
+    with RouteAwareMixin {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(myAnswersViewModelProvider);
@@ -86,6 +88,18 @@ class _MyAnswersScreenState extends ConsumerState<MyAnswersScreen> {
         }
       },
     );
+  }
+
+  @override
+  void didPopNext() {
+    ref.read(myAnswersViewModelProvider.notifier).fetchMyAnswers();
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref.read(myAnswersViewModelProvider.notifier).fetchMyAnswers();
+    super.didPush();
   }
 
   @override

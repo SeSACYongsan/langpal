@@ -2,7 +2,6 @@ import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
-import 'package:langpal/view_models/my_answer_detail_view_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'my_answers_view_model.g.dart';
@@ -15,11 +14,6 @@ class MyAnswersViewModel extends _$MyAnswersViewModel {
   Future<Map<String, dynamic>?> build() async {
     answerRepository = AnswerRepository();
     userRepository = UserRepository();
-    ref.listen(myAnswerDetailViewModelProvider, (previous, next) {
-      if (next is AsyncData) {
-        fetchMyAnswers();
-      }
-    });
     return null;
   }
 
