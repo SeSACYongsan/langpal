@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:langpal/models/language.dart';
 import 'package:langpal/models/level.dart';
+import 'package:langpal/router.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/initialization_view_model.dart';
@@ -14,7 +15,8 @@ class InitializationScreen extends ConsumerStatefulWidget {
       _InitializationScreenState();
 }
 
-class _InitializationScreenState extends ConsumerState<InitializationScreen> {
+class _InitializationScreenState extends ConsumerState<InitializationScreen>
+    with RouteAwareMixin {
   @override
   Widget build(BuildContext context) {
     final asyncData = ref.watch(initializationViewModelProvider);
@@ -183,6 +185,18 @@ class _InitializationScreenState extends ConsumerState<InitializationScreen> {
         }
       },
     );
+  }
+
+  @override
+  void didPopNext() {
+    ref.read(initializationViewModelProvider.notifier).resetState();
+    super.didPopNext();
+  }
+
+  @override
+  void didPush() {
+    ref.read(initializationViewModelProvider.notifier).resetState();
+    super.didPush();
   }
 
   @override
