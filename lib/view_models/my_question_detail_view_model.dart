@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:langpal/models/notification.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
@@ -80,6 +81,12 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
     final modifiedAnswerOwner =
         answerOwner.copyWith(point: initialPoint + point);
     await userRepository.updateUser(modifiedAnswerOwner);
+    final currentUser = ref.read(currentUserProvider).value!;
+    if (currentUser.id == modifiedAnswerOwner.id) {
+      ref
+          .read(currentUserProvider.notifier)
+          .setCurrentUser(modifiedAnswerOwner);
+    }
     await fetchMyQuestionDetail(questionID);
   }
 }
