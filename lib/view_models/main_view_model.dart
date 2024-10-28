@@ -27,13 +27,13 @@ class MainViewModel extends _$MainViewModel {
       questionOwnerProfilePhotoMap[questionOwnerID] = profilePhoto;
     }
     List<Uint8List?> questionOwnerProfilePhotos = [];
+    questions.sort((a, b) {
+      return a.isPremium && !b.isPremium ? -1 : 1;
+    });
     for (final questionOwnerID in questionOwnerIDs) {
       final profilePhoto = questionOwnerProfilePhotoMap[questionOwnerID];
       questionOwnerProfilePhotos.add(profilePhoto);
     }
-    questions.sort((a, b) {
-      return a.isPremium && !b.isPremium ? -1 : 1;
-    });
     state = AsyncData({
       "questions": questions,
       "profilePhotos": questionOwnerProfilePhotos,
