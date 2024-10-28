@@ -18,7 +18,6 @@ class UserRepository {
       final data = await storageInstance.ref("profilePhotos/$userID").getData();
       return data;
     } catch (error) {
-      logger.e(error);
       return null;
     }
   }
