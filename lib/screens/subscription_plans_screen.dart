@@ -100,22 +100,6 @@ class SubscriptionPlansScreen extends StatelessWidget {
                 onPressed: () {},
                 iconAlignment: IconAlignment.end,
               ),
-              const Spacer(),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.all(15),
-                  textStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                      ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text("구독"),
-              ),
             ],
           ),
         ),
