@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:langpal/view_models/subscription_plans_view_model.dart';
 
-class SubscriptionPlansScreen extends StatelessWidget {
+class SubscriptionPlansScreen extends ConsumerStatefulWidget {
   const SubscriptionPlansScreen({super.key});
+  @override
+  ConsumerState<SubscriptionPlansScreen> createState() =>
+      _SubscriptionPlansScreenState();
+}
+
+class _SubscriptionPlansScreenState
+    extends ConsumerState<SubscriptionPlansScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,6 +121,29 @@ class SubscriptionPlansScreen extends StatelessWidget {
     );
   }
 
-  void onTapAnnualPlan() {}
-  void onTapMonthlyPlan() {}
+  void onTapAnnualPlan() async {
+    await ref
+        .read(subscriptionPlansViewModelProvider.notifier)
+        .promoteCurrentUser();
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("프리미엄 회원이 되었습니다"),
+      ),
+    );
+    context.go("/main/my_page");
+  }
+
+  void onTapMonthlyPlan() async {
+    await ref
+        .read(subscriptionPlansViewModelProvider.notifier)
+        .promoteCurrentUser();
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("프리미엄 회원이 되었습니다"),
+      ),
+    );
+    context.go("/main/my_page");
+  }
 }
