@@ -169,7 +169,9 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen>
                     ),
                     const SizedBox(height: 10),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await onTapCancelSubscription();
+                      },
                       child: Text(
                         "구독 취소",
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -215,6 +217,16 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen>
     Future(() {
       ref.read(myPageViewModelProvider.notifier).fetchCurrentUser();
     });
+  }
+
+  Future<void> onTapCancelSubscription() async {
+    await ref.read(myPageViewModelProvider.notifier).demoteCurrentUser();
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("구독이 취소되었습니다"),
+      ),
+    );
   }
 
   Future<void> onTapSignOut(BuildContext context) async {

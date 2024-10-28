@@ -74,8 +74,8 @@ class _SubscriptionPlansScreenState
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
-                onPressed: () {
-                  onTapMonthlyPlan();
+                onPressed: () async {
+                  await onTapMonthlyPlan();
                 },
                 iconAlignment: IconAlignment.end,
               ),
@@ -109,8 +109,8 @@ class _SubscriptionPlansScreenState
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
-                onPressed: () {
-                  onTapAnnualPlan();
+                onPressed: () async {
+                  await onTapAnnualPlan();
                 },
                 iconAlignment: IconAlignment.end,
               ),
@@ -121,7 +121,7 @@ class _SubscriptionPlansScreenState
     );
   }
 
-  void onTapAnnualPlan() async {
+  Future<void> onTapAnnualPlan() async {
     await ref
         .read(subscriptionPlansViewModelProvider.notifier)
         .promoteCurrentUser();
@@ -134,7 +134,7 @@ class _SubscriptionPlansScreenState
     context.go("/main/my_page");
   }
 
-  void onTapMonthlyPlan() async {
+  Future<void> onTapMonthlyPlan() async {
     await ref
         .read(subscriptionPlansViewModelProvider.notifier)
         .promoteCurrentUser();

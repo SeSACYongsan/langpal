@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/user_repository.dart';
@@ -14,7 +16,20 @@ class MyPageViewModel extends _$MyPageViewModel {
     return null;
   }
 
-  void fetchCurrentUser() async {
+  Future<void> demoteCurrentUser() async {
+    final currentUser = ref.read(currentUserProvider).value!;
+    final modifiedCurrentUser = currentUser.copyWith(isPremium: false);
+    await userRepository.updateUser(modifiedCurrentUser);
+    await ref
+        .read(currentUserProvider.notifier)
+        .setCurrentUser(modifiedCurrentUser);
+    state = AsyncData({
+      "currentUser": modifiedCurrentUser,
+      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
+    });
+  }
+
+  Future<void> fetchCurrentUser() async {
     final currentUser = ref.read(currentUserProvider).value;
     final profilePhoto =
         await userRepository.fetchProfilePhotoByUserID(currentUser!.id);
