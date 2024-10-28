@@ -64,7 +64,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
-                onPressed: () {},
+                onPressed: () {
+                  onTapMonthlyPlan();
+                },
                 iconAlignment: IconAlignment.end,
               ),
               const SizedBox(height: 10),
@@ -97,7 +99,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
                   ],
                 ),
                 icon: const Icon(Icons.chevron_right),
-                onPressed: () {},
+                onPressed: () {
+                  onTapAnnualPlan();
+                },
                 iconAlignment: IconAlignment.end,
               ),
             ],
@@ -106,4 +110,7 @@ class SubscriptionPlansScreen extends StatelessWidget {
       ),
     );
   }
+
+  void onTapAnnualPlan() {}
+  void onTapMonthlyPlan() {}
 }
