@@ -31,6 +31,9 @@ class MainViewModel extends _$MainViewModel {
       final profilePhoto = questionOwnerProfilePhotoMap[questionOwnerID];
       questionOwnerProfilePhotos.add(profilePhoto);
     }
+    questions.sort((a, b) {
+      return a.isPremium && !b.isPremium ? -1 : 1;
+    });
     state = AsyncData({
       "questions": questions,
       "profilePhotos": questionOwnerProfilePhotos,

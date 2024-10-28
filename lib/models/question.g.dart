@@ -15,6 +15,7 @@ _$QuestionImpl _$$QuestionImplFromJson(Map<String, dynamic> json) =>
       questionType: $enumDecode(_$QuestionTypeEnumMap, json['questionType']),
       content: json['content'] as String,
       date: DateTime.parse(json['date'] as String),
+      isPremium: json['isPremium'] as bool,
       chosenAnswerID: json['chosenAnswerID'] as String?,
     );
 
@@ -27,6 +28,7 @@ Map<String, dynamic> _$$QuestionImplToJson(_$QuestionImpl instance) =>
       'questionType': _$QuestionTypeEnumMap[instance.questionType]!,
       'content': instance.content,
       'date': instance.date.toIso8601String(),
+      'isPremium': instance.isPremium,
       'chosenAnswerID': instance.chosenAnswerID,
     };
 

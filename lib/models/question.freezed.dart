@@ -27,6 +27,7 @@ mixin _$Question {
   QuestionType get questionType => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
+  bool get isPremium => throw _privateConstructorUsedError;
   String? get chosenAnswerID => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $QuestionCopyWith<$Res> {
       QuestionType questionType,
       String content,
       DateTime date,
+      bool isPremium,
       String? chosenAnswerID});
 }
 
@@ -71,6 +73,7 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
     Object? questionType = null,
     Object? content = null,
     Object? date = null,
+    Object? isPremium = null,
     Object? chosenAnswerID = freezed,
   }) {
     return _then(_value.copyWith(
@@ -102,6 +105,10 @@ class _$QuestionCopyWithImpl<$Res, $Val extends Question>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isPremium: null == isPremium
+          ? _value.isPremium
+          : isPremium // ignore: cast_nullable_to_non_nullable
+              as bool,
       chosenAnswerID: freezed == chosenAnswerID
           ? _value.chosenAnswerID
           : chosenAnswerID // ignore: cast_nullable_to_non_nullable
@@ -126,6 +133,7 @@ abstract class _$$QuestionImplCopyWith<$Res>
       QuestionType questionType,
       String content,
       DateTime date,
+      bool isPremium,
       String? chosenAnswerID});
 }
 
@@ -147,6 +155,7 @@ class __$$QuestionImplCopyWithImpl<$Res>
     Object? questionType = null,
     Object? content = null,
     Object? date = null,
+    Object? isPremium = null,
     Object? chosenAnswerID = freezed,
   }) {
     return _then(_$QuestionImpl(
@@ -178,6 +187,10 @@ class __$$QuestionImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isPremium: null == isPremium
+          ? _value.isPremium
+          : isPremium // ignore: cast_nullable_to_non_nullable
+              as bool,
       chosenAnswerID: freezed == chosenAnswerID
           ? _value.chosenAnswerID
           : chosenAnswerID // ignore: cast_nullable_to_non_nullable
@@ -197,6 +210,7 @@ class _$QuestionImpl implements _Question {
       required this.questionType,
       required this.content,
       required this.date,
+      required this.isPremium,
       this.chosenAnswerID});
 
   factory _$QuestionImpl.fromJson(Map<String, dynamic> json) =>
@@ -217,11 +231,13 @@ class _$QuestionImpl implements _Question {
   @override
   final DateTime date;
   @override
+  final bool isPremium;
+  @override
   final String? chosenAnswerID;
 
   @override
   String toString() {
-    return 'Question(id: $id, ownerUsername: $ownerUsername, ownerID: $ownerID, point: $point, questionType: $questionType, content: $content, date: $date, chosenAnswerID: $chosenAnswerID)';
+    return 'Question(id: $id, ownerUsername: $ownerUsername, ownerID: $ownerID, point: $point, questionType: $questionType, content: $content, date: $date, isPremium: $isPremium, chosenAnswerID: $chosenAnswerID)';
   }
 
   @override
@@ -238,6 +254,8 @@ class _$QuestionImpl implements _Question {
                 other.questionType == questionType) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.date, date) || other.date == date) &&
+            (identical(other.isPremium, isPremium) ||
+                other.isPremium == isPremium) &&
             (identical(other.chosenAnswerID, chosenAnswerID) ||
                 other.chosenAnswerID == chosenAnswerID));
   }
@@ -245,7 +263,7 @@ class _$QuestionImpl implements _Question {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, ownerUsername, ownerID,
-      point, questionType, content, date, chosenAnswerID);
+      point, questionType, content, date, isPremium, chosenAnswerID);
 
   @JsonKey(ignore: true)
   @override
@@ -270,6 +288,7 @@ abstract class _Question implements Question {
       required final QuestionType questionType,
       required final String content,
       required final DateTime date,
+      required final bool isPremium,
       final String? chosenAnswerID}) = _$QuestionImpl;
 
   factory _Question.fromJson(Map<String, dynamic> json) =
@@ -289,6 +308,8 @@ abstract class _Question implements Question {
   String get content;
   @override
   DateTime get date;
+  @override
+  bool get isPremium;
   @override
   String? get chosenAnswerID;
   @override

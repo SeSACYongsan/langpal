@@ -14,6 +14,7 @@ class Question with _$Question {
     required QuestionType questionType,
     required String content,
     required DateTime date,
+    required bool isPremium,
     String? chosenAnswerID,
   }) = _Question;
   factory Question.fromJson(Map<String, dynamic> json) =>

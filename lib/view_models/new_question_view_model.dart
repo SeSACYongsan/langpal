@@ -26,6 +26,7 @@ class NewQuestionViewModel extends _$NewQuestionViewModel {
       questionType: questionType,
       content: content,
       point: point,
+      isPremium: currentUser.isPremium,
       date: DateTime.now(),
     );
     await questionRepository.addQuestion(question);
