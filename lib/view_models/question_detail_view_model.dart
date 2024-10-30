@@ -108,6 +108,7 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         currentUserProfilePhoto: currentUserProfilePhoto,
       );
     } catch (error, stackTrace) {
+      print(stackTrace);
       state = AsyncError(error, stackTrace);
     }
   }
@@ -138,12 +139,9 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       "answerOwners":
           answerOwners ?? state.value!["answerOwners"] as List<LangpalUser?>,
       "answerText": answerText ?? state.value!["answerText"] as String,
-      "questionOwnerProfilePhoto": questionOwnerProfilePhoto ??
-          state.value!["questionOwnerProfilePhoto"] as Uint8List?,
-      "answerOwnerProfilePhotos": answerOwnerProfilePhotos ??
-          state.value!["answerOwnerProfilePhotos"] as List<Uint8List?>,
-      "currentUserProfilePhoto": currentUserProfilePhoto ??
-          state.value!["currentUserProfilePhoto"] as Uint8List?,
+      "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
+      "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
+      "currentUserProfilePhoto": currentUserProfilePhoto,
     });
   }
 }
