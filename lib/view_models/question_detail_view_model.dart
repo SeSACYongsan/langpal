@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:langpal/models/answer.dart';
 import 'package:langpal/models/langpal_user.dart';
 import 'package:langpal/models/notification.dart';
-import 'package:langpal/models/question.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
@@ -97,16 +96,16 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
       final currentUser = ref.read(currentUserProvider).value!;
       final currentUserProfilePhoto =
           await userRepository.fetchProfilePhotoByUserID(currentUser.id);
-      updateState(
-        answers: answers,
-        question: question,
-        questionOwner: questionOwner,
-        answerOwners: answerOwners,
-        answerText: "",
-        questionOwnerProfilePhoto: questionOwnerProfilePhoto,
-        answerOwnerProfilePhotos: answerOwnerProfilePhotos,
-        currentUserProfilePhoto: currentUserProfilePhoto,
-      );
+      state = AsyncData({
+        "answers": answers,
+        "question": question,
+        "questionOwner": questionOwner,
+        "answerOwners": answerOwners,
+        "answerText": "",
+        "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
+        "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
+        "currentUserProfilePhoto": currentUserProfilePhoto,
+      });
     } catch (error, stackTrace) {
       print(stackTrace);
       state = AsyncError(error, stackTrace);
@@ -114,34 +113,28 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
   }
 
   void resetAnswer() {
-    updateState(answerText: "");
+    state = AsyncData({
+      "answers": state.value!["answers"],
+      "question": state.value!["question"],
+      "questionOwner": state.value!["questionOwner"],
+      "answerOwners": state.value!["answerOwners"],
+      "answerText": "",
+      "questionOwnerProfilePhoto": state.value!["questionOwnerProfilePhoto"],
+      "answerOwnerProfilePhotos": state.value!["answerOwnerProfilePhotos"],
+      "currentUserProfilePhoto": state.value!["currentUserProfilePhoto"],
+    });
   }
 
   void setAnswer(String answerText) {
-    updateState(answerText: answerText);
-  }
-
-  void updateState({
-    List<Answer>? answers,
-    Question? question,
-    LangpalUser? questionOwner,
-    List<LangpalUser?>? answerOwners,
-    String? answerText,
-    Uint8List? questionOwnerProfilePhoto,
-    List<Uint8List?>? answerOwnerProfilePhotos,
-    Uint8List? currentUserProfilePhoto,
-  }) {
     state = AsyncData({
-      "answers": answers ?? state.value!["answers"] as List<Answer>,
-      "question": question ?? state.value!["question"] as Question,
-      "questionOwner":
-          questionOwner ?? state.value!["questionOwner"] as LangpalUser,
-      "answerOwners":
-          answerOwners ?? state.value!["answerOwners"] as List<LangpalUser?>,
-      "answerText": answerText ?? state.value!["answerText"] as String,
-      "questionOwnerProfilePhoto": questionOwnerProfilePhoto,
-      "answerOwnerProfilePhotos": answerOwnerProfilePhotos,
-      "currentUserProfilePhoto": currentUserProfilePhoto,
+      "answers": state.value!["answers"],
+      "question": state.value!["question"],
+      "questionOwner": state.value!["questionOwner"],
+      "answerOwners": state.value!["answerOwners"],
+      "answerText": answerText,
+      "questionOwnerProfilePhoto": state.value!["questionOwnerProfilePhoto"],
+      "answerOwnerProfilePhotos": state.value!["answerOwnerProfilePhotos"],
+      "currentUserProfilePhoto": state.value!["currentUserProfilePhoto"],
     });
   }
 }
