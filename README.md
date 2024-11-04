@@ -10,6 +10,8 @@ Langpal은 서로가 서로의 모국어를 첨삭해주는 서비스입니다. 
 ## 🤔 디자인 패턴
 * MVVM 디자인 패턴 - 코드 가독성, 유지보수성 향상
   * Model - Repository - View Model - View
+
+![MVVMPattern svg](https://github.com/user-attachments/assets/0209d66f-d77f-47a7-ba60-2616de398841)
 ## 💿 프로젝트 설치 및 실행 방법
 ```zsh
 flutter pub get
