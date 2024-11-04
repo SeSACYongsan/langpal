@@ -12,6 +12,22 @@ Langpal은 서로가 서로의 모국어를 첨삭해주는 서비스입니다. 
   * Model - Repository - View Model - View
 
 ![MVVMPattern svg](https://github.com/user-attachments/assets/0209d66f-d77f-47a7-ba60-2616de398841)
+## 🧮 주요 기능들
+* 소셜 로그인
+  * Google/Apple 계정을 통한 로그인 기능
+* 초기 설정
+  * 모국어, 타국어, 구사 수준 설정
+  * 프로필 사진, 닉네임 설정
+* 질문 게시
+  * 5가지 유형으로 질문을 분류
+  * 포인트 제도로 유저들로 하여금 답변의 동기 부여
+* 알림 페이지
+  * 답변 등록 & 답변 채택에 대한 알림 스크린
+* 마이페이지
+  * 내 질문 & 답변 모아보기
+  * 구독 설정
+  * 로그아웃
+
 ## 💿 프로젝트 설치 및 실행 방법
 ```zsh
 flutter pub get
