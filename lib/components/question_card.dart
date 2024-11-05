@@ -30,7 +30,7 @@ class QuestionCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(50),
                     child: Image.asset(
                       "assets/images/profile.png",
-                      width: 70,
+                      width: 60,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
                           Icons.person,
@@ -39,7 +39,7 @@ class QuestionCard extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 20),
                 ],
               )
             else
