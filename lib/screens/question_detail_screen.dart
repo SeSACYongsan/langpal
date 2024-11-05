@@ -83,7 +83,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen>
                             borderRadius: BorderRadius.circular(50),
                             child: Image.asset(
                               "assets/images/profile.png",
-                              width: 70,
+                              width: 60,
                               errorBuilder: (context, error, stackTrace) {
                                 return const Icon(Icons.person);
                               },
@@ -189,7 +189,7 @@ class _QuestionDetailScreenState extends ConsumerState<QuestionDetailScreen>
                         borderRadius: BorderRadius.circular(50),
                         child: Image.asset(
                           "assets/images/profile.png",
-                          width: 70,
+                          width: 60,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.person);
                           },
