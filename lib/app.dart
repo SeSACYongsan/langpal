@@ -12,6 +12,7 @@ class App extends ConsumerWidget {
       theme: ThemeData(
         fontFamily: "CookieRun",
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
