@@ -54,6 +54,7 @@ dev_dependencies:
     flutter_test:
         sdk: flutter
     build_runner:
+    flutter_launcher_icons:
     riverpod_generator:
     riverpod_lint:
     custom_lint:
@@ -113,3 +114,9 @@ flutter:
     #
     # For details regarding fonts from package dependencies,
     # see https://flutter.dev/custom-fonts/#from-packages
+flutter_launcher_icons:
+    ios: true
+    android: true
+    remove_alpha_ios: true
+    image_path_android: "assets/images/app_icon.png"
+    image_path_ios: "assets/images/app_icon.png"
