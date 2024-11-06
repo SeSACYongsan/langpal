@@ -50,6 +50,7 @@ dependencies:
     freezed_annotation:
     logger:
     image_picker:
+    flutter_native_splash:
 dev_dependencies:
     flutter_test:
         sdk: flutter
@@ -120,3 +121,13 @@ flutter_launcher_icons:
     remove_alpha_ios: true
     image_path_android: "assets/images/app_icon.png"
     image_path_ios: "assets/images/app_icon.png"
+
+flutter_native_splash:
+    color: "#FFFFFF"
+    image: "assets/images/app_icon.png"
+    android_gravity: center
+    ios_content_mode: center
+    fullscreen: true
+    android_12:
+        color: "#FFFFFF"
+        image: "assets/images/app_icon.png"
