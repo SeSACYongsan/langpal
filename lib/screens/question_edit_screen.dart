@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:langpal/models/question_type.dart';
+import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/question_edit_view_model.dart';
@@ -192,6 +193,18 @@ class _QuestionEditScreenState extends ConsumerState<QuestionEditScreen> {
           return const AlertDialog(
             title: Text("내용을 입력해주세요"),
             icon: Icon(Icons.info),
+          );
+        },
+      );
+    } else if (ref.read(questionEditViewModelProvider).value!["point"] >
+        ref.read(currentUserProvider).value!.point) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+                "포인트가 부족합니다. (현재 포인트: ${ref.read(currentUserProvider).value!.point})"),
+            icon: const Icon(Icons.info),
           );
         },
       );
