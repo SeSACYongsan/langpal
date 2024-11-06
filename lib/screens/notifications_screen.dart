@@ -7,7 +7,7 @@ import 'package:langpal/screens/error_screen.dart';
 import 'package:langpal/screens/loading_screen.dart';
 import 'package:langpal/view_models/notifications_view_model.dart';
 
-final dateFormatter = DateFormat.yMd();
+final dateFormatter = DateFormat("yyyy-MM-dd");
 
 class NotificationsScreen extends ConsumerStatefulWidget {
   const NotificationsScreen({super.key});
