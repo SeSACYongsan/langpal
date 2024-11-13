@@ -34,7 +34,6 @@ class SignInViewModel extends _$SignInViewModel {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(scopes: [
         AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
       ]);
       final userID = credential.userIdentifier!;
       final firestoreInstance = FirebaseFirestore.instance;

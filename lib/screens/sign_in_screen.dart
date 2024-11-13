@@ -122,7 +122,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
 
   Future<void> onTapSignInWithApple() async {
     final signInStatus =
-        ref.read(signInViewModelProvider.notifier).signInWithApple();
+        await ref.read(signInViewModelProvider.notifier).signInWithApple();
+    switch (signInStatus) {
+      case SignInStatus.signInFailed:
+        showSignInFailedDialog(context);
+        break;
+      case SignInStatus.userNotExist:
+        context.go("/initialization");
+        break;
+      case SignInStatus.userExist:
+        context.go("/main");
+        break;
+    }
   }
 
   Future<void> onTapSignInWithGoogle() async {
