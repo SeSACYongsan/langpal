@@ -6,6 +6,7 @@ import 'package:langpal/models/sign_in_status.dart';
 import 'package:langpal/providers/current_user_provider.dart';
 import 'package:langpal/providers/temp_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 part 'sign_in_view_model.g.dart';
 
@@ -18,8 +19,35 @@ class SignInViewModel extends _$SignInViewModel {
     });
   }
 
-  SignInStatus signInWithApple() {
-    return SignInStatus.signInFailed;
+  Future<SignInStatus> signInWithApple() async {
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ]);
+      print(credential.authorizationCode);
+      final userID = credential.userIdentifier!;
+      final firestoreInstance = FirebaseFirestore.instance;
+      final userSnapshot =
+          await firestoreInstance.collection("users").doc(userID).get();
+      if (userSnapshot.exists) {
+        final user = LangpalUser.fromJson(userSnapshot.data()!);
+        ref.read(currentUserProvider.notifier).setCurrentUser(user);
+        return SignInStatus.userExist;
+      } else {
+        final displayName = credential.familyName! + credential.givenName!;
+        final emailAddress = credential.email!;
+        ref.read(tempUserProvider.notifier).setTempUser({
+          "displayName": displayName,
+          "emailAddress": emailAddress,
+          "userID": userID,
+        });
+        return SignInStatus.userNotExist;
+      }
+    } catch (error) {
+      print(error);
+      return SignInStatus.signInFailed;
+    }
   }
 
   Future<SignInStatus> signInWithGoogle() async {
