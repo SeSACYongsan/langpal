@@ -32,9 +32,11 @@ class SignInViewModel extends _$SignInViewModel {
 
   Future<SignInStatus> signInWithApple() async {
     try {
-      final credential = await SignInWithApple.getAppleIDCredential(scopes: [
-        AppleIDAuthorizationScopes.email,
-      ]);
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+        ],
+      );
       final userID = credential.userIdentifier!;
       final firestoreInstance = FirebaseFirestore.instance;
       final userSnapshot =
