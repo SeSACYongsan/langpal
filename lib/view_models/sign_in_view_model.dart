@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -19,13 +21,21 @@ class SignInViewModel extends _$SignInViewModel {
     });
   }
 
+  String getEmailAddressFromJWT(String token) {
+    final jwt = token.split(".");
+    final payload = jwt[1];
+    final normalizedPayload = base64.normalize(payload);
+    final jsonData = base64.decode(normalizedPayload);
+    final userInfo = jsonDecode(utf8.decode(jsonData));
+    return userInfo["email"];
+  }
+
   Future<SignInStatus> signInWithApple() async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ]);
-      print(credential.authorizationCode);
       final userID = credential.userIdentifier!;
       final firestoreInstance = FirebaseFirestore.instance;
       final userSnapshot =
@@ -35,8 +45,8 @@ class SignInViewModel extends _$SignInViewModel {
         ref.read(currentUserProvider.notifier).setCurrentUser(user);
         return SignInStatus.userExist;
       } else {
-        final displayName = credential.familyName! + credential.givenName!;
-        final emailAddress = credential.email!;
+        final emailAddress = getEmailAddressFromJWT(credential.identityToken!);
+        final displayName = emailAddress.split("@").first;
         ref.read(tempUserProvider.notifier).setTempUser({
           "displayName": displayName,
           "emailAddress": emailAddress,
