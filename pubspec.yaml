@@ -51,6 +51,7 @@ dependencies:
     logger:
     image_picker:
     flutter_native_splash:
+    sign_in_with_apple:
 dev_dependencies:
     flutter_test:
         sdk: flutter
