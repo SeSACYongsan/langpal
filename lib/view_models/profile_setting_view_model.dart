@@ -71,7 +71,10 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
           pickedImage.path,
           quality: 1,
         );
-        updateState(profilePhoto: compressedImage);
+        state = AsyncData({
+          "username": state.value!["username"] as String,
+          "profilePhoto": compressedImage,
+        });
       } else {
         throw Exception("The picked photo is null");
       }
@@ -81,21 +84,16 @@ class ProfileSettingViewModel extends _$ProfileSettingViewModel {
   }
 
   void resetState() {
-    updateState(username: "", profilePhoto: null);
+    state = const AsyncData({
+      "username": "",
+      "profilePhoto": null,
+    });
   }
 
   void setUsername(String username) {
-    updateState(username: username);
-  }
-
-  void updateState({
-    String? username,
-    Uint8List? profilePhoto,
-  }) {
     state = AsyncData({
-      "username": username ?? state.value!["username"] as String,
-      "profilePhoto":
-          profilePhoto ?? state.value!["profilePhoto"] as Uint8List?,
+      "username": username,
+      "profilePhoto": state.value!["profilePhoto"] as Uint8List?,
     });
   }
 }
