@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:langpal/models/sign_in_status.dart';
+import 'package:langpal/utils/notification.dart';
 import 'package:langpal/view_models/sign_in_view_model.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -118,6 +119,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    FlutterLocalNotification.init();
+    Future.delayed(const Duration(seconds: 3),
+        FlutterLocalNotification.requestNotificationPermission());
+    super.initState();
   }
 
   Future<void> onTapSignInWithApple() async {
