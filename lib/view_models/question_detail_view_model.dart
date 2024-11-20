@@ -8,6 +8,7 @@ import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
+import 'package:langpal/utils/notification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -48,6 +49,10 @@ class QuestionDetailViewModel extends _$QuestionDetailViewModel {
         content: "질문에 답변이 등록되었습니다",
       );
       await notificationRepository.addNotification(notification);
+      await FlutterLocalNotification.showNotification(
+        title: "답변 등록",
+        body: "질문에 답변이 등록되었습니다",
+      );
     }
   }
 

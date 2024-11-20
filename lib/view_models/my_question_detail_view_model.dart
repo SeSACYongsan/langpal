@@ -6,6 +6,7 @@ import 'package:langpal/repositories/answer_repository.dart';
 import 'package:langpal/repositories/notification_repository.dart';
 import 'package:langpal/repositories/question_repository.dart';
 import 'package:langpal/repositories/user_repository.dart';
+import 'package:langpal/utils/notification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -28,6 +29,10 @@ class MyQuestionDetailViewModel extends _$MyQuestionDetailViewModel {
       content: "답변이 채택되었습니다",
     );
     await notificationRepository.addNotification(notification);
+    await FlutterLocalNotification.showNotification(
+      title: "답변 채택",
+      body: "답변이 채택되었습니다.",
+    );
   }
 
   @override

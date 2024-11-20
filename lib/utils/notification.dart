@@ -29,7 +29,10 @@ class FlutterLocalNotification {
         );
   }
 
-  static Future<void> showNotification() async {
+  static Future<void> showNotification({
+    required String title,
+    required String body,
+  }) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       "Channel ID",
@@ -45,8 +48,8 @@ class FlutterLocalNotification {
     );
     await flutterLocalNotificationsPlugin.show(
       0,
-      "Test title",
-      "Test body",
+      title,
+      body,
       notificationDetails,
     );
   }
