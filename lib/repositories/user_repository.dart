@@ -74,6 +74,8 @@ class UserRepository {
     required String userID,
   }) async {
     final storageInstance = FirebaseStorage.instance;
-    await storageInstance.ref("profilePhotos/$userID").putData(profilePhoto!);
+    if (profilePhoto != null) {
+      await storageInstance.ref("profilePhotos/$userID").putData(profilePhoto);
+    }
   }
 }
