@@ -143,24 +143,16 @@ final router = GoRouter(
 mixin RouteAwareMixin<T extends StatefulWidget> on State<T>
     implements RouteAware {
   @override
-  void didPop() {
-    print("didPop");
-  }
+  void didPop() {}
 
   @override
-  void didPopNext() {
-    print("didPopNext");
-  }
+  void didPopNext() {}
 
   @override
-  void didPush() {
-    print("didPush");
-  }
+  void didPush() {}
 
   @override
-  void didPushNext() {
-    print("didPushNext");
-  }
+  void didPushNext() {}
 
   @override
   void dispose() {
