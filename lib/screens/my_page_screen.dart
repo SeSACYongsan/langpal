@@ -143,42 +143,42 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen>
                       iconAlignment: IconAlignment.end,
                     ),
                     const SizedBox(height: 10),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        context.go("/main/my_page/subscription");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        foregroundColor: Colors.white,
-                        elevation: 3,
-                        textStyle:
-                            Theme.of(context).textTheme.titleLarge!.copyWith(
-                                  color: Colors.white,
-                                ),
-                      ),
-                      label: const Text("프리미엄 구독"),
-                      icon: const Icon(
-                        Icons.star,
-                        color: Colors.yellow,
-                      ),
-                      iconAlignment: IconAlignment.end,
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () async {
-                        await onTapCancelSubscription();
-                      },
-                      child: Text(
-                        "구독 취소",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              decoration: TextDecoration.underline,
-                            ),
-                      ),
-                    ),
+                    // ElevatedButton.icon(
+                    //   onPressed: () {
+                    //     context.go("/main/my_page/subscription");
+                    //   },
+                    //   style: ElevatedButton.styleFrom(
+                    //     backgroundColor: Colors.blue,
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     padding: const EdgeInsets.all(10),
+                    //     foregroundColor: Colors.white,
+                    //     elevation: 3,
+                    //     textStyle:
+                    //         Theme.of(context).textTheme.titleLarge!.copyWith(
+                    //               color: Colors.white,
+                    //             ),
+                    //   ),
+                    //   label: const Text("프리미엄 구독"),
+                    //   icon: const Icon(
+                    //     Icons.star,
+                    //     color: Colors.yellow,
+                    //   ),
+                    //   iconAlignment: IconAlignment.end,
+                    // ),
+                    // const SizedBox(height: 10),
+                    // TextButton(
+                    //   onPressed: () async {
+                    //     await onTapCancelSubscription();
+                    //   },
+                    //   child: Text(
+                    //     "구독 취소",
+                    //     style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    //           decoration: TextDecoration.underline,
+                    //         ),
+                    //   ),
+                    // ),
                     const Spacer(),
                     TextButton(
                       onPressed: () async {
